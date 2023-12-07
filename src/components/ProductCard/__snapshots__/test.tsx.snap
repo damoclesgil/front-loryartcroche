@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProductCard /> should render the heading 1`] = `
+<main
+  class=""
+>
+  <h1>
+    ProductCard
+  </h1>
+</main>
+`;
