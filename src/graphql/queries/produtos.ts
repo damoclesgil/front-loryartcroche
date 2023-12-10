@@ -11,6 +11,7 @@ export const QUERY_PRODUTOS = graphql(/* GraphQL */ `
           nome
           slug
           descricao
+          preco
           imagem_destaque {
             data {
               attributes {

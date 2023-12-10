@@ -1,8 +1,8 @@
 
-![React Avançado](https://raw.githubusercontent.com/React-Avancado/boilerplate/master/public/img/logo-gh.svg)
+![Lory Art Croche](https://raw.githubusercontent.com/damoclesgil/front-loryartcroche/master/public/img/logo-gh.svg?token=GHSAT0AAAAAACLHKISCS3JARWULULG5JP42ZLSBBXA)
 
-This is a [Next.js](https://nextjs.org/) boilerplate to be used in a course called [React Avançado](https://reactavancado.com.br/).
-![ci](https://github.com/React-Avancado/boilerplate-apps-router/workflows/ci/badge.svg)
+This is the front end of the [loryartcroche](https://www.instagram.com/loryartcroche/) e-commerce that was created with the intention of selling and promoting its handcrafted products.
+
 ## What is inside?
 
 This project uses lot of stuff as:
@@ -22,6 +22,8 @@ This project uses lot of stuff as:
 First, run the development server:
 
 ```bash
+pnpm dev
+# or
 npm run dev
 # or
 yarn dev

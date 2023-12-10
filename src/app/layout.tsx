@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+// import { Inter } from 'next/font/google'
 
 import StyledComponentsRegistry from '@/lib/registry'
 import { Providers } from './providers'
 import Header from '@/components/Header'
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Lory Art Crochê',
@@ -19,7 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={inter.className}>
+      {/*  className={inter.className} */}
+      <body>
         <StyledComponentsRegistry>
           <Providers>
             <Header />
