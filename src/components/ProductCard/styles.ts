@@ -53,9 +53,9 @@ export const Content = styled.div`
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    margin-top: ${theme.spacings.xxsmall};
+    /* margin-top: ${theme.spacings.xxsmall}; */
     /* height: 100%; */
-    /* margin: ${theme.spacings.xsmall}; */
+    margin: ${theme.spacings.xsmall};
   `}
 `
 
@@ -69,6 +69,7 @@ export const Title = styled.h3`
     font-size: ${theme.font.sizes.medium};
     line-height: ${theme.font.sizes.medium};
     font-weight: ${theme.font.bold};
+    margin-bottom: ${theme.spacings.xsmall};
     color: ${theme.colors.black};
   `}
 `

@@ -1,5 +1,5 @@
 import { useWishlist } from '@/hooks/use-wishlist'
-import { useSession } from 'next-auth/react'
+// import { useSession } from 'next-auth/react'
 
 import Button, { ButtonProps } from '@/components/Button'
 
@@ -15,7 +15,7 @@ const WishlistButton = ({
   hasText,
   size = 'small'
 }: WishlistButtonProps) => {
-  const [session] = useSession()
+  // const [session] = useSession()
 
   const {
     isInWishlist,
@@ -32,7 +32,7 @@ const WishlistButton = ({
     ? 'Remove from Wishlist'
     : 'Add to Wishlist'
 
-  if (!session) return null
+  // if (!session) return null
 
   return (
     <Button

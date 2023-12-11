@@ -7,7 +7,7 @@ import CartButton from '../CartButton'
 // import { getImageUrl } from '@/utils/getImageUrl'
 
 export type ProductCardProps = {
-  id: string
+  id?: string
   slug: string
   name: string
   img: string
@@ -34,7 +34,7 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
       <S.BuyBox>
         {!!price && <S.Price isPromotional>{formatPrice(price)}</S.Price>}
         <S.Price>{formatPrice(price)}</S.Price>
-        <CartButton id={id} />
+        <CartButton id={id ? id : ''} />
       </S.BuyBox>
     </S.Content>
   </S.Wrapper>

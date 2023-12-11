@@ -29,7 +29,7 @@ export default function ProductsList() {
             <S.Grid>
               {data?.produtos?.data.map((produto, index) => (
                 <ProductCard
-                  id={produto?.id}
+                  id={produto?.id ? produto.id : ''}
                   key={index}
                   slug={
                     produto.attributes?.slug

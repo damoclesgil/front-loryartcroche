@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
 // import { Inter } from 'next/font/google'
-
+import { Container } from '@/components/Container'
 import StyledComponentsRegistry from '@/lib/registry'
 import { Providers } from './providers'
-import Header from '@/components/Header'
+// import Header from '@/components/Header'
+import Menu from '@/components/Menu'
+import Footer from '@/components/Footer'
 
 // const inter = Inter({ subsets: ['latin'] })
+import * as S from './styles'
 
 export const metadata: Metadata = {
   title: 'Lory Art Crochê',
@@ -23,8 +26,17 @@ export default function RootLayout({
       <body>
         <StyledComponentsRegistry>
           <Providers>
-            <Header />
-            {children}
+            <Container>
+              <Menu username="damoclesgil" loading={false} />
+            </Container>
+            {/* <Header /> */}
+
+            <S.Content>{children}</S.Content>
+            <S.SectionFooter>
+              <Container>
+                <Footer />
+              </Container>
+            </S.SectionFooter>
           </Providers>
         </StyledComponentsRegistry>
       </body>

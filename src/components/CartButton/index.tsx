@@ -4,7 +4,6 @@ import {
 } from '@styled-icons/material-outlined'
 
 import Button, { ButtonProps } from '@/components/Button'
-// import { useCart } from '@/hooks/use-cart'
 
 type CartButtonProps = {
   id: string
