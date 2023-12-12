@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  forceSwcTransforms: false,
+  // compiler: {
+  //   styledComponents: true
+  // },
   images: {
     remotePatterns: [
       {
@@ -8,9 +13,9 @@ const nextConfig = {
       },
       {
         protocol: 'http',
-        hostname: 'localhost',
-        port: '1337',
-        pathname: '/uploads/**'
+        hostname: 'localhost'
+        // port: '1337',
+        // pathname: '/uploads/**'
         // pathname: 'localhost:1337',
       }
     ]

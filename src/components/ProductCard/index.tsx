@@ -12,18 +12,40 @@ export type ProductCardProps = {
   name: string
   img: string
   price: number
+  isPromotional?: boolean
 }
 
-const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
+const ProductCard = ({
+  id,
+  slug,
+  name,
+  img,
+  price,
+  isPromotional = false
+}: ProductCardProps) => (
   <S.Wrapper>
-    <Link href={`produtos/${slug}`} passHref legacyBehavior>
+    <Link
+      href={{
+        pathname: `produtos/${slug}`,
+        query: { id: id }
+      }}
+      passHref
+      legacyBehavior
+    >
       <S.ImageBox>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={img} alt={name} />
       </S.ImageBox>
     </Link>
     <S.Content>
-      <Link href={`produtos/${slug}`} passHref legacyBehavior>
+      <Link
+        href={{
+          pathname: `produtos/${slug}`,
+          query: { id: id }
+        }}
+        passHref
+        legacyBehavior
+      >
         <S.Info>
           <S.Title>{name}</S.Title>
         </S.Info>
@@ -32,8 +54,9 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
         <WishlistButton id={id} />
       </S.FavButton> */}
       <S.BuyBox>
-        {!!price && <S.Price isPromotional>{formatPrice(price)}</S.Price>}
-        <S.Price>{formatPrice(price)}</S.Price>
+        {!!price && (
+          <S.Price isPromotional={isPromotional}>{formatPrice(price)}</S.Price>
+        )}
         <CartButton id={id ? id : ''} />
       </S.BuyBox>
     </S.Content>

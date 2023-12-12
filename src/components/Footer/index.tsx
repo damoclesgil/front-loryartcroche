@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Heading from '@/components/Heading'
 import Logo from '@/components/Logo'
 import * as S from './styles'
+import Button from '../Button'
 
 const currentYear = new Date().getFullYear()
 
@@ -13,7 +14,12 @@ const Footer = () => (
     <Logo color="black" />
     <S.Content>
       <S.Column>
-        <Heading color="black" size="small" lineBottom lineColor="secondary">
+        <Heading
+          color="black"
+          size="small"
+          lineBottom={true}
+          lineColor="secondary"
+        >
           Entre em Contato
         </Heading>
 
@@ -79,9 +85,7 @@ const Footer = () => (
         <Heading color="black" lineColor="secondary" lineBottom size="small">
           Localização
         </Heading>
-        <span>Lorem ipsum dolor sit.</span>
-        <span>Lorem Ipsum</span>
-        <span>Lorem, ipsum dolor.</span>
+        <Button>tESTE</Button>
       </S.Column>
     </S.Content>
 
