@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // forceSwcTransforms: false,
   reactStrictMode: true,
-  forceSwcTransforms: false,
-  // compiler: {
-  //   styledComponents: true
-  // },
+  compiler: {
+    styledComponents: true
+  },
   images: {
     remotePatterns: [
       {

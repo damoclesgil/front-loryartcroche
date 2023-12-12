@@ -2,34 +2,34 @@
 
 import Link from 'next/link'
 
-import Heading from '@/components/Heading'
-import Logo from '@/components/Logo'
+// import Heading from '@/components/Heading'
+// import Logo from '@/components/Logo'
 import * as S from './styles'
-import Button from '../Button'
+// import Button from '../Button'
 
 const currentYear = new Date().getFullYear()
 
 const Footer = () => (
   <S.Wrapper>
-    <Logo color="black" />
+    {/* <Logo color="black" /> */}
     <S.Content>
       <S.Column>
-        <Heading
+        {/* <Heading
           color="black"
           size="small"
           lineBottom={true}
           lineColor="secondary"
         >
           Entre em Contato
-        </Heading>
+        </Heading> */}
 
         <a href="mailto:loryartcroche@gmail">loryartcroche@gmail.com</a>
       </S.Column>
 
       <S.Column aria-labelledby="social-media">
-        <Heading color="black" lineColor="secondary" lineBottom size="small">
+        {/* <Heading color="black" lineColor="secondary" lineBottom size="small">
           Siga-nos
-        </Heading>
+        </Heading> */}
 
         <nav id="social-media">
           <a
@@ -64,9 +64,9 @@ const Footer = () => (
       </S.Column>
 
       <S.Column aria-labelledby="resources">
-        <Heading color="black" lineColor="secondary" lineBottom size="small">
+        {/* <Heading color="black" lineColor="secondary" lineBottom size="small">
           Links
-        </Heading>
+        </Heading> */}
 
         <nav id="resources">
           <Link href="/" legacyBehavior>
@@ -82,10 +82,10 @@ const Footer = () => (
       </S.Column>
 
       <S.Column aria-label="contact">
-        <Heading color="black" lineColor="secondary" lineBottom size="small">
+        {/* <Heading color="black" lineColor="secondary" lineBottom size="small">
           Localização
-        </Heading>
-        <Button>tESTE</Button>
+        </Heading> */}
+        {/* <Button>tESTE</Button> */}
       </S.Column>
     </S.Content>
 
