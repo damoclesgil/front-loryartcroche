@@ -1,8 +1,11 @@
-// 'use client'
+import ProductList from '@/components/ProductList'
 
-import ProductsList from './components/ProductsList'
-// import * as S from './styles'
+export default function Produtos() {
+  return (
+    <main>
+      <code className="font-mono font-bold">src/app/produtos/page.tsx</code>
 
-export default function ProductsPage() {
-  return <ProductsList />
+      <ProductList />
+    </main>
+  )
 }

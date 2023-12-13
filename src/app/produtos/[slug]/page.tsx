@@ -1,58 +1,50 @@
 'use client'
 
-import { notFound, useSearchParams } from 'next/navigation'
-import * as S from './styles'
-
-import { QUERY_PRODUTO } from '@/graphql/queries/produtos'
-import { useQuery } from '@apollo/client'
-import ProductCard from '@/components/ProductCard'
-import { getImageUrl } from '@/utils/getImageUrl'
-
-// export async function generateStaticParams(context) {
-//   console.log(context)
-//   return [
-//     { slug: 'bolsa-tal-tal', id: '1' },
-//     { slug: 'bolsa-2', id: '2' }
-//   ]
-// }
+// import ProductCard from '@/components/ProductCard'
+import { mockedProducts } from '@/components/ProductList/mockedProducts'
+import Tabs from '@/components/Tabs'
+import Image from 'next/image'
+// import { useSearchParams } from 'next/navigation'
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const queryParams = useSearchParams()
-  const { data } = useQuery(QUERY_PRODUTO, {
-    variables: { produtoId: queryParams.get('id') }
-  })
+  const { slug } = params
+  const currentProduct = mockedProducts.find((product) => product.slug === slug)
+  console.log(currentProduct)
+  // const queryParams = useSearchParams()
   // console.log(queryParams.get('id'))
-  // const { id } = router.query
-  // if (id) {
-  // console.log(id)
-  // }
-  // const { slug } = params
-  if (Number(params) >= 100) {
-    notFound()
-  }
 
-  const produto = data?.produto?.data
+  // <ProductCard {...currentProduct} />
   return (
-    <S.Wrapper>
-      {/* {params.id} */}
-      <ProductCard
-        id={produto?.id ? produto.id : ''}
-        key={queryParams.get('id')}
-        slug={produto?.attributes?.slug ? produto.attributes?.slug : 'bolsa'}
-        name={
-          produto?.attributes?.nome
-            ? produto.attributes?.nome
-            : 'Sem Nome por Enquanto'
-        }
-        price={29}
-        img={
-          produto?.attributes?.imagem_destaque?.data?.attributes!.url
-            ? `${getImageUrl(
-                produto.attributes?.imagem_destaque?.data?.attributes!.url
-              )}`
-            : ''
-        }
-      />
-    </S.Wrapper>
+    <>
+      {currentProduct && (
+        <>
+          <div className="flex justify-between">
+            <div className="flex flex-col">
+              <div className="w-100 h-100">
+                <Image
+                  className="object-cover"
+                  src={`/img/products/${currentProduct.img}`}
+                  alt={currentProduct.name}
+                  width={580}
+                  height={580}
+                  loading="lazy"
+                />
+              </div>
+              <p>Galeria de imagens?</p>
+              <p>Favoritar</p>
+            </div>
+            <div className="flex flex-col">
+              <p className="font-bold text-lg">{currentProduct.name}</p>
+              <p>Adicionar ao carrinho?</p>
+              <p>Encomendar?</p>
+              <p>Compartilhar?</p>
+            </div>
+          </div>
+          <div>
+            <Tabs contentFirstTab={<p>detalhes</p>} />
+          </div>
+        </>
+      )}
+    </>
   )
 }
