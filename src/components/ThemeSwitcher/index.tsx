@@ -27,7 +27,7 @@ const ThemeSwitcher = () => {
   return (
     <div>
       <button onClick={() => toggleTheme()}>
-        {theme === 'light' ? (
+        {theme === 'light' || theme === null ? (
           <svg
             viewBox="0 0 16 16"
             height="24"

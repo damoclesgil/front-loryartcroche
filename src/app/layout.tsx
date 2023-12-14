@@ -5,7 +5,7 @@ import Menu from '@/components/Menu'
 import Footer from '@/components/Footer'
 import Providers from './providers'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 export const metadata: Metadata = {
   title: 'Lory Art Crochê',
