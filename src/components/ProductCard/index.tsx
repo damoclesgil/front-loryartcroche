@@ -20,7 +20,7 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
     >
       <div className="w-100 h-100">
         <Image
-          className="object-contain object-center w-full h-full max-w-72 min-h-72 max-h-72"
+          className="object-contain object-center w-full h-full max-w-[18rem] min-h-[18rem] max-h-[18rem]"
           src={`/img/products/${img}`}
           alt={name}
           width={550}
