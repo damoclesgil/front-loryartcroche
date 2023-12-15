@@ -1,43 +1,41 @@
 import Link from 'next/link'
-import * as S from './styles'
+import Image from 'next/image'
 import formatPrice from '@/utils/format-price'
-import CartButton from '../CartButton'
-// import WishlistButton from '../WishlistButton'
-// import Image from 'next/image'
-// import { getImageUrl } from '@/utils/getImageUrl'
 
 export type ProductCardProps = {
-  id?: string
+  id: string
   slug: string
   name: string
-  img: string
+  img?: string
   price: number
 }
 
 const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
-  <S.Wrapper>
-    <Link href={`produtos/${slug}`} passHref legacyBehavior>
-      <S.ImageBox>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={img} alt={name} />
-      </S.ImageBox>
+  <div className="bg-product dark:bg-black relative flex flex-col w-100 h-100">
+    <Link
+      href={{
+        pathname: `produtos/${slug}`,
+        query: { id: id }
+      }}
+    >
+      <div className="w-100 h-100">
+        <Image
+          className="object-contain object-center w-full h-full max-w-72 min-h-72 max-h-72"
+          src={`/img/products/${img}`}
+          alt={name}
+          width={550}
+          height={550}
+          loading="lazy"
+        />
+      </div>
     </Link>
-    <S.Content>
-      <Link href={`produtos/${slug}`} passHref legacyBehavior>
-        <S.Info>
-          <S.Title>{name}</S.Title>
-        </S.Info>
-      </Link>
-      {/* <S.FavButton>
-        <WishlistButton id={id} />
-      </S.FavButton> */}
-      <S.BuyBox>
-        {!!price && <S.Price isPromotional>{formatPrice(price)}</S.Price>}
-        <S.Price>{formatPrice(price)}</S.Price>
-        <CartButton id={id ? id : ''} />
-      </S.BuyBox>
-    </S.Content>
-  </S.Wrapper>
+    <div className="flex flex-col justify-between m-2">
+      <h3 className="text-md mb-2">{name}</h3>
+    </div>
+    <div className="flex justify-end items-center mt-2">
+      <h3 className="text-md mb-2 font-bold">{formatPrice(price)}</h3>
+    </div>
+  </div>
 )
 
 export default ProductCard

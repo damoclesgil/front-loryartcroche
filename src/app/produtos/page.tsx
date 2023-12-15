@@ -1,8 +1,11 @@
-// 'use client'
+import InstagramSection from '@/components/InstagramSection'
+import ProductList from '@/components/ProductList'
 
-import ProductsList from './components/ProductsList'
-// import * as S from './styles'
-
-export default function ProductsPage() {
-  return <ProductsList />
+export default function Produtos() {
+  return (
+    <main>
+      <ProductList />
+      <InstagramSection />
+    </main>
+  )
 }

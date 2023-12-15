@@ -1,5 +1,0 @@
-!.storybook
-!.jest
-generators
-src/graphql/generated/*
-src/hooks/use-cart/*
