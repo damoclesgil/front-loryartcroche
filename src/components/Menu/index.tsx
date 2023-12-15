@@ -10,6 +10,7 @@ const Menu = () => {
       <Link href="/produtos" className="no-underline text-purple-600">
         Produtos
       </Link>
+      <p>Buscar</p>
       <ThemeSwitcher />
     </div>
   )

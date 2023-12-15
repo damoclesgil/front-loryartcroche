@@ -2,6 +2,8 @@ import Link from 'next/link'
 import Logo from '../Logo'
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear()
+
   return (
     <div className="grid items-center md:items-start w-full justify-center md:justify-between mt-7 grid-cols-1 md:grid-cols-4 gap-6">
       <div className="flex flex-col items-center md:items-start">
@@ -37,6 +39,7 @@ const Footer = () => {
           Produtos
         </Link>
       </div>
+      <div> Lory Art Crochê {currentYear} © Todos os direitos reservados.</div>
     </div>
   )
 }

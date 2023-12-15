@@ -11,7 +11,7 @@ export type ProductCardProps = {
 }
 
 const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
-  <div className="bg-white dark:bg-black relative flex flex-col w-100 h-100">
+  <div className="bg-product dark:bg-black relative flex flex-col w-100 h-100">
     <Link
       href={{
         pathname: `produtos/${slug}`,
@@ -20,11 +20,11 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
     >
       <div className="w-100 h-100">
         <Image
-          className="object-cover"
+          className="object-contain object-center w-full h-full max-w-72 min-h-72 max-h-72"
           src={`/img/products/${img}`}
           alt={name}
-          width={580}
-          height={580}
+          width={550}
+          height={550}
           loading="lazy"
         />
       </div>

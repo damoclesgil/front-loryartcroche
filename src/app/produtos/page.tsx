@@ -1,11 +1,11 @@
+import InstagramSection from '@/components/InstagramSection'
 import ProductList from '@/components/ProductList'
 
 export default function Produtos() {
   return (
     <main>
-      <code className="font-mono font-bold">src/app/produtos/page.tsx</code>
-
       <ProductList />
+      <InstagramSection />
     </main>
   )
 }

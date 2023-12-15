@@ -5,7 +5,7 @@ import { mockedProducts } from '@/components/ProductList/mockedProducts'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 // import { useSearchParams } from 'next/navigation'
-const Tabs = dynamic(() => import('@/components/Tabs'))
+const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
 import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
 
 export default function Page({ params }: { params: { slug: string } }) {
@@ -65,14 +65,12 @@ export default function Page({ params }: { params: { slug: string } }) {
                   <p>FOTOS TIRADAS DO PRÓPRIO PRODUTO.</p>
 
                   <p>
-                    {' '}
                     Linda bolsa de luxo feita com muito cuidado e zelo,
                     acabamento impecável, para quem quer se destacar nos
                     passeios e nas festas.
                   </p>
 
                   <p>
-                    {' '}
                     Tem o fechamento principal com tampa de crochê emoldurada e
                     trava com metal dourado e internamente tem um bolsinho em
                     tecido, tem alça de mão exclusiva em crochê e correia de
