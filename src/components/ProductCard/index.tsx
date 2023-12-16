@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import formatPrice from '@/utils/format-price'
+import Button from '@/components/Button'
 
 export type ProductCardProps = {
   id: string
@@ -29,6 +30,15 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
         />
       </div>
     </Link>
+    <Button
+      as="a"
+      fullWidth
+      href="https://www.google.com/"
+      target="_blank"
+      size="medium"
+    >
+      Encomendar
+    </Button>
     <div className="flex flex-col justify-between m-2">
       <h3 className="text-md mb-2">{name}</h3>
     </div>

@@ -5,7 +5,7 @@ const Base = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Menu />
-      <div className="w-full max-w-2xl md:max-w-7xl ml-auto mr-auto px-6">
+      <div className="w-full max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 md:px-0">
         <div className="mt-10 flex-auto">{children}</div>
         <Footer />
       </div>

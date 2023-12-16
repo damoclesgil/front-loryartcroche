@@ -167,7 +167,7 @@ const Menu = () => {
               </Link>
             </li>
             <li>
-              <div className="py-2 px-3">
+              <div className="py-2 px-3 md:p-0 md:py-0">
                 <ThemeSwitcher />
               </div>
             </li>
