@@ -31,10 +31,10 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
       </div>
     </Link>
     <Button
-      as="a"
-      fullWidth
       href="https://www.google.com/"
       target="_blank"
+      as="a"
+      fullWidth
       size="medium"
     >
       Encomendar
