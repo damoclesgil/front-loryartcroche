@@ -1,3 +1,4 @@
+import ProductList from '@/components/ProductList'
 import Base from '@/templates/Base'
 
 export default function Home() {
@@ -5,6 +6,7 @@ export default function Home() {
     <Base>
       <main>
         <code className="font-mono font-bold">src/app/page.tsx</code>
+        <ProductList />
       </main>
     </Base>
   )

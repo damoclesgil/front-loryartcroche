@@ -6,6 +6,7 @@ export default function Produtos() {
     <main>
       <ProductList />
       <InstagramSection />
+      <p>12</p>
     </main>
   )
 }

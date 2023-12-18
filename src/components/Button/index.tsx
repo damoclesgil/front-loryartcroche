@@ -7,6 +7,7 @@ export type ButtonProps = {
   fullWidth?: boolean
   as?: React.ElementType
   href?: string
+  target?: '_self' | '_blank'
 } & ButtonTypes
 
 const Button = ({
@@ -14,12 +15,14 @@ const Button = ({
   size = 'medium',
   fullWidth = false,
   as = 'button',
-  href
+  href,
+  target = '_blank'
 }: ButtonProps) => (
   <>
     {as === 'a' ? (
       <a
         href={href}
+        target={target}
         className={`inline-flex items-center justify-center bg-primary hover:bg-primary-darker transition-colors duration-150 border-0 cursor-pointer  no-underline px-4 ${
           size === 'medium' && 'h-8 text-md'
         } ${fullWidth === false && 'rounded-md'}`}
