@@ -1,5 +1,6 @@
-import { ButtonHTMLAttributes, forwardRef } from 'react'
+import { ButtonHTMLAttributes } from 'react'
 
+//  forwardRef
 type ButtonTypes = ButtonHTMLAttributes<HTMLButtonElement>
 
 export type ButtonProps = {
@@ -23,16 +24,16 @@ const Button = ({
       <a
         href={href}
         target={target}
-        className={`inline-flex items-center justify-center bg-primary hover:bg-primary-darker transition-colors duration-150 border-0 cursor-pointer  no-underline px-4 ${
-          size === 'medium' && 'h-8 text-md'
+        className={`inline-flex items-center justify-center bg-primary hover:bg-primary-darker transition-colors duration-150 border-0 cursor-pointer font-bold leading-none text-white no-underline px-4 ${
+          size === 'medium' && 'h-10 text-md'
         } ${fullWidth === false && 'rounded-md'}`}
       >
         {!!children && <span>{children}</span>}
       </a>
     ) : (
       <button
-        className={`inline-flex items-center justify-center bg-primary hover:bg-primary-darker transition-colors duration-150 border-0 cursor-pointer  no-underline px-4 ${
-          size === 'medium' && 'h-8 text-md'
+        className={`inline-flex items-center justify-center bg-primary hover:bg-primary-darker transition-colors duration-150 border-0 cursor-pointer font-bold leading-none text-white no-underline px-4 ${
+          size === 'medium' && 'h-10 text-md'
         } ${fullWidth === false && 'rounded-md'}`}
       >
         {!!children && <span>{children}</span>}
@@ -41,4 +42,4 @@ const Button = ({
   </>
 )
 
-export default forwardRef(Button)
+export default Button

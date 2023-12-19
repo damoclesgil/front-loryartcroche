@@ -12,16 +12,16 @@ export type ProductCardProps = {
 }
 
 const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
-  <div className="bg-product dark:bg-black relative flex flex-col w-100 h-100">
+  <div className="bg-product dark:bg-black relative flex flex-col w-full">
     <Link
       href={{
         pathname: `produtos/${slug}`,
         query: { id: id }
       }}
     >
-      <div className="w-100 h-100">
+      <div className="w-full">
         <Image
-          className="object-contain object-center w-full h-full max-w-[18rem] min-h-[18rem] max-h-[18rem]"
+          className="object-contain object-center w-full h-full md:max-w-[18rem] min-h-[18rem] max-h-[18rem]"
           src={`/img/products/${img}`}
           alt={name}
           width={550}

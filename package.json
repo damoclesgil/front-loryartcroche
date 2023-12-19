@@ -10,6 +10,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@styled-icons/boxicons-logos": "^10.47.0",
+    "@styled-icons/fa-brands": "^10.47.0",
     "@styled-icons/material-outlined": "^10.47.0",
     "@vercel/speed-insights": "^1.0.2",
     "next": "14.0.4",
