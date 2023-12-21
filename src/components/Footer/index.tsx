@@ -63,7 +63,7 @@ const Footer = () => {
             className="no-underline text-primary hover:text-primary-darker mt-2 flex items-center"
           >
             <WhatsIcon size={22} />
-            <p className="ml-2">WhatsApp</p>
+            <p className="ml-2">WhatsApp 62 99672-5529</p>
           </Link>
         </div>
       </div>
