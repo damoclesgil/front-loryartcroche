@@ -13,7 +13,14 @@ import Button from '@/components/Button'
 import { LocalShipping, CreditCard } from '@styled-icons/material-outlined'
 // import { LocalShipping } from '@styled-icons/material-outlined'
 import { Pix } from '@styled-icons/fa-brands'
+import Gallery from '@/components/Gallery'
+import mockedGallery from '@/components/Gallery/mockedGallery'
+import Head from 'next/head'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 export default function Page({ params }: { params: { slug: string } }) {
+  const pathname = usePathname()
+
   const { slug } = params
   const currentProduct = mockedProducts.find((product) => product.slug === slug)
   // const queryParams = useSearchParams()
@@ -22,6 +29,19 @@ export default function Page({ params }: { params: { slug: string } }) {
   // <ProductCard {...currentProduct} />
   return (
     <>
+      <Head>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          charSet="UTF-8"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+        />
+      </Head>
       {currentProduct && (
         <>
           <div className="flex flex-col md:flex-row justify-between">
@@ -36,6 +56,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                   loading="lazy"
                 />
               </div>
+              <Gallery items={mockedGallery} />
               {/* <p>Galeria de imagens?</p> */}
               {/* <p>Favoritar</p> */}
               {/* <button>
@@ -60,6 +81,43 @@ export default function Page({ params }: { params: { slug: string } }) {
                   <p>Frete grátis para Goiânia e regiões próximas</p>
                   <p>Verificar disponibilidade</p>
                 </div>
+              </div>
+              <p className="mb-2">Cores:</p>
+              <div className="flex mb-2">
+                <Link
+                  className={`p-3 mr-2 border-primary focus:border-2 rounded-sm ${
+                    pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
+                      ? 'border-2 '
+                      : 'border'
+                  }`}
+                  href={{
+                    pathname: `bolsa-de-croche-cor-de-rosa`,
+                    query: { id: 1 }
+                  }}
+                >
+                  Rosa
+                </Link>
+                <Link
+                  className={`p-3 ml-2 border-primary focus:border-2 rounded-sm ${
+                    pathname === '/produtos/bolsa-de-croche-cor-azul'
+                      ? 'border-2 '
+                      : 'border'
+                  }`}
+                  href={{
+                    pathname: `bolsa-de-croche-cor-azul`,
+                    query: { id: 2 }
+                  }}
+                >
+                  Azul
+                </Link>
+                {/* <Image
+                      className="object-cover"
+                      src={`${mockedGallery[0]?.src}`}
+                      alt={mockedGallery[0]?.label}
+                      width={50}
+                      height={50}
+                      loading="lazy"
+                    /> */}
               </div>
               <p>Meios de pagamento:</p>
               <p>Pix, Cartão e Boleto</p>

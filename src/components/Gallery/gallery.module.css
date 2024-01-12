@@ -1,14 +1,22 @@
 .wrapper {
-  .slick-prev,
-  .slick-next {
-    display: block;
-    color: #fff;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0;
-    transform: translate(0, -50%);
+  max-width: 600px;
+}
+.wrapper :global .slick-prev,
+.wrapper :global .slick-next {
+  display: block;
+  color: #fff;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  transform: translate(0, -50%);
+}
+
+@media (max-width: 1279px) {
+  .wrapper :global .slick-prev,
+  .wrapper :global .slick-next {
+    overflow: hidden;
   }
 }

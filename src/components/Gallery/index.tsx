@@ -7,41 +7,44 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 
 const commonSettings: SliderSettings = {
-  infinite: false,
-  lazyLoad: 'ondemand',
+  infinite: true,
+  dots: true,
+  // lazyLoad: 'ondemand',
   arrows: true,
+  dotsClass: 'slick-dots',
   nextArrow: <ArrowRight aria-label="next image" />,
   prevArrow: <ArrowLeft aria-label="previous image" />
 }
 const settings: SliderSettings = {
   ...commonSettings,
-  slidesToShow: 4,
-  responsive: [
-    {
-      breakpoint: 1375,
-      settings: {
-        arrows: false,
-        slidesToShow: 3.2,
-        draggable: true
-      }
-    },
-    {
-      breakpoint: 1024,
-      settings: {
-        arrows: false,
-        slidesToShow: 2.2,
-        draggable: true
-      }
-    },
-    {
-      breakpoint: 768,
-      settings: {
-        arrows: false,
-        slidesToShow: 2.2,
-        draggable: true
-      }
-    }
-  ]
+  slidesToShow: 1,
+  slidesToScroll: 1
+  // responsive: [
+  //   {
+  //     breakpoint: 1375,
+  //     settings: {
+  //       arrows: false,
+  //       slidesToShow: 3.2,
+  //       draggable: true
+  //     }
+  //   },
+  //   {
+  //     breakpoint: 1024,
+  //     settings: {
+  //       arrows: false,
+  //       slidesToShow: 2.2,
+  //       draggable: true
+  //     }
+  //   },
+  //   {
+  //     breakpoint: 768,
+  //     settings: {
+  //       arrows: false,
+  //       slidesToShow: 2.2,
+  //       draggable: true
+  //     }
+  //   }
+  // ]
 }
 
 const modalSettings: SliderSettings = {
@@ -71,9 +74,35 @@ const Gallery = ({ items }: GalleryProps) => {
     return () => window.removeEventListener('keyup', handleKeyUp)
   }, [])
 
+  let customSettings: SliderSettings = {
+    ...settings,
+    customPaging: function (i) {
+      const onHoverSlide = () => {
+        if (slider) slider.current!.slickGoTo(i, true)
+      }
+      return (
+        <button onMouseEnter={onHoverSlide} className="flex">
+          <Image
+            key={i}
+            width={120}
+            height={110}
+            src={items[i].src}
+            alt={`Thumb - ${items[i].label}`}
+          />
+        </button>
+      )
+    }
+    // customPaging(index) {
+    //   return (
+    //     <button onMouseEnter={onHoverSlide)}>
+    //       <img src={`${mockedGallery[index].src}`} width={120} height={120} />
+    //     </button>
+    //   )
+  }
+
   return (
     <div className={`w-full ${styles['wrapper']}`}>
-      <Slider ref={slider} settings={settings}>
+      <Slider ref={slider} settings={customSettings}>
         {items.map((item, index) => (
           <Image
             width={295}

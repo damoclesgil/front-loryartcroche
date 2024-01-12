@@ -7,7 +7,7 @@ const InstagramSection = () => {
     <div className="flex flex-col text-center justify-center items-center mt-8">
       <div className="flex items-center">
         <InstagramIcon size={24} />
-        <h2 className="text-gray-800 font-medium text-lg ml-2">
+        <h2 className="text-gray-800 dark:text-white font-medium text-lg ml-2">
           Siga-nos através do Instagram
         </h2>
       </div>
@@ -15,7 +15,7 @@ const InstagramSection = () => {
         href="https://www.instagram.com/loryartcroche/"
         target="_blank"
         title="@loryartcroche"
-        className="no-underline block hover:text-primary-darker"
+        className="no-underline block hover:text-primary-darker duration-150"
       >
         @loryartcroche
       </a>
