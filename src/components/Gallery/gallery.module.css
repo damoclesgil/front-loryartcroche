@@ -12,6 +12,13 @@
   height: 2.5rem;
   padding: 0;
   transform: translate(0, -50%);
+  @apply z-10;
+}
+.wrapper :global .slick-prev {
+  left: -10px;
+}
+.wrapper :global .slick-next {
+  right: -10px;
 }
 
 @media (max-width: 1279px) {

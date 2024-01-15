@@ -14,7 +14,7 @@ const Slider: React.ForwardRefRenderFunction<SlickSlider, SliderProps> = (
   { children, settings },
   ref
 ) => (
-  <section className={`w-full ${styles['wrapper']}`}>
+  <section className={`${styles['wrapper']}`}>
     <SlickSlider ref={ref} {...settings}>
       {children}
     </SlickSlider>

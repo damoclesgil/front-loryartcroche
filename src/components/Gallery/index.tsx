@@ -10,7 +10,11 @@ import { Close } from '@styled-icons/material-outlined/Close'
 const commonSettings: SliderSettings = {
   infinite: false,
   dots: true,
-  lazyLoad: 'ondemand'
+  lazyLoad: 'ondemand',
+  arrows: true,
+  dotsClass: 'slick-dots',
+  nextArrow: <ArrowRight aria-label="next image" />,
+  prevArrow: <ArrowLeft aria-label="previous image" />
   // arrows: true,
   // dotsClass: 'slick-dots',
   // nextArrow: <ArrowRight aria-label="next image" />,
@@ -51,10 +55,7 @@ const settings: SliderSettings = {
 const modalSettings: SliderSettings = {
   ...commonSettings,
   slidesToShow: 1,
-  arrows: true,
-  dotsClass: 'slick-dots',
-  nextArrow: <ArrowRight aria-label="next image" />,
-  prevArrow: <ArrowLeft aria-label="previous image" />
+  dots: false
 }
 
 export type GalleryImageProps = {
@@ -141,13 +142,17 @@ const Gallery = ({ items }: GalleryProps) => {
           <Close size={40} />
         </button>
 
-        {/* max-w-[min(120rem, 100%)] */}
-        <div className="content-modal max-h-[80rem] max-w-[90rem]">
+        {/* max-w-[min(120rem, 100%)]max-w-[90rem] */}
+        <div
+          className="content-modal max-h-[54rem]"
+          style={{ maxWidth: 'min(42rem, 100%)' }}
+        >
           <Slider ref={slider} settings={modalSettings}>
             {items.map((item, index) => (
+              // className="inset-0 absolute"
               <Image
+                className="w-auto h-auto"
                 width={1200}
-                className="object-contain"
                 height={675}
                 key={`gallery-${index}`}
                 src={item.src}
