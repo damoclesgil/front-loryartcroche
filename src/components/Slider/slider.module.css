@@ -1,6 +1,6 @@
-.wrapper :global .slick-list .slick-track {
-  @apply my-[0] mx-[20];
-}
+/* .wrapper :global .slick-list .slick-track {
+  @apply my-[0rem] mx-[20rem];
+} */
 .wrapper :global .slick-slider {
   position: relative;
   display: block;
@@ -73,7 +73,8 @@
 }
 .wrapper :global .slick-slide img {
   display: block;
-  width: 250px !important;
+  /* width: 250px !important; */
+  /* max-width: 500px !important; */
 }
 .wrapper :global .slick-slide.slick-loading img {
   display: none;

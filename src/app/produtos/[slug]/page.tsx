@@ -46,7 +46,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         <>
           <div className="flex flex-col md:flex-row justify-between">
             <div className="flex flex-col">
-              <div className="w-full">
+              {/* <div className="w-full">
                 <Image
                   className="object-cover"
                   src={`/img/products/${currentProduct.img}`}
@@ -55,10 +55,10 @@ export default function Page({ params }: { params: { slug: string } }) {
                   height={580}
                   loading="lazy"
                 />
-              </div>
+              </div> */}
               <Gallery items={mockedGallery} />
               {/* <p>Galeria de imagens?</p> */}
-              {/* <p>Favoritar</p> */}
+
               {/* <button>
                 <FavoriteBorder width={20} aria-label="Favoritar" />
               </button> */}
@@ -119,6 +119,8 @@ export default function Page({ params }: { params: { slug: string } }) {
                       loading="lazy"
                     /> */}
               </div>
+              <p>Favoritar</p>
+              <p>Compartilhar</p>
               <p>Meios de pagamento:</p>
               <p>Pix, Cartão e Boleto</p>
               <div className="flex mb-4">

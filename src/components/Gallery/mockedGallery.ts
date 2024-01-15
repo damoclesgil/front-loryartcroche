@@ -10,7 +10,16 @@ export default [
   {
     src: '/img/products/bolsa-verde.png',
     label: 'Bolsa de Crochê Cor de Rosa 3'
+  },
+  {
+    src: '/img/products/gilzera.jpg',
+    label: 'Bolsa de Crochê Cor de Rosa 3'
+  },
+  {
+    src: '/img/products/fidelicia_debora_marcela.jpg',
+    label: 'Bolsa de Crochê Cor de Rosa 3'
   }
+
   // {
   //   src: '/img/products/bolsa-de-croche-na-cor-rose-bolsa-de-croche.jpg',
   //   label: 'Bolsa de Crochê Cor de Rosa 4'

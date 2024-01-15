@@ -5,51 +5,56 @@ import { ArrowForwardIos as ArrowRight } from '@styled-icons/material-outlined/A
 import Slider, { SliderSettings } from '@/components/Slider'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import { Close } from '@styled-icons/material-outlined/Close'
 
 const commonSettings: SliderSettings = {
-  infinite: true,
+  infinite: false,
   dots: true,
-  // lazyLoad: 'ondemand',
-  arrows: true,
-  dotsClass: 'slick-dots',
-  nextArrow: <ArrowRight aria-label="next image" />,
-  prevArrow: <ArrowLeft aria-label="previous image" />
+  lazyLoad: 'ondemand'
+  // arrows: true,
+  // dotsClass: 'slick-dots',
+  // nextArrow: <ArrowRight aria-label="next image" />,
+  // prevArrow: <ArrowLeft aria-label="previous image" />
 }
 const settings: SliderSettings = {
   ...commonSettings,
   slidesToShow: 1,
-  slidesToScroll: 1
-  // responsive: [
-  //   {
-  //     breakpoint: 1375,
-  //     settings: {
-  //       arrows: false,
-  //       slidesToShow: 3.2,
-  //       draggable: true
-  //     }
-  //   },
-  //   {
-  //     breakpoint: 1024,
-  //     settings: {
-  //       arrows: false,
-  //       slidesToShow: 2.2,
-  //       draggable: true
-  //     }
-  //   },
-  //   {
-  //     breakpoint: 768,
-  //     settings: {
-  //       arrows: false,
-  //       slidesToShow: 2.2,
-  //       draggable: true
-  //     }
-  //   }
-  // ]
+  slidesToScroll: 1,
+  responsive: [
+    {
+      breakpoint: 1375,
+      settings: {
+        arrows: false,
+        slidesToShow: 3.2,
+        draggable: true
+      }
+    },
+    {
+      breakpoint: 1024,
+      settings: {
+        arrows: false,
+        slidesToShow: 2.2,
+        draggable: true
+      }
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        arrows: false,
+        slidesToShow: 2.2,
+        draggable: true
+      }
+    }
+  ]
 }
 
 const modalSettings: SliderSettings = {
   ...commonSettings,
-  slidesToShow: 1
+  slidesToShow: 1,
+  arrows: true,
+  dotsClass: 'slick-dots',
+  nextArrow: <ArrowRight aria-label="next image" />,
+  prevArrow: <ArrowLeft aria-label="previous image" />
 }
 
 export type GalleryImageProps = {
@@ -77,11 +82,12 @@ const Gallery = ({ items }: GalleryProps) => {
   let customSettings: SliderSettings = {
     ...settings,
     customPaging: function (i) {
-      const onHoverSlide = () => {
-        if (slider) slider.current!.slickGoTo(i, true)
-      }
+      // const onHoverSlide = () => {
+      //   if (slider) slider.current!.slickGoTo(i, true)
+      // }
+      // onMouseEnter={onHoverSlide}
       return (
-        <button onMouseEnter={onHoverSlide} className="flex">
+        <button className="flex">
           <Image
             key={i}
             width={120}
@@ -101,7 +107,7 @@ const Gallery = ({ items }: GalleryProps) => {
   }
 
   return (
-    <div className={`w-full ${styles['wrapper']}`}>
+    <div className={`${styles['wrapper']}`}>
       <Slider ref={slider} settings={customSettings}>
         {items.map((item, index) => (
           <Image
@@ -118,6 +124,39 @@ const Gallery = ({ items }: GalleryProps) => {
           />
         ))}
       </Slider>
+
+      <div
+        className={`fixed w-full h-full top-0 left-0 bg-gray-900 bg-opacity-75 flex justify-center items-center z-10 transition-opacity ${
+          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        aria-label="modal"
+        aria-hidden={!isOpen}
+      >
+        <button
+          className="text-white absolute top-[1%] right-0 w-10 h-10 p-0 text-right z-20"
+          role="button"
+          aria-label="close modal"
+          onClick={() => setIsOpen(false)}
+        >
+          <Close size={40} />
+        </button>
+
+        {/* max-w-[min(120rem, 100%)] */}
+        <div className="content-modal max-h-[80rem] max-w-[90rem]">
+          <Slider ref={slider} settings={modalSettings}>
+            {items.map((item, index) => (
+              <Image
+                width={1200}
+                className="object-contain"
+                height={675}
+                key={`gallery-${index}`}
+                src={item.src}
+                alt={item.label}
+              />
+            ))}
+          </Slider>
+        </div>
+      </div>
     </div>
   )
 }
