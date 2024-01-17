@@ -22,7 +22,7 @@ const commonSettings: SliderSettings = {
 }
 const settings: SliderSettings = {
   ...commonSettings,
-  slidesToShow: 1,
+  slidesToShow: 4,
   slidesToScroll: 1,
   responsive: [
     {
@@ -69,47 +69,43 @@ export type GalleryProps = {
 
 const Gallery = ({ items }: GalleryProps) => {
   const slider = useRef<SlickSlider>(null)
+  let sliderRef1 = useRef(null)
+  let sliderRef2 = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
+  const [nav1, setNav1] = useState(null)
+  const [nav2, setNav2] = useState(null)
 
   useEffect(() => {
+    setNav1(sliderRef1)
+    setNav2(sliderRef2)
+
     const handleKeyUp = ({ key }: KeyboardEvent) => {
       key === 'Escape' && setIsOpen(false)
     }
-
     window.addEventListener('keyup', handleKeyUp)
     return () => window.removeEventListener('keyup', handleKeyUp)
   }, [])
 
-  let customSettings: SliderSettings = {
+  const slide1Settings = {
     ...settings,
-    customPaging: function (i) {
-      // const onHoverSlide = () => {
-      //   if (slider) slider.current!.slickGoTo(i, true)
-      // }
-      // onMouseEnter={onHoverSlide}
-      return (
-        <button className="flex">
-          <Image
-            key={i}
-            width={120}
-            height={110}
-            src={items[i].src}
-            alt={`Thumb - ${items[i].label}`}
-          />
-        </button>
-      )
-    }
-    // customPaging(index) {
-    //   return (
-    //     <button onMouseEnter={onHoverSlide)}>
-    //       <img src={`${mockedGallery[index].src}`} width={120} height={120} />
-    //     </button>
-    //   )
+    dots: false,
+    arrows: false,
+    slidesToShow: 1
+    // asNavFor: nav2
+  }
+  const slide2Settings = {
+    ...settings,
+    dots: false,
+    arrows: true,
+    slidesToShow: 4
+    // asNavFor: nav1
   }
 
   return (
     <div className={`${styles['wrapper']}`}>
-      <Slider ref={slider} settings={customSettings}>
+      {/* {slider.current} */}
+      {/* ref={(slider) => setNav2(slider)} */}
+      <Slider ref={(slider) => (sliderRef1 = slider)} settings={slide1Settings}>
         {items.map((item, index) => (
           <Image
             width={295}
@@ -120,6 +116,25 @@ const Gallery = ({ items }: GalleryProps) => {
             alt={`Thumb - ${item.label}`}
             onClick={() => {
               setIsOpen(true)
+            }}
+          />
+        ))}
+      </Slider>
+      {/*
+       onClick={() => {
+              slider.current!.slickGoTo(index, true)
+            }} */}
+
+      <Slider ref={(slider) => (sliderRef2 = slider)} settings={slide2Settings}>
+        {items.map((item, index) => (
+          <Image
+            width={295}
+            height={165}
+            role="button"
+            key={`thumb-${index}`}
+            src={item.src}
+            alt={`Thumb - ${item.label}`}
+            onClick={() => {
               slider.current!.slickGoTo(index, true)
             }}
           />
