@@ -1,28 +1,26 @@
-import SlickSlider from 'react-slick'
+import Slider, { Settings } from 'react-slick'
 import styles from './gallery.module.css'
 import { ArrowBackIos as ArrowLeft } from '@styled-icons/material-outlined/ArrowBackIos'
 import { ArrowForwardIos as ArrowRight } from '@styled-icons/material-outlined/ArrowForwardIos'
-import Slider, { SliderSettings } from '@/components/Slider'
+// import Slider, { SliderSettings } from '@/components/Slider'
+// import Slider from 'react-slick'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Close } from '@styled-icons/material-outlined/Close'
 
-const commonSettings: SliderSettings = {
+const commonSettings: Settings = {
   infinite: false,
-  dots: true,
+  // dots: true,
+  // dotsClass: 'slick-dots',
   lazyLoad: 'ondemand',
   arrows: true,
-  dotsClass: 'slick-dots',
+  slidesToShow: 3,
   nextArrow: <ArrowRight aria-label="next image" />,
   prevArrow: <ArrowLeft aria-label="previous image" />
-  // arrows: true,
-  // dotsClass: 'slick-dots',
-  // nextArrow: <ArrowRight aria-label="next image" />,
-  // prevArrow: <ArrowLeft aria-label="previous image" />
 }
-const settings: SliderSettings = {
+const settings: Settings = {
   ...commonSettings,
-  slidesToShow: 4,
+  slidesToShow: 1,
   slidesToScroll: 1,
   responsive: [
     {
@@ -52,11 +50,11 @@ const settings: SliderSettings = {
   ]
 }
 
-const modalSettings: SliderSettings = {
-  ...commonSettings,
-  slidesToShow: 1,
-  dots: false
-}
+// const modalSettings: Settings = {
+//   ...commonSettings,
+//   slidesToShow: 1,
+//   dots: false
+// }
 
 export type GalleryImageProps = {
   src: string
@@ -68,16 +66,16 @@ export type GalleryProps = {
 }
 
 const Gallery = ({ items }: GalleryProps) => {
-  const slider = useRef<SlickSlider>(null)
-  let sliderRef1 = useRef(null)
-  let sliderRef2 = useRef(null)
+  const sliderModal = useRef<Slider>(null)
+  const sliderRef1 = useRef<Slider>(null)
+  let sliderRef2 = useRef()
   const [isOpen, setIsOpen] = useState(false)
-  const [nav1, setNav1] = useState(null)
-  const [nav2, setNav2] = useState(null)
+  const [nav1, setNav1] = useState()
+  const [nav2, setNav2] = useState()
 
   useEffect(() => {
-    setNav1(sliderRef1)
-    setNav2(sliderRef2)
+    // setNav1(sliderRef1)
+    // setNav2(sliderRef2)
 
     const handleKeyUp = ({ key }: KeyboardEvent) => {
       key === 'Escape' && setIsOpen(false)
@@ -87,25 +85,33 @@ const Gallery = ({ items }: GalleryProps) => {
   }, [])
 
   const slide1Settings = {
-    ...settings,
-    dots: false,
+    ...commonSettings,
     arrows: false,
-    slidesToShow: 1
-    // asNavFor: nav2
+    slidesToShow: 1,
+    asNavFor: nav2
   }
   const slide2Settings = {
-    ...settings,
-    dots: false,
+    ...commonSettings,
+    asNavFor: nav1
+  }
+
+  const modalSettings = {
+    infinite: false,
     arrows: true,
-    slidesToShow: 4
-    // asNavFor: nav1
+    slidesToShow: 1,
+    nextArrow: <ArrowRight aria-label="next image" />,
+    prevArrow: <ArrowLeft aria-label="previous image" />
   }
 
   return (
     <div className={`${styles['wrapper']}`}>
-      {/* {slider.current} */}
-      {/* ref={(slider) => setNav2(slider)} */}
-      <Slider ref={(slider) => (sliderRef1 = slider)} settings={slide1Settings}>
+      <Slider
+        arrows={false}
+        asNavFor={nav2}
+        slidesToShow={1}
+        ref={(sliderRef1) => setNav1(sliderRef1)}
+      >
+        {/* ref={(sliderRef1) => setNav1(sliderRef1)} */}
         {items.map((item, index) => (
           <Image
             width={295}
@@ -120,12 +126,13 @@ const Gallery = ({ items }: GalleryProps) => {
           />
         ))}
       </Slider>
-      {/*
-       onClick={() => {
-              slider.current!.slickGoTo(index, true)
-            }} */}
 
-      <Slider ref={(slider) => (sliderRef2 = slider)} settings={slide2Settings}>
+      <Slider
+        {...slide2Settings}
+        className="droga"
+        ref={(sliderRef2) => setNav2(sliderRef2)}
+      >
+        {/* ref={(sliderRef2) => (sliderRef2 ? sliderRef2.slickGoTo(+1 || 0) : '')} */}
         {items.map((item, index) => (
           <Image
             width={295}
@@ -135,7 +142,10 @@ const Gallery = ({ items }: GalleryProps) => {
             src={item.src}
             alt={`Thumb - ${item.label}`}
             onClick={() => {
-              slider.current!.slickGoTo(index, true)
+              console.log(sliderRef1)
+              console.log(sliderRef2)
+              console.log(sliderModal)
+              sliderModal.current!.slickGoTo(index, true)
             }}
           />
         ))}
@@ -156,13 +166,12 @@ const Gallery = ({ items }: GalleryProps) => {
         >
           <Close size={40} />
         </button>
-
         {/* max-w-[min(120rem, 100%)]max-w-[90rem] */}
         <div
           className="content-modal max-h-[54rem]"
           style={{ maxWidth: 'min(42rem, 100%)' }}
         >
-          <Slider ref={slider} settings={modalSettings}>
+          <Slider ref={sliderModal} {...modalSettings}>
             {items.map((item, index) => (
               // className="inset-0 absolute"
               <Image
