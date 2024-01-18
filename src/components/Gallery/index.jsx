@@ -1,5 +1,3 @@
-'use client'
-
 import Slider from 'react-slick'
 import styles from './gallery.module.css'
 import { ArrowBackIos as ArrowLeft } from '@styled-icons/material-outlined/ArrowBackIos'
@@ -12,7 +10,7 @@ const commonSettings = {
   infinite: false,
   lazyLoad: 'ondemand',
   arrows: true,
-  slidesToShow: 3,
+  slidesToShow: 4,
   nextArrow: <ArrowRight aria-label="next image" />,
   prevArrow: <ArrowLeft aria-label="previous image" />
 }
@@ -20,7 +18,7 @@ const commonSettings = {
 const Gallery = ({ items }, props) => {
   const [nav1, setNav1] = useState(null)
   const [nav2, setNav2] = useState(null)
-  const sliderModal = useRef(null)
+  let sliderModal = useRef()
   let sliderRef1 = useRef()
   let sliderRef2 = useRef()
   const [isOpen, setIsOpen] = useState(false)
@@ -39,15 +37,17 @@ const Gallery = ({ items }, props) => {
   const slide1Settings = {
     arrows: false,
     slidesToShow: 1,
+    draggable: false,
     asNavFor: nav2
   }
+
   const slide2Settings = {
     ...commonSettings,
     responsive: [
       {
         breakpoint: 1375,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 3,
           draggable: true
         }
       },
@@ -70,51 +70,51 @@ const Gallery = ({ items }, props) => {
   }
 
   const modalSettings = {
-    infinite: false,
+    infinite: true,
     arrows: true,
     slidesToShow: 1,
     nextArrow: <ArrowRight aria-label="next image" />,
     prevArrow: <ArrowLeft aria-label="previous image" />
-    // ...commonSettings,
-    // slidesToShow: 1
   }
 
   return (
-    <div className={`${styles['wrapper']}`}>
-      <Slider {...slide1Settings} ref={(slider) => (sliderRef1 = slider)}>
-        {items.map((item, index) => (
-          <Image
-            width={295}
-            height={165}
-            role="button"
-            key={`thumb-${index}`}
-            src={item.src}
-            alt={`Thumb - ${item.label}`}
-            onClick={() => {
-              // console.log(sliderModal)
-              sliderModal.current.slickGoTo(index, true)
-              setIsOpen(true)
-            }}
-          />
-        ))}
-      </Slider>
-
-      <Slider {...slide2Settings} ref={(slider) => (sliderRef2 = slider)}>
-        {items.map((item, index) => (
-          <Image
-            width={295}
-            height={165}
-            role="button"
-            key={`thumb-${index}`}
-            src={item.src}
-            alt={`Thumb - ${item.label}`}
-            onClick={() => {
-              sliderRef1.slickGoTo(index, true)
-              sliderRef2.slickGoTo(index, true)
-            }}
-          />
-        ))}
-      </Slider>
+    <div className={`${styles['wrapper']} wrapper-chan`}>
+      <div className="slide-one">
+        <Slider {...slide1Settings} ref={(slider) => (sliderRef1 = slider)}>
+          {items.map((item, index) => (
+            <Image
+              width={295}
+              height={165}
+              role="button"
+              key={`thumb-${index}`}
+              src={item.src}
+              alt={`Thumb - ${item.label}`}
+              onClick={() => {
+                sliderModal.current.slickGoTo(index, true)
+                setIsOpen(true)
+              }}
+            />
+          ))}
+        </Slider>
+      </div>
+      <div className="slide-two">
+        <Slider {...slide2Settings} ref={(slider) => (sliderRef2 = slider)}>
+          {items.map((item, index) => (
+            <Image
+              width={295}
+              height={165}
+              role="button"
+              key={`thumb-${index}`}
+              src={item.src}
+              alt={`Thumb - ${item.label}`}
+              onClick={() => {
+                sliderRef1.slickGoTo(index, true)
+                sliderRef2.slickGoTo(index, true)
+              }}
+            />
+          ))}
+        </Slider>
+      </div>
 
       <div
         className={`fixed w-full h-full top-0 left-0 bg-gray-900 bg-opacity-75 flex justify-center items-center z-10 transition-opacity ${
@@ -131,21 +131,18 @@ const Gallery = ({ items }, props) => {
         >
           <Close size={40} />
         </button>
-        {/* max-w-[min(120rem, 100%)]max-w-[90rem] */}
         <div
-          className="content-modal max-h-[54rem]"
+          className="slide-modal max-h-[54rem]"
           style={{ maxWidth: 'min(42rem, 100%)' }}
         >
           <Slider ref={sliderModal} {...modalSettings}>
             {items.map((item, index) => (
-              // className="inset-0 absolute"
               <Image
-                className="w-auto h-auto"
                 width={1200}
                 height={675}
                 key={`gallery-${index}`}
                 src={item.src}
-                alt={item.label}
+                alt={`${item.label}`}
               />
             ))}
           </Slider>

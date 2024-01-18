@@ -14,7 +14,6 @@ import { LocalShipping, CreditCard } from '@styled-icons/material-outlined'
 // import { LocalShipping } from '@styled-icons/material-outlined'
 import { Pix } from '@styled-icons/fa-brands'
 import Gallery from '@/components/Gallery'
-import mockedGallery from '@/components/Gallery/mockedGallery'
 import Head from 'next/head'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -44,7 +43,8 @@ export default function Page({ params }: { params: { slug: string } }) {
       </Head>
       {currentProduct && (
         <>
-          <div className="flex flex-col md:flex-row justify-between">
+          {/* flex flex-col md:flex-row */}
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr] justify-between">
             <div className="flex flex-col">
               {/* <div className="w-full">
                 <Image
@@ -56,7 +56,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                   loading="lazy"
                 />
               </div> */}
-              <Gallery items={mockedGallery} />
+              <Gallery items={currentProduct.gallery} />
               {/* <p>Galeria de imagens?</p> */}
 
               {/* <button>

@@ -1,24 +1,16 @@
 .wrapper {
-  max-width: 600px;
+  max-width: 650px;
 }
 .wrapper :global .slick-prev,
 .wrapper :global .slick-next {
-  display: block;
-  color: #fff;
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 0;
-  transform: translate(0, -50%);
-  @apply z-10;
+  @apply block absolute cursor-pointer w-10 h-10 p-0 z-10 top-[50%] text-primary  translate-y-[-50%];
 }
+
 .wrapper :global .slick-prev {
-  left: -10px;
+  left: 0;
 }
 .wrapper :global .slick-next {
-  right: -10px;
+  right: 0;
 }
 
 @media (max-width: 1279px) {
@@ -28,18 +20,24 @@
   }
 }
 
+@media (min-width: 768px) {
+  .wrapper :global .slick-prev {
+    left: -35px;
+  }
+  .wrapper :global .slick-next {
+    right: -35px;
+  }
+}
 /* end */
 
 .wrapper :global .slick-slider {
   @apply relative;
   display: block;
   box-sizing: border-box;
-
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
   -webkit-touch-callout: none;
   -khtml-user-select: none;
   -ms-touch-action: pan-y;
@@ -80,7 +78,6 @@
 .wrapper :global(.slick-track:before),
 .wrapper :global(.slick-track:after) {
   display: table;
-
   content: '';
 }
 .wrapper :global .slick-track:after {
@@ -90,19 +87,8 @@
   visibility: hidden;
 }
 
-.wrapper :global .slick-slide {
-  display: none;
-  float: left;
-
-  height: 100%;
-  /* min-height: 768px; */
-  min-height: 1px;
-}
 [dir='rtl'] .wrapper :global .slick-slide {
   float: right;
-}
-.wrapper :global .slick-slide img {
-  display: block;
 }
 .wrapper :global .slick-slide.slick-loading img {
   display: none;
@@ -125,10 +111,34 @@
   display: none;
 }
 .wrapper :global .slick-dots {
-  display: flex !important;
+  display: flex;
 }
 
-.wrapper :global .slick-slide > div {
-  margin: 0 1.6rem;
+.wrapper :global .slide-one {
+  @apply mb-6;
+}
+.wrapper :global .slick-slide {
+  display: none;
+  float: left;
+  height: 100%;
+}
+
+.wrapper :global .slide-one .slick-slide {
+  max-height: 450px;
+}
+.wrapper :global .slide-two .slick-slide {
+  max-height: 130px;
+  width: 100%;
+}
+.wrapper :global .slide-two .slick-slide > div {
+  margin: 0 0.2rem;
   cursor: pointer;
+}
+.wrapper :global .slide-modal .slick-slide {
+  background-color: black !important;
+  min-height: 120px;
+  min-width: 120px !important;
+}
+.wrapper :global .slick-slide img {
+  @apply block w-full h-full object-contain object-center;
 }
