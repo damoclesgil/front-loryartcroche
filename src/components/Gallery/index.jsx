@@ -110,6 +110,7 @@ const Gallery = ({ items }, props) => {
             alt={`Thumb - ${item.label}`}
             onClick={() => {
               sliderRef1.slickGoTo(index, true)
+              sliderRef2.slickGoTo(index, true)
             }}
           />
         ))}

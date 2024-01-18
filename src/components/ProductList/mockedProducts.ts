@@ -41,7 +41,7 @@ export const mockedProducts = [
     name: 'Bolsa de Crochê Cor Azul',
     slug: 'bolsa-de-croche-cor-azul',
     // img: 'woocommerce-placeholder-600x600.png',
-    img: 'bolsa-em-croche-croche.webp',
+    img: 'bolsa-em-croche-croche-azul-01.jpg',
     price: 295.9,
     detalhes: `
     <p>by 🧶loryartcroche</p>
