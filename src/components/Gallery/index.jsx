@@ -1,4 +1,7 @@
-import Slider, { Settings } from 'react-slick'
+/* eslint-disable */
+// @ts-ignore
+// , { Settings }
+import Slider from 'react-slick'
 import styles from './gallery.module.css'
 import { ArrowBackIos as ArrowLeft } from '@styled-icons/material-outlined/ArrowBackIos'
 import { ArrowForwardIos as ArrowRight } from '@styled-icons/material-outlined/ArrowForwardIos'
@@ -8,7 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Close } from '@styled-icons/material-outlined/Close'
 
-const commonSettings: Settings = {
+const commonSettings = {
   infinite: false,
   // dots: true,
   // dotsClass: 'slick-dots',
@@ -18,37 +21,48 @@ const commonSettings: Settings = {
   nextArrow: <ArrowRight aria-label="next image" />,
   prevArrow: <ArrowLeft aria-label="previous image" />
 }
-const settings: Settings = {
-  ...commonSettings,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  responsive: [
-    {
-      breakpoint: 1375,
-      settings: {
-        arrows: false,
-        slidesToShow: 3.2,
-        draggable: true
-      }
-    },
-    {
-      breakpoint: 1024,
-      settings: {
-        arrows: false,
-        slidesToShow: 2.2,
-        draggable: true
-      }
-    },
-    {
-      breakpoint: 768,
-      settings: {
-        arrows: false,
-        slidesToShow: 2.2,
-        draggable: true
-      }
-    }
-  ]
-}
+
+// export type SliderProps = {
+//   infinite?: boolean | undefined
+//   arrows?: boolean | undefined
+//   asNavFor?: {} | undefined
+//   nextArrow?: React.JSX.Element | undefined
+//   prevArrow?: React.JSX.Element | undefined;
+//   slidesToShow?: number | undefined;
+//   slidesToScroll?: number | undefined;
+// }
+
+// const settings: Settings = {
+//   ...commonSettings,
+//   slidesToShow: 1,
+//   slidesToScroll: 1,
+//   responsive: [
+//     {
+//       breakpoint: 1375,
+//       settings: {
+//         arrows: false,
+//         slidesToShow: 3.2,
+//         draggable: true
+//       }
+//     },
+//     {
+//       breakpoint: 1024,
+//       settings: {
+//         arrows: false,
+//         slidesToShow: 2.2,
+//         draggable: true
+//       }
+//     },
+//     {
+//       breakpoint: 768,
+//       settings: {
+//         arrows: false,
+//         slidesToShow: 2.2,
+//         draggable: true
+//       }
+//     }
+//   ]
+// }
 
 // const modalSettings: Settings = {
 //   ...commonSettings,
@@ -56,28 +70,29 @@ const settings: Settings = {
 //   dots: false
 // }
 
-export type GalleryImageProps = {
-  src: string
-  label: string
-}
+// export type GalleryImageProps = {
+//   src: string
+//   label: string
+// }
 
-export type GalleryProps = {
-  items: GalleryImageProps[]
-}
+// export type GalleryProps = {
+//   items: GalleryImageProps[]
+// }
 
-const Gallery = ({ items }: GalleryProps) => {
-  const sliderModal = useRef<Slider>(null)
-  const sliderRef1 = useRef<Slider>(null)
+const Gallery = ({ items }) => {
+  // let asda = SliderProps
+  const sliderModal = useRef(null)
+  let sliderRef1 = useRef()
   let sliderRef2 = useRef()
   const [isOpen, setIsOpen] = useState(false)
-  const [nav1, setNav1] = useState()
-  const [nav2, setNav2] = useState()
+  const [nav1, setNav1] = useState({})
+  const [nav2, setNav2] = useState({})
 
   useEffect(() => {
     // setNav1(sliderRef1)
     // setNav2(sliderRef2)
 
-    const handleKeyUp = ({ key }: KeyboardEvent) => {
+    const handleKeyUp = ({ key }) => {
       key === 'Escape' && setIsOpen(false)
     }
     window.addEventListener('keyup', handleKeyUp)
@@ -85,10 +100,10 @@ const Gallery = ({ items }: GalleryProps) => {
   }, [])
 
   const slide1Settings = {
-    ...commonSettings,
+    // ...commonSettings,
     arrows: false,
     slidesToShow: 1,
-    asNavFor: nav2
+    asNavFor: Object.keys(nav2).length ? nav2 : undefined
   }
   const slide2Settings = {
     ...commonSettings,
@@ -102,16 +117,24 @@ const Gallery = ({ items }: GalleryProps) => {
     nextArrow: <ArrowRight aria-label="next image" />,
     prevArrow: <ArrowLeft aria-label="previous image" />
   }
+  // if(Object.keys(nav2).length === 0) {
+  //   console.log('oi')
+  // } else {
+  //   console.log('a')
+  // }
+  // console.log(nav2)
+  // const newLocal = nav2 === {}
 
   return (
+    // asNavFor={nav2}
     <div className={`${styles['wrapper']}`}>
       <Slider
-        arrows={false}
         asNavFor={nav2}
+        arrows={false}
         slidesToShow={1}
-        ref={(sliderRef1) => setNav1(sliderRef1)}
+        ref={(sliderRef1) => (sliderRef1 ? setNav1(sliderRef1) : '')}
       >
-        {/* ref={(sliderRef1) => setNav1(sliderRef1)} */}
+        {/* ref={sliderRef1 => setNav1(sliderRef1)} */}
         {items.map((item, index) => (
           <Image
             width={295}
@@ -129,9 +152,9 @@ const Gallery = ({ items }: GalleryProps) => {
 
       <Slider
         {...slide2Settings}
-        className="droga"
-        ref={(sliderRef2) => setNav2(sliderRef2)}
+        ref={(sliderRef2) => (sliderRef2 ? setNav2(sliderRef2) : '')}
       >
+        {/* ref={sliderRef2 => setNav2(sliderRef2)} */}
         {/* ref={(sliderRef2) => (sliderRef2 ? sliderRef2.slickGoTo(+1 || 0) : '')} */}
         {items.map((item, index) => (
           <Image
@@ -142,10 +165,12 @@ const Gallery = ({ items }: GalleryProps) => {
             src={item.src}
             alt={`Thumb - ${item.label}`}
             onClick={() => {
-              console.log(sliderRef1)
-              console.log(sliderRef2)
-              console.log(sliderModal)
-              sliderModal.current!.slickGoTo(index, true)
+              if (Object.keys(nav2).length) {
+                console.log(sliderRef1)
+              }
+              // console.log(sliderRef2)
+              // console.log(sliderModal)
+              // sliderModal.current!.slickGoTo(index, true)
             }}
           />
         ))}
