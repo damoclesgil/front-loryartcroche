@@ -1,4 +1,4 @@
 {
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "cSpell.words": ["codegen", "loryartcroche", "nextjs"]
 }
