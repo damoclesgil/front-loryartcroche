@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import formatPrice from '@/utils/format-price'
+import Button from '@/components/Button'
 
 export type ProductCardProps = {
   id: string
@@ -11,16 +12,16 @@ export type ProductCardProps = {
 }
 
 const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
-  <div className="bg-product dark:bg-black relative flex flex-col w-100 h-100">
+  <div className="bg-product dark:bg-black relative flex flex-col w-full">
     <Link
       href={{
         pathname: `produtos/${slug}`,
         query: { id: id }
       }}
     >
-      <div className="w-100 h-100">
+      <div className="w-full">
         <Image
-          className="object-contain object-center w-full h-full max-w-[18rem] min-h-[18rem] max-h-[18rem]"
+          className="object-contain object-center w-full h-full md:max-w-[18rem] min-h-[18rem] max-h-[18rem]"
           src={`/img/products/${img}`}
           alt={name}
           width={550}
@@ -29,6 +30,15 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
         />
       </div>
     </Link>
+    <Button
+      href="https://www.google.com/"
+      target="_blank"
+      as="a"
+      fullWidth
+      size="medium"
+    >
+      Encomendar
+    </Button>
     <div className="flex flex-col justify-between m-2">
       <h3 className="text-md mb-2">{name}</h3>
     </div>

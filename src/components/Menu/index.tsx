@@ -5,6 +5,7 @@ import ThemeSwitcher from '../ThemeSwitcher'
 import Logo from '@/components/Logo'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
+import SearchInput from '@/components/SearchInput'
 
 const Menu = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -64,12 +65,7 @@ const Menu = () => {
               </svg>
               <span className="sr-only">Search icon</span>
             </div>
-            <input
-              type="text"
-              id="search-navbar"
-              className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Search..."
-            />
+            <SearchInput defaultValue={''} />
           </div>
           <button
             data-collapse-toggle="navbar-search"
@@ -167,7 +163,7 @@ const Menu = () => {
               </Link>
             </li>
             <li>
-              <div className="py-2 px-3">
+              <div className="py-2 px-3 md:p-0 md:py-0">
                 <ThemeSwitcher />
               </div>
             </li>

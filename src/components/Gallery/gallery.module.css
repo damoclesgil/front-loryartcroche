@@ -1,0 +1,134 @@
+.wrapper {
+  max-width: 600px;
+}
+.wrapper :global .slick-prev,
+.wrapper :global .slick-next {
+  display: block;
+  color: #fff;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  transform: translate(0, -50%);
+  @apply z-10;
+}
+.wrapper :global .slick-prev {
+  left: -10px;
+}
+.wrapper :global .slick-next {
+  right: -10px;
+}
+
+@media (max-width: 1279px) {
+  .wrapper :global .slick-prev,
+  .wrapper :global .slick-next {
+    overflow: hidden;
+  }
+}
+
+/* end */
+
+.wrapper :global .slick-slider {
+  @apply relative;
+  display: block;
+  box-sizing: border-box;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wrapper :global .slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+.wrapper :global .slick-list:focus {
+  outline: none;
+}
+.wrapper :global .slick-list.dragging {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.wrapper :global(.slick-slider .slick-track),
+.wrapper :global(.slick-slider .slick-list) {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.wrapper :global(.slick-track) {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+}
+.wrapper :global(.slick-track:before),
+.wrapper :global(.slick-track:after) {
+  display: table;
+
+  content: '';
+}
+.wrapper :global .slick-track:after {
+  clear: both;
+}
+.wrapper :global(.slick-loading .slick-track) {
+  visibility: hidden;
+}
+
+.wrapper :global .slick-slide {
+  display: none;
+  float: left;
+
+  height: 100%;
+  /* min-height: 768px; */
+  min-height: 1px;
+}
+[dir='rtl'] .wrapper :global .slick-slide {
+  float: right;
+}
+.wrapper :global .slick-slide img {
+  display: block;
+}
+.wrapper :global .slick-slide.slick-loading img {
+  display: none;
+}
+.wrapper :global .slick-slide.dragging img {
+  pointer-events: none;
+}
+.wrapper :global .slick-initialized .slick-slide {
+  display: block;
+}
+.wrapper :global .slick-loading .slick-slide {
+  visibility: hidden;
+}
+.wrapper :global .slick-vertical .slick-slide {
+  display: block;
+  height: auto;
+  border: 1px solid transparent;
+}
+.wrapper :global .slick-arrow.slick-hidden {
+  display: none;
+}
+.wrapper :global .slick-dots {
+  display: flex !important;
+}
+
+.wrapper :global .slick-slide > div {
+  margin: 0 1.6rem;
+  cursor: pointer;
+}

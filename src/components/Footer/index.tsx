@@ -1,5 +1,12 @@
+'use client'
+
 import Link from 'next/link'
 import Logo from '../Logo'
+
+import {
+  Instagram as InstagramIcon,
+  Whatsapp as WhatsIcon
+} from '@styled-icons/boxicons-logos'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -14,25 +21,56 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-col items-center md:items-start mt-4 md:mt-0">
-          <Link href="/" className="no-underline text-purple-600 mb-2">
+          <h2 className="text-lg font-semibold mb-2">Links</h2>
+          <Link
+            href="/"
+            className="no-underline text-primary hover:text-primary-darker mb-2"
+          >
             Início
           </Link>
-          <Link href="/produtos" className="no-underline text-purple-600">
+          <Link
+            href="/produtos"
+            className="no-underline text-primary hover:text-primary-darker mb-2"
+          >
             Produtos
           </Link>
+          <Link
+            href="/produtos"
+            className="no-underline text-primary hover:text-primary-darker"
+          >
+            Favoritos
+          </Link>
+          {/* <Link
+            href="mailto:loryartcroche@gmail.com"
+            className="no-underline text-purple-600"
+          >
+            loryartcroche@gmail.com
+          </Link> */}
         </div>
         <div className="flex flex-col items-center md:items-start mt-4 md:mt-0">
           <h2 className="text-lg font-semibold">Redes Sociais</h2>
-          <Link href="/" className="no-underline text-purple-600 mb-2">
-            Início
+          <Link
+            href="https://www.instagram.com/loryartcroche/"
+            target="_blank"
+            className="no-underline text-primary hover:text-primary-darker mt-2 flex items-center"
+          >
+            <InstagramIcon size={22} />
+            <p className="ml-2">Instagram</p>
           </Link>
-          <Link href="/produtos" className="no-underline text-purple-600">
-            Produtos
+          <Link
+            href="https://google.com.br"
+            target="_blank"
+            className="no-underline text-primary hover:text-primary-darker mt-2 flex items-center"
+          >
+            <WhatsIcon size={22} />
+            <p className="ml-2">WhatsApp 62 99672-5529</p>
           </Link>
         </div>
       </div>
-      <div className="text-center mt-8">
-        Lory Art Crochê {currentYear} © Todos os direitos reservados.
+      <div className="text-center flex justify-center items-center w-full mt-8 pb-6">
+        <p className="text-sm text-gray-600">
+          Lory Art Crochê {currentYear} © Todos os direitos reservados.
+        </p>
       </div>
     </>
   )
