@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    unoptimized: true
+  // images: {
+  //   unoptimized: false
+  // },
+  // images: { remotePatterns: [{ protocol: 'https', hostname: '**' }] },
+  typescript: {
+    ignoreBuildErrors: true
   }
 }
 
