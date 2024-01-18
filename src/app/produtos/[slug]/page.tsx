@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Tabs from '@/components/Tabs'
 // import dynamic from 'next/dynamic'
 // const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
-// import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
+import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
 import formatPrice from '@/utils/format-price'
 import Button from '@/components/Button'
 import { LocalShipping, CreditCard } from '@styled-icons/material-outlined'
@@ -58,13 +58,6 @@ export default function Page({ params }: { params: { slug: string } }) {
               </div> */}
               <Gallery items={currentProduct.gallery} />
               {/* <p>Galeria de imagens?</p> */}
-
-              {/* <button>
-                <FavoriteBorder width={20} aria-label="Favoritar" />
-              </button> */}
-              {/* <button>
-                <Favorite width={20} aria-label="Favoritar" />
-              </button> */}
             </div>
             <div className="flex flex-col mt-4 md:mt-0">
               <p className="font-semibold text-lg mb-2">
@@ -119,7 +112,15 @@ export default function Page({ params }: { params: { slug: string } }) {
                       loading="lazy"
                     /> */}
               </div>
-              <p>Favoritar</p>
+              {/* <p>Favoritar</p> */}
+              <div className="flex items-center">
+                <button className="mr-2">
+                  <FavoriteBorder width={20} aria-label="Favoritar" />
+                </button>
+                <button>
+                  <Favorite width={20} aria-label="Favoritar" />
+                </button>
+              </div>
               <p>Compartilhar</p>
               <p>Meios de pagamento:</p>
               <p>Pix, Cartão e Boleto</p>

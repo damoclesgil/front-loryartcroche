@@ -16,7 +16,7 @@
 @media (max-width: 1279px) {
   .wrapper :global .slick-prev,
   .wrapper :global .slick-next {
-    overflow: hidden;
+    @apply overflow-hidden;
   }
 }
 
@@ -31,9 +31,7 @@
 /* end */
 
 .wrapper :global .slick-slider {
-  @apply relative;
-  display: block;
-  box-sizing: border-box;
+  @apply relative block box-border;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -46,11 +44,7 @@
 }
 
 .wrapper :global .slick-list {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
+  @apply relative block overflow-hidden m-0 p-0;
 }
 .wrapper :global .slick-list:focus {
   outline: none;
@@ -135,9 +129,8 @@
   cursor: pointer;
 }
 .wrapper :global .slide-modal .slick-slide {
-  background-color: black !important;
-  min-height: 120px;
-  min-width: 120px !important;
+  min-height: 250px;
+  min-width: 250px;
 }
 .wrapper :global .slick-slide img {
   @apply block w-full h-full object-contain object-center;

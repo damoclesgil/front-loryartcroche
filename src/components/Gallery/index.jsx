@@ -78,7 +78,7 @@ const Gallery = ({ items }, props) => {
   }
 
   return (
-    <div className={`${styles['wrapper']} wrapper-chan`}>
+    <div className={`${styles['wrapper']}`}>
       <div className="slide-one">
         <Slider {...slide1Settings} ref={(slider) => (sliderRef1 = slider)}>
           {items.map((item, index) => (
