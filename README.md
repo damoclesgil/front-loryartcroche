@@ -26,3 +26,7 @@ ncu --interactive
 ncu -i
 ```
 
+
+## Alguns problemas de bibliotecas
+
+O sharp aparenta estar funcionando somente na versão 0.33.1
