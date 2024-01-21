@@ -152,7 +152,7 @@ const Menu = () => {
             </li>
             <li>
               <Link
-                href="/"
+                href="/favoritos"
                 className={`block py-2 px-3 rounded md:bg-transparent md:primary md:p-0 md:dark:bg-transparent ${
                   pathname === '/favoritos'
                     ? 'text-primary bg-gray-100 dark:bg-gray-700 md:hover:bg-transparent'

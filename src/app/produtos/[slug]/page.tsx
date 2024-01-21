@@ -1,31 +1,31 @@
 'use client'
 
-// import ProductCard from '@/components/ProductCard'
 import { mockedProducts } from '@/components/ProductList/mockedProducts'
 import Image from 'next/image'
 // import { useSearchParams } from 'next/navigation'
-import Tabs from '@/components/Tabs'
-// import dynamic from 'next/dynamic'
-// const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
+// import Tabs from '@/components/Tabs'
+import dynamic from 'next/dynamic'
+// import {  AddShoppingCart,  RemoveShoppingCart } from '@styled-icons/material-outlined'
+const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
 import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
 import formatPrice from '@/utils/format-price'
 import Button from '@/components/Button'
 import { LocalShipping, CreditCard } from '@styled-icons/material-outlined'
-// import { LocalShipping } from '@styled-icons/material-outlined'
 import { Pix } from '@styled-icons/fa-brands'
 import Gallery from '@/components/Gallery'
 import Head from 'next/head'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useCart } from '@/hooks/use-cart'
+
 export default function Page({ params }: { params: { slug: string } }) {
   const pathname = usePathname()
 
   const { slug } = params
   const currentProduct = mockedProducts.find((product) => product.slug === slug)
-  // const queryParams = useSearchParams()
-  // console.log(queryParams.get('id'))
 
-  // <ProductCard {...currentProduct} />
+  const { addToCart, isInCart, removeFromCart } = useCart()
+
   return (
     <>
       <Head>
@@ -103,22 +103,36 @@ export default function Page({ params }: { params: { slug: string } }) {
                 >
                   Azul
                 </Link>
-                {/* <Image
-                      className="object-cover"
-                      src={`${mockedGallery[0]?.src}`}
-                      alt={mockedGallery[0]?.label}
-                      width={50}
-                      height={50}
-                      loading="lazy"
-                    /> */}
               </div>
-              {/* <p>Favoritar</p> */}
+
               <div className="flex items-center">
-                <button className="mr-2">
-                  <FavoriteBorder width={20} aria-label="Favoritar" />
-                </button>
-                <button>
-                  <Favorite width={20} aria-label="Favoritar" />
+                <button
+                  className="mr-2"
+                  onClick={() => {
+                    isInCart(currentProduct.id)
+                      ? removeFromCart(currentProduct.id)
+                      : addToCart({
+                          name: currentProduct.name,
+                          id: currentProduct.id,
+                          img: currentProduct.img,
+                          price: currentProduct.price,
+                          slug: slug
+                        })
+                  }}
+                >
+                  {isInCart(currentProduct.id) ? (
+                    <Favorite
+                      width={20}
+                      aria-label="Favoritar"
+                      title="Desfavoritar"
+                    />
+                  ) : (
+                    <FavoriteBorder
+                      width={20}
+                      aria-label="Favoritar"
+                      title="Favoritar"
+                    />
+                  )}
                 </button>
               </div>
               <p>Compartilhar</p>
