@@ -1,6 +1,6 @@
 'use client'
 
-import { mockedProducts } from '@/components/ProductList/mockedProducts'
+import { PRODUCTS_DATA } from '@/hooks/use-products/products-data'
 import Image from 'next/image'
 // import { useSearchParams } from 'next/navigation'
 // import Tabs from '@/components/Tabs'
@@ -22,7 +22,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   const pathname = usePathname()
 
   const { slug } = params
-  const currentProduct = mockedProducts.find((product) => product.slug === slug)
+  const currentProduct = PRODUCTS_DATA.find((product) => product.slug === slug)
 
   const { addToCart, isInCart, removeFromCart } = useCart()
 

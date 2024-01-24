@@ -3,13 +3,77 @@
 import Link from 'next/link'
 import ThemeSwitcher from '../ThemeSwitcher'
 import Logo from '@/components/Logo'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import SearchInput from '@/components/SearchInput'
+import { PRODUCTS_DATA } from '@/hooks/use-products/products-data'
+import Image from 'next/image'
+
+export type ProductItemProps = {
+  id: string
+  slug: string
+  name: string
+  img?: string
+  price?: number
+  isProductPage?: boolean
+}
+const ProductItem = ({
+  id,
+  slug,
+  name,
+  img,
+  isProductPage = false
+}: ProductItemProps) => (
+  <div className="bg-product dark:bg-black relative flex w-full">
+    <Link
+      href={{
+        pathname: `${isProductPage ? '' : 'produtos/'}${slug}`,
+        query: { id: id }
+      }}
+    >
+      <div className="flex items-center">
+        <Image
+          className="object-contain object-center"
+          src={`/img/products/${img}`}
+          alt={name}
+          width={50}
+          height={50}
+          loading="lazy"
+        />
+        <p className="dark:text-white ml-2">{name}</p>
+        <p>{isProductPage}</p>
+      </div>
+    </Link>
+  </div>
+)
 
 const Menu = () => {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const [inputValue, setInputValue] = useState<string>('')
+  const [initialList] = useState(PRODUCTS_DATA)
+  const [filteredList, setFilteredList] = useState(PRODUCTS_DATA)
+  // console.log(pathname.includes('/produtos/'))
+  // Search Handler
+  const searchHandler = useCallback(() => {
+    const filteredData = initialList.filter((product) => {
+      return product.name.toLowerCase().includes(inputValue.toLowerCase())
+    })
+    setFilteredList(filteredData)
+  }, [initialList, inputValue])
+
+  // EFFECT: Search Handler
+  useEffect(() => {
+    // Debounce search handler
+    const timer = setTimeout(() => {
+      searchHandler()
+    }, 500)
+
+    // Cleanup
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [searchHandler])
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 border-b dark:border-gray-500">
@@ -47,25 +111,28 @@ const Menu = () => {
             <span className="sr-only">Search</span>
           </button>
           <div className="relative hidden md:block">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
-              <span className="sr-only">Search icon</span>
-            </div>
-            <SearchInput defaultValue={''} />
+            <SearchInput
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+              isHandling={false}
+            />
+            {inputValue.length > 0 ? (
+              <div className="bg-black text-white p-2 absolute w-full">
+                {filteredList.map((product) => (
+                  <ProductItem
+                    key={product.id}
+                    id={product.id}
+                    slug={product.slug}
+                    img={product.img}
+                    name={product.name}
+                    isProductPage={pathname.includes('/produtos/')}
+                    price={product.price}
+                  />
+                ))}
+              </div>
+            ) : (
+              ''
+            )}
           </div>
           <button
             data-collapse-toggle="navbar-search"

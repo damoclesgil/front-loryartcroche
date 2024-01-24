@@ -6,7 +6,6 @@ import ProductCard from '@/components/ProductCard'
 
 export default function Favoritos() {
   const { items } = useCart()
-
   return (
     <main>
       {/* <p>{JSON.stringify(items)}</p> */}
@@ -22,6 +21,7 @@ export default function Favoritos() {
           />
         ))}
       </div>
+      {/* <UseProducts /> */}
       <p>Favoritos</p>
       <InstagramSection />
     </main>
