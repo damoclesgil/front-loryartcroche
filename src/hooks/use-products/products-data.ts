@@ -91,16 +91,8 @@ export const PRODUCTS_DATA = [
     `,
     gallery: [
       {
-        src: '/img/products/bolsa-em-croche-croche-azul-01.jpg',
-        label: 'Bolsa de Crochê Cor Azul 1'
-      },
-      {
-        src: '/img/products/bolsa-em-croche-croche-azul-02.webp',
-        label: 'Bolsa de Crochê Cor Azul 2'
-      },
-      {
-        src: '/img/products/bolsa-em-croche-croche-azul-03.jpg',
-        label: 'Bolsa de Crochê Cor Azul 3'
+        src: '/img/products/mochila_croche_colorida.webp',
+        label: 'Mochila de Natal'
       }
     ]
   },
@@ -115,16 +107,8 @@ export const PRODUCTS_DATA = [
     `,
     gallery: [
       {
-        src: '/img/products/bolsa-em-croche-croche-azul-01.jpg',
-        label: 'Bolsa de Crochê Cor Azul 1'
-      },
-      {
-        src: '/img/products/bolsa-em-croche-croche-azul-02.webp',
-        label: 'Bolsa de Crochê Cor Azul 2'
-      },
-      {
-        src: '/img/products/bolsa-em-croche-croche-azul-03.jpg',
-        label: 'Bolsa de Crochê Cor Azul 3'
+        src: '/img/products/woocommerce-placeholder-600x600.png',
+        label: 'Mocked Product'
       }
     ]
   }
