@@ -1,32 +1,31 @@
 'use client'
 
-// import ProductCard from '@/components/ProductCard'
-import { mockedProducts } from '@/components/ProductList/mockedProducts'
+import { PRODUCTS_DATA } from '@/hooks/use-products/products-data'
 import Image from 'next/image'
 // import { useSearchParams } from 'next/navigation'
-import Tabs from '@/components/Tabs'
-// import dynamic from 'next/dynamic'
-// const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
-// import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
+// import Tabs from '@/components/Tabs'
+import dynamic from 'next/dynamic'
+// import {  AddShoppingCart,  RemoveShoppingCart } from '@styled-icons/material-outlined'
+const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
+import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
 import formatPrice from '@/utils/format-price'
 import Button from '@/components/Button'
 import { LocalShipping, CreditCard } from '@styled-icons/material-outlined'
-// import { LocalShipping } from '@styled-icons/material-outlined'
 import { Pix } from '@styled-icons/fa-brands'
 import Gallery from '@/components/Gallery'
-import mockedGallery from '@/components/Gallery/mockedGallery'
 import Head from 'next/head'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useCart } from '@/hooks/use-cart'
+
 export default function Page({ params }: { params: { slug: string } }) {
   const pathname = usePathname()
 
   const { slug } = params
-  const currentProduct = mockedProducts.find((product) => product.slug === slug)
-  // const queryParams = useSearchParams()
-  // console.log(queryParams.get('id'))
+  const currentProduct = PRODUCTS_DATA.find((product) => product.slug === slug)
 
-  // <ProductCard {...currentProduct} />
+  const { addToCart, isInCart, removeFromCart } = useCart()
+
   return (
     <>
       <Head>
@@ -44,7 +43,8 @@ export default function Page({ params }: { params: { slug: string } }) {
       </Head>
       {currentProduct && (
         <>
-          <div className="flex flex-col md:flex-row justify-between">
+          {/* flex flex-col md:flex-row */}
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr] justify-between">
             <div className="flex flex-col">
               {/* <div className="w-full">
                 <Image
@@ -56,15 +56,8 @@ export default function Page({ params }: { params: { slug: string } }) {
                   loading="lazy"
                 />
               </div> */}
-              <Gallery items={mockedGallery} />
+              <Gallery items={currentProduct.gallery} />
               {/* <p>Galeria de imagens?</p> */}
-
-              {/* <button>
-                <FavoriteBorder width={20} aria-label="Favoritar" />
-              </button> */}
-              {/* <button>
-                <Favorite width={20} aria-label="Favoritar" />
-              </button> */}
             </div>
             <div className="flex flex-col mt-4 md:mt-0">
               <p className="font-semibold text-lg mb-2">
@@ -110,16 +103,38 @@ export default function Page({ params }: { params: { slug: string } }) {
                 >
                   Azul
                 </Link>
-                {/* <Image
-                      className="object-cover"
-                      src={`${mockedGallery[0]?.src}`}
-                      alt={mockedGallery[0]?.label}
-                      width={50}
-                      height={50}
-                      loading="lazy"
-                    /> */}
               </div>
-              <p>Favoritar</p>
+
+              <div className="flex items-center">
+                <button
+                  className="mr-2"
+                  onClick={() => {
+                    isInCart(currentProduct.id)
+                      ? removeFromCart(currentProduct.id)
+                      : addToCart({
+                          name: currentProduct.name,
+                          id: currentProduct.id,
+                          img: currentProduct.img,
+                          price: currentProduct.price,
+                          slug: slug
+                        })
+                  }}
+                >
+                  {isInCart(currentProduct.id) ? (
+                    <Favorite
+                      width={20}
+                      aria-label="Favoritar"
+                      title="Desfavoritar"
+                    />
+                  ) : (
+                    <FavoriteBorder
+                      width={20}
+                      aria-label="Favoritar"
+                      title="Favoritar"
+                    />
+                  )}
+                </button>
+              </div>
               <p>Compartilhar</p>
               <p>Meios de pagamento:</p>
               <p>Pix, Cartão e Boleto</p>

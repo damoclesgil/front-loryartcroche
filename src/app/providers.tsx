@@ -1,4 +1,6 @@
 'use client'
+import { CartProvider } from '@/hooks/use-cart'
+// import { ProductsProvider } from '@/hooks/use-products'
 import { ThemeProvider } from 'next-themes'
 import { useState, useEffect } from 'react'
 
@@ -20,7 +22,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       enableSystem
       attribute="class"
     >
-      {children}
+      <CartProvider>
+        {children}
+        {/* <ProductsProvider>{children}</ProductsProvider> */}
+      </CartProvider>
     </ThemeProvider>
   )
 }

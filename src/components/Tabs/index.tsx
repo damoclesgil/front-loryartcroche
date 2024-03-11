@@ -13,8 +13,6 @@ const Tabs = ({ contentFirstTab, contentSecondTab }: TabContentProps) => {
   const [activeSecondTab, setActiveSecondTab] = useState(false)
 
   const handleClick = (isFirstTab: Boolean) => {
-    console.log('on click')
-    console.log(activeFirstTab)
     if (isFirstTab) {
       setActiveFirstTab(true)
       setActiveSecondTab(false)

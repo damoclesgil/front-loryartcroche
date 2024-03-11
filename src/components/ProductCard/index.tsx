@@ -8,7 +8,7 @@ export type ProductCardProps = {
   slug: string
   name: string
   img?: string
-  price: number
+  price?: number
 }
 
 const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (

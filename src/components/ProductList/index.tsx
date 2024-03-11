@@ -1,8 +1,8 @@
 import ProductCard from '@/components/ProductCard'
-import { mockedProducts } from './mockedProducts'
+import { PRODUCTS_DATA } from '@/hooks/use-products/products-data'
 
 const ProductList = () => {
-  const products = mockedProducts
+  const products = PRODUCTS_DATA
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center justify-center my-4 mx-2">

@@ -1,10 +1,10 @@
-export const mockedProducts = [
+export const PRODUCTS_DATA = [
   {
     id: '1',
     name: 'Bolsa de Crochê Cor de Rosa',
     slug: 'bolsa-de-croche-cor-de-rosa',
     // img: 'woocommerce-placeholder-600x600.png',
-    img: 'bolsa-de-croche-na-cor-rose-bolsa-de-croche.jpg',
+    img: 'bolsa-de-croche-na-cor-rose-bolsa-01.jpg',
     price: 180,
     detalhes: `
     <p class="font-bold">Encomende a sua</p>
@@ -34,18 +34,50 @@ export const mockedProducts = [
     </p>
     <p>Garantia do vendedor: 3 meses</p>
     <p>by 🧶loryartcroche</p>
-    `
+    `,
+    gallery: [
+      {
+        src: '/img/products/bolsa-de-croche-na-cor-rose-bolsa-01.jpg',
+        label: 'Bolsa de Crochê Cor Azul 1'
+      },
+      {
+        src: '/img/products/bolsa-de-croche-na-cor-rose-bolsa-02.jpg',
+        label: 'Bolsa de Crochê Cor Azul 2'
+      },
+      {
+        src: '/img/products/bolsa-de-croche-na-cor-rose-bolsa-03.jpg',
+        label: 'Bolsa de Crochê Cor Azul 3'
+      },
+      {
+        src: '/img/products/bolsa-de-croche-na-cor-rose-bolsa-04.webp',
+        label: 'Bolsa de Crochê Cor Azul 3'
+      }
+    ]
   },
   {
     id: '2',
     name: 'Bolsa de Crochê Cor Azul',
     slug: 'bolsa-de-croche-cor-azul',
     // img: 'woocommerce-placeholder-600x600.png',
-    img: 'bolsa-em-croche-croche.webp',
+    img: 'bolsa-em-croche-croche-azul-01.jpg',
     price: 295.9,
     detalhes: `
     <p>by 🧶loryartcroche</p>
-    `
+    `,
+    gallery: [
+      {
+        src: '/img/products/bolsa-em-croche-croche-azul-01.jpg',
+        label: 'Bolsa de Crochê Cor Azul 1'
+      },
+      {
+        src: '/img/products/bolsa-em-croche-croche-azul-02.webp',
+        label: 'Bolsa de Crochê Cor Azul 2'
+      },
+      {
+        src: '/img/products/bolsa-em-croche-croche-azul-03.jpg',
+        label: 'Bolsa de Crochê Cor Azul 3'
+      }
+    ]
   },
   {
     id: '3',
@@ -56,7 +88,13 @@ export const mockedProducts = [
     price: 325.9,
     detalhes: `
     <p>by 🧶loryartcroche</p>
-    `
+    `,
+    gallery: [
+      {
+        src: '/img/products/mochila_croche_colorida.webp',
+        label: 'Mochila de Natal'
+      }
+    ]
   },
   {
     id: '4',
@@ -66,20 +104,12 @@ export const mockedProducts = [
     price: 325.9,
     detalhes: `
     <p>by 🧶loryartcroche</p>
-    `
-  }
-]
-export const blueBags = [
-  {
-    src: '/img/products/bolsa-em-croche-croche-azul-01.jpg',
-    label: 'Bolsa de Crochê Cor Azul 1'
-  },
-  {
-    src: '/img/products/bolsa-em-croche-croche-azul-02.webp',
-    label: 'Bolsa de Crochê Cor Azul 2'
-  },
-  {
-    src: '/img/products/bolsa-em-croche-croche-azul-03.jpg',
-    label: 'Bolsa de Crochê Cor Azul 3'
+    `,
+    gallery: [
+      {
+        src: '/img/products/woocommerce-placeholder-600x600.png',
+        label: 'Mocked Product'
+      }
+    ]
   }
 ]
