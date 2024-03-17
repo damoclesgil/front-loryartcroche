@@ -1,2 +1,3 @@
 !.jest
 src/components/Gallery/index.tsx
+src/graphql/generated/**.ts
