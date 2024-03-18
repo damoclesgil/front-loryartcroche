@@ -9,10 +9,14 @@ const config: CodegenConfig = {
   documents: 'src/graphql/queries/**/*.ts',
   // documents: 'src/graphql/*.graphql',
   generates: {
+    // config: {
+    //   useIndexSignature: true
+    // },
     'src/graphql/generated/': {
       preset: 'client',
       // preset: 'near-operation-file-preset',
       plugins: []
+      // plugins: ['typescript', 'typescript-resolvers']
       // plugins: ['typescript-operations', 'typed-document-node']
     },
     './graphql.schema.json': {

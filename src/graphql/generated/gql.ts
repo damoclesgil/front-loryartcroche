@@ -14,7 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query produtos {\n    produtos {\n      data {\n        id\n        attributes {\n          nome\n          slug\n          descricao\n          preco\n          imagem_destaque {\n            data {\n              attributes {\n                url\n              }\n            }\n          }\n          galeria {\n            data {\n              attributes {\n                url\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n": types.ProdutosDocument,
-    "\n  mutation REGISTER($input: UsersPermissionsRegisterInput!) {\n    register(input: $input) {\n      jwt\n    }\n  }\n": types.RegisterDocument,
+    "\n  mutation MutationRegister($input: UsersPermissionsRegisterInput!) {\n    register(input: $input) {\n      jwt\n    }\n  }\n": types.MutationRegisterDocument,
 };
 
 /**
@@ -38,7 +38,7 @@ export function graphql(source: "\n  query produtos {\n    produtos {\n      dat
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation REGISTER($input: UsersPermissionsRegisterInput!) {\n    register(input: $input) {\n      jwt\n    }\n  }\n"): (typeof documents)["\n  mutation REGISTER($input: UsersPermissionsRegisterInput!) {\n    register(input: $input) {\n      jwt\n    }\n  }\n"];
+export function graphql(source: "\n  mutation MutationRegister($input: UsersPermissionsRegisterInput!) {\n    register(input: $input) {\n      jwt\n    }\n  }\n"): (typeof documents)["\n  mutation MutationRegister($input: UsersPermissionsRegisterInput!) {\n    register(input: $input) {\n      jwt\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -1,9 +1,9 @@
-// import { gql } from '@apollo/client'
+import { gql } from '@apollo/client'
 // import { gql } from  './gql/gql'
 // import { graphql } from './gql/gql';
 // import { graphql } from '../generated'
 
-export const QUERY_PRODUTOS = /* GraphQL */ `
+export const QUERY_PRODUTOS = gql`
   query produtos {
     produtos {
       data {

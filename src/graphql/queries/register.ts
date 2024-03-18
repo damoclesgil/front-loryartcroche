@@ -3,7 +3,7 @@ import { gql } from '@apollo/client'
 // import { graphql } from '../generated'
 
 export const MUTATION_REGISTER = gql`
-  mutation REGISTER($input: UsersPermissionsRegisterInput!) {
+  mutation MutationRegister($input: UsersPermissionsRegisterInput!) {
     register(input: $input) {
       jwt
     }
