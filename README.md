@@ -1,4 +1,3 @@
-
 ![Lory Art Croche](https://raw.githubusercontent.com/damoclesgil/front-loryartcroche/master/public/img/logo-gh.svg?token=GHSAT0AAAAAACLHKISCS3JARWULULG5JP42ZLSBBXA)
 
 This is the front end of the [loryartcroche](https://www.instagram.com/loryartcroche/) e-commerce that was created with the intention of selling and promoting its handcrafted products.
@@ -19,6 +18,7 @@ This project uses lot of stuff as:
 // react-fancybox
 
 Update Libs
+
 ```bash
 ncu --interactive
 
@@ -26,7 +26,12 @@ ncu --interactive
 ncu -i
 ```
 
-
 ## Alguns problemas de bibliotecas
 
 O sharp aparenta estar funcionando somente na versão 0.33.1
+
+todo
+
+= carrinho
+compartilhar
+linkar com api
