@@ -17,6 +17,8 @@ import { toast } from '@/components/ui/use-toast'
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+// import { signIn } from '@/services/auth'
+// import { signIn } from 'next-auth'
 
 export function AuthForm() {
   const form = useForm()
@@ -29,15 +31,17 @@ export function AuthForm() {
     // console.log(isLoginPage)
     try {
       if (isLoginPage) {
+        // signIn()
+        // await signIn('credentials', { entries: {} })
         const result = await signIn('credentials', {
           identifier: data.identifier,
           password: data.password,
-          redirect: false
-          // callbackUrl: '/'
+          redirect: false,
+          callbackUrl: '/client-example'
         })
-        if (result) {
-          console.log(result)
-          return push('/auth')
+        console.log(result)
+        if (result?.url) {
+          return push(result.url)
         }
       }
       if (!isLoginPage) {
@@ -52,11 +56,18 @@ export function AuthForm() {
         })
       }
       toast({
-        variant: 'destructive',
-        title: 'Cadastro Entrado com sucesso!',
-        description: 'Login Deu certo'
+        variant: 'default',
+        title: 'Login efetuado com success!',
+        description: '...'
       })
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+      toast({
+        variant: 'destructive',
+        title: 'OOps Errado!',
+        description: 'Login Deu errado'
+      })
+    }
   })
 
   return (

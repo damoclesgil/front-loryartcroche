@@ -7,5 +7,6 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["codegen", "loryartcroche", "nextjs"]
+  "cSpell.language": "pt,pt-BR,en,en-US",
+  "cSpell.words": ["codegen", "loryartcroche", "nextjs", "Strapi"]
 }
