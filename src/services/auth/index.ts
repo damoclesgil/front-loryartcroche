@@ -2,8 +2,11 @@ import NextAuth from 'next-auth'
 // import { AdapterSession, AdapterUser } from 'next-auth/adapters'
 // import EmailProvider from 'next-auth/providers/email'
 import CredentialsProvider from 'next-auth/providers/credentials'
+// import type { NextAuthOptions } from 'next-auth'
+// import { NextApiRequest, NextApiResponse } from 'next-auth/internals/utils'
+// import google from 'next-auth/providers/google'
+import Google from '@auth/core/providers/google'
 import type { NextAuthConfig } from 'next-auth'
-import { strategy } from 'sharp'
 
 declare module 'next-auth' {
   interface User {
@@ -29,25 +32,16 @@ export const config = {
     logo: 'https://next-auth.js.org/img/logo/logo-sm.png'
   },
   providers: [
+    Google({
+      name: 'google',
+      clientId: process.env.NEXT_GOOGLE_CLIENT_ID,
+      clientSecret: process.env.NEXT_GOOGLE_CLIENT_SECRET
+    }),
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
-      name: 'Credentials',
-      // `credentials` is used to generate a form on the sign in page.
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
+      name: 'credentials',
       // https://authjs.dev/getting-started/providers/credentials-tutorial
-      credentials: {
-        // email: {
-        //   label: 'E-mail',
-        //   type: 'text',
-        //   placeholder: 'damoclesgil@gmail.com'
-        // },
-        // password: { label: 'password', type: 'password' }
-      },
+      credentials: {},
       async authorize(credentials: any) {
-        console.log('credentials', credentials)
-
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/auth/local`,
           {
@@ -60,7 +54,6 @@ export const config = {
           }
         )
         const data = await response.json()
-        // console.log('data', data)
         if (data.user) {
           return { ...data.user, jwt: data.jwt }
         } else {
@@ -72,6 +65,7 @@ export const config = {
   session: {
     strategy: 'jwt'
   },
+  secret: process.env.JWT_SECRET,
   pages: {
     signIn: '/auth',
     signOut: '/auth',
@@ -79,41 +73,18 @@ export const config = {
     verifyRequest: '/auth',
     newUser: '/'
   },
-  basePath: '/api/auth',
+  // basePath: '/api/auth',
   callbacks: {
     async session({ session, token }: { session: any; token: any }) {
-      console.log('token', token)
-      console.log('session', session)
       session.address = token.sub
       session.user.name = token.name
-      session.user.image = 'https://www.fillmurray.com/128/128'
+      // session.user.image = 'https://www.fillmurray.com/128/128'
+      // console.log('token from callback session', token)
+      // console.log('session from callback session', session)
       return session
+      // return Promise.resolve(session)
     },
-    // async session({ session, user }) {
-    //   session.jwt = user.jwt
-    //   session.id = user.id
-    //   console.log('session', session)
-    //   console.log('user', user)
-    //   return Promise.resolve(session)
-    // },
 
-    // session(params) {
-    //   console.log('params', params?.session)
-    //   return Promise.resolve(params.session)
-    // },
-    // session: async (session: Session, user: User) => {
-    //   console.log(session)
-    //   session.jwt = user.jwt
-    //   session.id = user.id
-
-    //   return Promise.resolve(session)
-    // },
-    // authorized({ request, auth }) {
-    //   const { pathname } = request.nextUrl
-    //   console.log(pathname)
-    //   // if (pathname === '/middleware-example') return !!auth
-    //   return true
-    // },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
@@ -121,9 +92,6 @@ export const config = {
         token.name = user.username
         token.jwt = user.jwt
       }
-      console.log('token jwt', token)
-      console.log('user jwt', user)
-      // return token
       return Promise.resolve(token)
       // if (trigger === 'update') token.name = session.user.name
     }
@@ -131,6 +99,12 @@ export const config = {
 } satisfies NextAuthConfig
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config)
+
+// const Auth = (req: any, res: any) => NextAuth(req, res, config)
+
+// export default Auth
+
+// export const { handlers, auth, signIn, signOut } = NextAuth(config)
 
 /* 
 

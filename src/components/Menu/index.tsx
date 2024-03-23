@@ -230,6 +230,18 @@ const Menu = () => {
               </Link>
             </li>
             <li>
+              <Link
+                href="/auth"
+                className={`block py-2 px-3 rounded md:bg-transparent md:primary md:p-0 md:dark:bg-transparent ${
+                  pathname === '/auth'
+                    ? 'text-primary bg-gray-100 dark:bg-gray-700 md:hover:bg-transparent'
+                    : 'text-gray-900 hover:bg-gray-100  dark:hover:bg-gray-700 md:dark:hover:bg-transparent md:hover:bg-transparent dark:text-white md:dark:text-bg-gray-700 dark:hover:text-white'
+                }`}
+              >
+                Entrar
+              </Link>
+            </li>
+            <li>
               <div className="py-2 px-3 md:p-0 md:py-0">
                 <ThemeSwitcher />
               </div>

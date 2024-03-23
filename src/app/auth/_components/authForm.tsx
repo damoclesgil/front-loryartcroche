@@ -17,8 +17,7 @@ import { toast } from '@/components/ui/use-toast'
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-// import { signIn } from '@/services/auth'
-// import { signIn } from 'next-auth'
+import Link from 'next/link'
 
 export function AuthForm() {
   const form = useForm()
@@ -26,20 +25,22 @@ export function AuthForm() {
   const { push } = useRouter()
   const [mutate] = useMutation(MutationRegisterDocument)
 
+  // const signInWithGoogle = async () => {
+  //   await signIn('google', {
+  //     redirect: false,
+  //     callbackUrl: '/client-example'
+  //   })
+  // }
+
   const handleSubmit = form.handleSubmit(async (data) => {
-    // console.log(data)
-    // console.log(isLoginPage)
     try {
       if (isLoginPage) {
-        // signIn()
-        // await signIn('credentials', { entries: {} })
         const result = await signIn('credentials', {
           identifier: data.identifier,
           password: data.password,
           redirect: false,
           callbackUrl: '/client-example'
         })
-        console.log(result)
         if (result?.url) {
           return push(result.url)
         }
@@ -74,6 +75,9 @@ export function AuthForm() {
     <div className="flex justify-center items-center w-full h-[100vh]">
       {/* <button onClick={() => setLoginPage(!!true)}> Change </button> */}
       <Card className="w-full max-w-md">
+        <Link href="/client-example" className="mb-2 pt-2 block pl-2">
+          Teste Session
+        </Link>
         <CardHeader>
           <CardTitle className="text-center">Sign in to your account</CardTitle>
           <CardDescription className="text-center">
@@ -125,10 +129,16 @@ export function AuthForm() {
               type="password"
               {...form.register('password')}
             />
+
             <Button className="w-full" type="submit">
               Send Magic Link
             </Button>
           </form>
+          {/* <div className="mt-6">
+            <Button onClick={() => signInWithGoogle()}>
+              Login with google
+            </Button>
+          </div> */}
         </CardContent>
       </Card>
     </div>

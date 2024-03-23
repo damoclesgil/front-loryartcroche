@@ -8,5 +8,11 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "cSpell.language": "pt,pt-BR,en,en-US",
-  "cSpell.words": ["codegen", "loryartcroche", "nextjs", "Strapi"]
+  "cSpell.words": [
+    "codegen",
+    "googleusercontent",
+    "loryartcroche",
+    "nextjs",
+    "Strapi"
+  ]
 }
