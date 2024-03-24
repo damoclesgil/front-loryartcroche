@@ -1,10 +1,6 @@
 import NextAuth from 'next-auth'
-// import { AdapterSession, AdapterUser } from 'next-auth/adapters'
 // import EmailProvider from 'next-auth/providers/email'
 import CredentialsProvider from 'next-auth/providers/credentials'
-// import type { NextAuthOptions } from 'next-auth'
-// import { NextApiRequest, NextApiResponse } from 'next-auth/internals/utils'
-// import google from 'next-auth/providers/google'
 import Google from '@auth/core/providers/google'
 import type { NextAuthConfig } from 'next-auth'
 
@@ -78,11 +74,8 @@ export const config = {
     async session({ session, token }: { session: any; token: any }) {
       session.address = token.sub
       session.user.name = token.name
-      // session.user.image = 'https://www.fillmurray.com/128/128'
-      // console.log('token from callback session', token)
       // console.log('session from callback session', session)
       return session
-      // return Promise.resolve(session)
     },
 
     async jwt({ token, user }) {
@@ -93,40 +86,8 @@ export const config = {
         token.jwt = user.jwt
       }
       return Promise.resolve(token)
-      // if (trigger === 'update') token.name = session.user.name
     }
   }
 } satisfies NextAuthConfig
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config)
-
-// const Auth = (req: any, res: any) => NextAuth(req, res, config)
-
-// export default Auth
-
-// export const { handlers, auth, signIn, signOut } = NextAuth(config)
-
-/* 
-
-  callbacks: {
-    // session({ session, user }) {
-    //   session.jwt = user.jwt
-    //   session.id = user.id
-    //   return Promise.resolve(session)
-    // },
-    session: async (session, user) => {
-      session.jwt = user.jwt
-      session.id = user.id
-      return Promise.resolve(session)
-    },
-    jwt: async (token, user) => {
-      if (user) {
-        token.id = user.id
-        token.email = user.email
-        token.name = user.username
-        token.jwt = user.jwt
-      }
-      return Promise.resolve(token)
-    }
-  }
-*/

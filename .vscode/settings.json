@@ -7,6 +7,7 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "editor.fontFamily": "FiraCode Nerd Font",
   "cSpell.language": "pt,pt-BR,en,en-US",
   "cSpell.words": [
     "codegen",

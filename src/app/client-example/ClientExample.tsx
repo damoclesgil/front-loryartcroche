@@ -1,7 +1,7 @@
 'use client'
 
-import { signOut } from '@/services/auth'
-import { useSession } from 'next-auth/react'
+// import { signOut } from '@/services/auth'
+import { useSession, signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -9,7 +9,7 @@ export default function ClientExample() {
   const { data: session, status } = useSession()
 
   const deslogar = async () => {
-    await signOut({ redirect: true, redirectTo: '/auth' })
+    await signOut({ callbackUrl: '/auth' })
   }
 
   return (
@@ -30,7 +30,7 @@ export default function ClientExample() {
       </div>
 
       <h1 className="text-3xl font-bold">Client Side Rendering</h1>
-      {JSON.stringify(session)}
+      {JSON.stringify(session, null, 1)}
     </div>
   )
 }

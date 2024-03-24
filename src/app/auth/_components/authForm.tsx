@@ -39,7 +39,7 @@ export function AuthForm() {
           identifier: data.identifier,
           password: data.password,
           redirect: false,
-          callbackUrl: '/client-example'
+          callbackUrl: '/'
         })
         if (result?.url) {
           return push(result.url)
