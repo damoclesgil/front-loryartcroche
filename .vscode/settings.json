@@ -1,4 +1,19 @@
 {
   "editor.formatOnSave": true,
-  "cSpell.words": ["codegen", "loryartcroche", "nextjs"]
+  "prettier.enable": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.fontFamily": "FiraCode Nerd Font",
+  "cSpell.language": "pt,pt-BR,en,en-US",
+  "cSpell.words": [
+    "codegen",
+    "googleusercontent",
+    "loryartcroche",
+    "nextjs",
+    "Strapi"
+  ]
 }

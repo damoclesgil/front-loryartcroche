@@ -11,7 +11,7 @@ const ProductList = () => {
           key={product.id}
           id={product.id}
           slug={product.slug}
-          img={product.img}
+          img={`/img/products/${product.img}`}
           name={product.name}
           price={product.price}
         />

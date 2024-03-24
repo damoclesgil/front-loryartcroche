@@ -3,7 +3,7 @@ import { CartProvider } from '@/hooks/use-cart'
 // import { ProductsProvider } from '@/hooks/use-products'
 import { ThemeProvider } from 'next-themes'
 import { useState, useEffect } from 'react'
-
+// import { Provider as AuthProvider } from 'next-auth/providers'
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false)
 
@@ -16,6 +16,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   }
 
   return (
+    // <AuthProvider session={children}>
     <ThemeProvider
       defaultTheme="light"
       enableColorScheme
@@ -27,5 +28,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         {/* <ProductsProvider>{children}</ProductsProvider> */}
       </CartProvider>
     </ThemeProvider>
+    // </AuthProvider>
   )
 }

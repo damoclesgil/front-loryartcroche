@@ -1,7 +1,10 @@
-
 ![Lory Art Croche](https://raw.githubusercontent.com/damoclesgil/front-loryartcroche/master/public/img/logo-gh.svg?token=GHSAT0AAAAAACLHKISCS3JARWULULG5JP42ZLSBBXA)
 
 This is the front end of the [loryartcroche](https://www.instagram.com/loryartcroche/) e-commerce that was created with the intention of selling and promoting its handcrafted products.
+
+## Público Alvo
+
+Seria pessoas que gostam de colecionar talvez ou comprar bolsas artesanais feito a mal de crochê. Meio que coleção únicas, pois ela quer produzir pouco porém com alta qualidade.
 
 ## What is inside?
 
@@ -19,14 +22,19 @@ This project uses lot of stuff as:
 // react-fancybox
 
 Update Libs
+
 ```bash
 ncu --interactive
 
 // or
 ncu -i
 ```
-
-
 ## Alguns problemas de bibliotecas
 
 O sharp aparenta estar funcionando somente na versão 0.33.1
+
+todo
+
+= carrinho
+compartilhar
+linkar com api

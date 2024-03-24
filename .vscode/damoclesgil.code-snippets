@@ -1,0 +1,17 @@
+{
+  "Page ()": {
+    "scope": "typescript, typescriptreact",
+    "prefix": "page",
+    "body": [
+      "export default function Page(){",
+      "${0}",
+      "}",
+    ],
+    "description": "Exprot default Page()",
+  },
+  "websitelink": {
+    "prefix": "dmc.com.br",
+    "body": ["https://damoclesgil.com.br"],
+    "description": "Website meu",
+  },
+}

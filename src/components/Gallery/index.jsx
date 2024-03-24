@@ -1,7 +1,9 @@
+'use client'
+
 import Slider from 'react-slick'
 import styles from './gallery.module.css'
-import { ArrowBackIos as ArrowLeft } from '@styled-icons/material-outlined/ArrowBackIos'
-import { ArrowForwardIos as ArrowRight } from '@styled-icons/material-outlined/ArrowForwardIos'
+// import { ArrowBackIos as ArrowLeft } from '@styled-icons/material-outlined/ArrowBackIos'
+// import { ArrowForwardIos as ArrowRight } from '@styled-icons/material-outlined/ArrowForwardIos'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Close } from '@styled-icons/material-outlined/Close'
@@ -10,9 +12,10 @@ const commonSettings = {
   infinite: false,
   lazyLoad: 'ondemand',
   arrows: true,
-  slidesToShow: 4,
-  nextArrow: <ArrowRight aria-label="next image" />,
-  prevArrow: <ArrowLeft aria-label="previous image" />
+  slidesToShow: 4
+  // Ver pq estár retornando erro quando coloco o nextArrow e prevArrow
+  // nextArrow: <ArrowRight aria-label="next image" />,
+  // prevArrow: <ArrowLeft aria-label="previous image" />
 }
 
 const Gallery = ({ items }, props) => {
@@ -72,9 +75,9 @@ const Gallery = ({ items }, props) => {
   const modalSettings = {
     infinite: true,
     arrows: true,
-    slidesToShow: 1,
-    nextArrow: <ArrowRight aria-label="next image" />,
-    prevArrow: <ArrowLeft aria-label="previous image" />
+    slidesToShow: 1
+    // nextArrow: ">",
+    // prevArrow: "<"
   }
 
   return (
