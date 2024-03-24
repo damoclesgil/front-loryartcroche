@@ -1,4 +1,4 @@
-![Lory Art Croche](https://raw.githubusercontent.com/damoclesgil/front-loryartcroche/master/public/img/logo-gh.svg?token=GHSAT0AAAAAACLHKISCS3JARWULULG5JP42ZLSBBXA)
+![Lory Art Croche](./public/img/logo/logo_LoryArtCrocheColorida.png)
 
 This is the front end of the [loryartcroche](https://www.instagram.com/loryartcroche/) e-commerce that was created with the intention of selling and promoting its handcrafted products.
 

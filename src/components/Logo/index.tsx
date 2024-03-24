@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import LogoLoryArtCroche from './logo_LoryArtCrocheColorida.png'
+// import LogoLoryArtCroche from 'img/logo/logo_LoryArtCrocheColorida.png'
 
 export type LogoProps = {
   size?: 'small' | 'normal'
@@ -11,16 +11,20 @@ const Logo = ({ size = 'normal' }: LogoProps) => {
       {size === 'small' && (
         <Image
           className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert w-full h-[4.2rem]"
-          src={LogoLoryArtCroche}
+          src="/img/logo/logo_LoryArtCrocheColorida.png"
           alt="Lory Art Crochê Logo"
+          width={70}
+          height={70}
           priority
         />
       )}
       {size === 'normal' && (
         <Image
           className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert h-40"
-          src={LogoLoryArtCroche}
+          src="/img/logo/logo_LoryArtCrocheColorida.png"
           alt="Lory Art Crochê Logo"
+          width={160}
+          height={160}
           priority
         />
       )}
