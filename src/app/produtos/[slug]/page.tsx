@@ -2,10 +2,8 @@
 
 import { PRODUCTS_DATA } from '@/hooks/use-products/products-data'
 import Image from 'next/image'
-// import { useSearchParams } from 'next/navigation'
-// import Tabs from '@/components/Tabs'
+
 import dynamic from 'next/dynamic'
-// import {  AddShoppingCart,  RemoveShoppingCart } from '@styled-icons/material-outlined'
 const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
 import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
 import formatPrice from '@/utils/format-price'
@@ -15,14 +13,32 @@ import { Pix } from '@styled-icons/fa-brands'
 import Gallery from '@/components/Gallery'
 import Head from 'next/head'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useCart } from '@/hooks/use-cart'
+import { useQuery } from '@apollo/client'
+import { GetProdutoDocument } from '@/graphql/generated/graphql'
 
 export default function Page({ params }: { params: { slug: string } }) {
   const pathname = usePathname()
 
-  const { slug } = params
-  const currentProduct = PRODUCTS_DATA.find((product) => product.slug === slug)
+  const productId = useSearchParams().get('id')
+
+  const { data, error, loading } = useQuery(GetProdutoDocument, {
+    variables: { produtoId: productId }
+  })
+  let currentProduct = null
+
+  if (data) {
+    currentProduct = {
+      id: data?.produto?.data?.id,
+      name: data?.produto?.data?.attributes?.nome,
+      price: data?.produto?.data?.attributes?.preco,
+      img: data?.produto?.data?.attributes?.imagem_destaque?.data?.attributes
+        ?.url,
+      gallery: data?.produto?.data?.attributes?.galeria?.data,
+      detalhes: data?.produto?.data?.attributes?.descricao
+    }
+  }
 
   const { addToCart, isInCart, removeFromCart } = useCart()
 
@@ -64,7 +80,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 {currentProduct.name}
               </p>
               <p className="font-bold text-lg mb-2">
-                {formatPrice(currentProduct.price)}
+                {formatPrice(Number(currentProduct.price))}
               </p>
               <p className="text-md">Feito sob encomenda</p>
               <p className="mb-4">12 Dias para produção.</p>
@@ -77,7 +93,7 @@ export default function Page({ params }: { params: { slug: string } }) {
               </div>
               <p className="mb-2">Cores:</p>
               <div className="flex mb-2">
-                <Link
+                {/* <Link
                   className={`p-3 mr-2 border-primary focus:border-2 rounded-sm ${
                     pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
                       ? 'border-2 '
@@ -102,21 +118,21 @@ export default function Page({ params }: { params: { slug: string } }) {
                   }}
                 >
                   Azul
-                </Link>
+                </Link> */}
               </div>
 
               <div className="flex items-center">
                 <button
                   className="mr-2"
                   onClick={() => {
-                    isInCart(currentProduct.id)
-                      ? removeFromCart(currentProduct.id)
+                    isInCart(currentProduct?.id)
+                      ? removeFromCart(currentProduct?.id)
                       : addToCart({
+                          id: currentProduct?.id,
                           name: currentProduct.name,
-                          id: currentProduct.id,
                           img: currentProduct.img,
-                          price: currentProduct.price,
-                          slug: slug
+                          price: Number(currentProduct.price),
+                          slug: pathname
                         })
                   }}
                 >

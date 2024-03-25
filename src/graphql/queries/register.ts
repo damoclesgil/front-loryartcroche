@@ -1,6 +1,4 @@
 import { gql } from '@apollo/client'
-// import { graphql } from './gql/gql';
-// import { graphql } from '../generated'
 
 export const MUTATION_REGISTER = gql`
   mutation MutationRegister($input: UsersPermissionsRegisterInput!) {

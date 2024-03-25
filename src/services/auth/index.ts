@@ -74,7 +74,6 @@ export const config = {
     async session({ session, token }: { session: any; token: any }) {
       session.address = token.sub
       session.user.name = token.name
-      // console.log('session from callback session', session)
       return session
     },
 

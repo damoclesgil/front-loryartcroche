@@ -1,7 +1,7 @@
 import ProductCard from '@/components/ProductCard'
 import { PRODUCTS_DATA } from '@/hooks/use-products/products-data'
 
-const ProductList = () => {
+const ProductListMocked = () => {
   const products = PRODUCTS_DATA
 
   return (
@@ -20,4 +20,4 @@ const ProductList = () => {
   )
 }
 
-export default ProductList
+export default ProductListMocked

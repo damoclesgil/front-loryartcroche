@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import formatPrice from '@/utils/format-price'
 import Button from '@/components/Button'
+import { links, NextRoutes } from '@/utils/constant'
 
 export type ProductCardProps = {
   id: string
@@ -15,7 +16,7 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
   <div className="bg-product dark:bg-black relative flex flex-col w-full">
     <Link
       href={{
-        pathname: `produtos/${slug}`,
+        pathname: `${NextRoutes.products}/${slug}`,
         query: { id: id }
       }}
     >
@@ -39,7 +40,7 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
       </div>
     </Link>
     <Button
-      href="https://www.google.com/"
+      href={links.WhatsApp}
       target="_blank"
       as="a"
       fullWidth
@@ -51,7 +52,7 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
       <h3 className="text-md mb-2">{name}</h3>
     </div>
     <div className="flex justify-end items-center mt-2">
-      <h3 className="text-md mb-2 font-bold">{formatPrice(price)}</h3>
+      <h3 className="text-md mb-2 font-bold">{formatPrice(price || 0)}</h3>
     </div>
   </div>
 )

@@ -17,7 +17,6 @@ export const AllProducts = ({
 
   const [loading, setLoading] = useState(false)
 
-  console.log(pathname)
   return (
     <>
       Aqui está pegando do servidor no caso tanto é que pode ver no console log

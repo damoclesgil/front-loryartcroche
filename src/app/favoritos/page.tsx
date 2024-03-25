@@ -14,8 +14,8 @@ export default function Favoritos() {
           <ProductCard
             key={product.id}
             id={product.id}
+            img={`${process.env.NEXT_PUBLIC_API_URL}${product.img}`}
             slug={product.slug}
-            img={product.img}
             name={product.name}
             price={product.price}
           />

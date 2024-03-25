@@ -8,6 +8,8 @@ import { usePathname } from 'next/navigation'
 import SearchInput from '@/components/SearchInput'
 import { PRODUCTS_DATA } from '@/hooks/use-products/products-data'
 import Image from 'next/image'
+import UserMenu from './UserMenu'
+import { NextRoutes } from '@/utils/constant'
 
 export type ProductItemProps = {
   id: string
@@ -17,6 +19,7 @@ export type ProductItemProps = {
   price?: number
   isProductPage?: boolean
 }
+
 const ProductItem = ({
   id,
   slug,
@@ -53,7 +56,6 @@ const Menu = () => {
   const [inputValue, setInputValue] = useState<string>('')
   const [initialList] = useState(PRODUCTS_DATA)
   const [filteredList, setFilteredList] = useState(PRODUCTS_DATA)
-  // console.log(pathname.includes('/produtos/'))
   // Search Handler
   const searchHandler = useCallback(() => {
     const filteredData = initialList.filter((product) => {
@@ -79,7 +81,7 @@ const Menu = () => {
     <nav className="bg-white border-gray-200 dark:bg-gray-900 border-b dark:border-gray-500">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
-          href="/"
+          href={NextRoutes.home}
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <Logo size="small" />
@@ -110,7 +112,7 @@ const Menu = () => {
             </svg>
             <span className="sr-only">Search</span>
           </button>
-          <div className="relative hidden md:block">
+          <div className="relative hidden md:flex items-center">
             <SearchInput
               inputValue={inputValue}
               setInputValue={setInputValue}
@@ -125,7 +127,7 @@ const Menu = () => {
                     slug={product.slug}
                     img={product.img}
                     name={product.name}
-                    isProductPage={pathname.includes('/produtos/')}
+                    isProductPage={pathname.includes(`${NextRoutes.products}/`)}
                     price={product.price}
                   />
                 ))}
@@ -133,6 +135,9 @@ const Menu = () => {
             ) : (
               ''
             )}
+            <div className="ml-2">
+              <UserMenu />
+            </div>
           </div>
           <button
             data-collapse-toggle="navbar-search"
@@ -194,9 +199,9 @@ const Menu = () => {
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <Link
-                href="/"
+                href={NextRoutes.home}
                 className={`block py-2 px-3 rounded md:bg-transparent md:primary md:p-0 md:dark:bg-transparent ${
-                  pathname === '/'
+                  pathname === NextRoutes.home
                     ? 'text-primary bg-gray-100 dark:bg-gray-700 md:hover:bg-transparent'
                     : 'text-gray-900 hover:bg-gray-100  dark:hover:bg-gray-700 md:dark:hover:bg-transparent md:hover:bg-transparent dark:text-white md:dark:text-bg-gray-700 dark:hover:text-white'
                 }`}
@@ -207,9 +212,9 @@ const Menu = () => {
             </li>
             <li>
               <Link
-                href="/produtos"
+                href={NextRoutes.products}
                 className={`block py-2 px-3 rounded md:bg-transparent md:primary md:p-0 md:dark:bg-transparent ${
-                  pathname === '/produtos'
+                  pathname === NextRoutes.products
                     ? 'text-primary bg-gray-100 dark:bg-gray-700 md:hover:bg-transparent'
                     : 'text-gray-900 hover:bg-gray-100  dark:hover:bg-gray-700 md:dark:hover:bg-transparent md:hover:bg-transparent dark:text-white md:dark:text-bg-gray-700 dark:hover:text-white'
                 }`}
@@ -219,26 +224,14 @@ const Menu = () => {
             </li>
             <li>
               <Link
-                href="/favoritos"
+                href={NextRoutes.favorites}
                 className={`block py-2 px-3 rounded md:bg-transparent md:primary md:p-0 md:dark:bg-transparent ${
-                  pathname === '/favoritos'
+                  pathname === NextRoutes.favorites
                     ? 'text-primary bg-gray-100 dark:bg-gray-700 md:hover:bg-transparent'
                     : 'text-gray-900 hover:bg-gray-100  dark:hover:bg-gray-700 md:dark:hover:bg-transparent md:hover:bg-transparent dark:text-white md:dark:text-bg-gray-700 dark:hover:text-white'
                 }`}
               >
                 Favoritos
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/auth"
-                className={`block py-2 px-3 rounded md:bg-transparent md:primary md:p-0 md:dark:bg-transparent ${
-                  pathname === '/auth'
-                    ? 'text-primary bg-gray-100 dark:bg-gray-700 md:hover:bg-transparent'
-                    : 'text-gray-900 hover:bg-gray-100  dark:hover:bg-gray-700 md:dark:hover:bg-transparent md:hover:bg-transparent dark:text-white md:dark:text-bg-gray-700 dark:hover:text-white'
-                }`}
-              >
-                Entrar
               </Link>
             </li>
             <li>

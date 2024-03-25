@@ -7,6 +7,7 @@ import {
   Instagram as InstagramIcon,
   Whatsapp as WhatsIcon
 } from '@styled-icons/boxicons-logos'
+import { links, NextRoutes } from '@/utils/constant'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -23,19 +24,19 @@ const Footer = () => {
         <div className="flex flex-col items-center md:items-start mt-4 md:mt-0">
           <h2 className="text-lg font-semibold mb-2">Links</h2>
           <Link
-            href="/"
+            href={NextRoutes.home}
             className="no-underline text-primary hover:text-primary-darker mb-2"
           >
             Início
           </Link>
           <Link
-            href="/produtos"
+            href={NextRoutes.products}
             className="no-underline text-primary hover:text-primary-darker mb-2"
           >
             Produtos
           </Link>
           <Link
-            href="/produtos"
+            href={NextRoutes.favorites}
             className="no-underline text-primary hover:text-primary-darker"
           >
             Favoritos
@@ -50,7 +51,7 @@ const Footer = () => {
         <div className="flex flex-col items-center md:items-start mt-4 md:mt-0">
           <h2 className="text-lg font-semibold">Redes Sociais</h2>
           <Link
-            href="https://www.instagram.com/loryartcroche/"
+            href={links.Instagram}
             target="_blank"
             className="no-underline text-primary hover:text-primary-darker mt-2 flex items-center"
           >
@@ -58,12 +59,12 @@ const Footer = () => {
             <p className="ml-2">Instagram</p>
           </Link>
           <Link
-            href="https://google.com.br"
+            href={links.WhatsApp}
             target="_blank"
             className="no-underline text-primary hover:text-primary-darker mt-2 flex items-center"
           >
             <WhatsIcon size={22} />
-            <p className="ml-2">WhatsApp 62 99672-5529</p>
+            <p className="ml-2">WhatsApp {links.Phone}</p>
           </Link>
         </div>
       </div>

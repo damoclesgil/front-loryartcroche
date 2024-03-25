@@ -9,7 +9,7 @@ export default function ClientExample() {
   const { data: session, status } = useSession()
 
   const deslogar = async () => {
-    await signOut({ callbackUrl: '/auth' })
+    await signOut({ callbackUrl: '/auth', redirect: false })
   }
 
   return (

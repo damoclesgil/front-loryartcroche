@@ -18,6 +18,16 @@ const commonSettings = {
   // prevArrow: <ArrowLeft aria-label="previous image" />
 }
 
+// type GalleryProps = {
+//   items: {
+//     id: string
+//     attributes: {
+//       url: string
+//       name: string
+//     }
+//   }[]
+// }
+
 const Gallery = ({ items }, props) => {
   const [nav1, setNav1] = useState(null)
   const [nav2, setNav2] = useState(null)
@@ -90,8 +100,8 @@ const Gallery = ({ items }, props) => {
               height={165}
               role="button"
               key={`thumb-${index}`}
-              src={item.src}
-              alt={`Thumb - ${item.label}`}
+              src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.url}`}
+              alt={`Thumb - ${item.attributes.name}`}
               onClick={() => {
                 sliderModal.current.slickGoTo(index, true)
                 setIsOpen(true)
@@ -108,8 +118,8 @@ const Gallery = ({ items }, props) => {
               height={165}
               role="button"
               key={`thumb-${index}`}
-              src={item.src}
-              alt={`Thumb - ${item.label}`}
+              src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.url}`}
+              alt={`Thumb - ${item.attributes.name}`}
               onClick={() => {
                 sliderRef1.slickGoTo(index, true)
                 sliderRef2.slickGoTo(index, true)
@@ -144,8 +154,8 @@ const Gallery = ({ items }, props) => {
                 width={1200}
                 height={675}
                 key={`gallery-${index}`}
-                src={item.src}
-                alt={`${item.label}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.url}`}
+                alt={`${item.attributes.name}`}
               />
             ))}
           </Slider>

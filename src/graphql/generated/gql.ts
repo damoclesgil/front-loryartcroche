@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  query getProduto($produtoId: ID) {\n    produto(id: $produtoId) {\n      data {\n        id\n        attributes {\n          nome\n          slug\n          descricao\n          preco\n          imagem_destaque {\n            data {\n              attributes {\n                url\n              }\n            }\n          }\n          galeria {\n            data {\n              id\n              attributes {\n                url\n                name\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n": types.GetProdutoDocument,
     "\n  query produtos {\n    produtos {\n      data {\n        id\n        attributes {\n          nome\n          slug\n          descricao\n          preco\n          imagem_destaque {\n            data {\n              attributes {\n                url\n              }\n            }\n          }\n          galeria {\n            data {\n              attributes {\n                url\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n": types.ProdutosDocument,
     "\n  mutation MutationRegister($input: UsersPermissionsRegisterInput!) {\n    register(input: $input) {\n      jwt\n    }\n  }\n": types.MutationRegisterDocument,
 };
@@ -31,6 +32,10 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query getProduto($produtoId: ID) {\n    produto(id: $produtoId) {\n      data {\n        id\n        attributes {\n          nome\n          slug\n          descricao\n          preco\n          imagem_destaque {\n            data {\n              attributes {\n                url\n              }\n            }\n          }\n          galeria {\n            data {\n              id\n              attributes {\n                url\n                name\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getProduto($produtoId: ID) {\n    produto(id: $produtoId) {\n      data {\n        id\n        attributes {\n          nome\n          slug\n          descricao\n          preco\n          imagem_destaque {\n            data {\n              attributes {\n                url\n              }\n            }\n          }\n          galeria {\n            data {\n              id\n              attributes {\n                url\n                name\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
