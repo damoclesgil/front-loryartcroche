@@ -1,5 +1,5 @@
 'use client'
-
+// https://www.tabnews.com.br/GkIgor/hey-dev-usando-zod-no-angular-pra-que
 import {
   CardTitle,
   CardHeader,
@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from '@/components/ui/use-toast'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export function FormSignIn() {
   const form = useForm()
@@ -82,6 +83,13 @@ export function FormSignIn() {
             Entrar
           </Button>
         </form>
+        <Link
+          href="/forgot-password"
+          className="mb-2 pt-2 block pl-2 text-gray-500"
+        >
+          Esqueceu sua senha?
+        </Link>
+
         {/* <div className="mt-6">
             <Button onClick={() => signInWithGoogle()}>
               Login with google

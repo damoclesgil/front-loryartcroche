@@ -14,7 +14,7 @@ export default function ProductsList() {
   if (loading) {
     return (
       <>
-        <p>Apenas Carregando será?</p>
+        <p>Carregando Produtos...</p>
       </>
     )
   }

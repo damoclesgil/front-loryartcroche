@@ -3,79 +3,15 @@
 import Link from 'next/link'
 import ThemeSwitcher from '../ThemeSwitcher'
 import Logo from '@/components/Logo'
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import SearchInput from '@/components/SearchInput'
-import { PRODUCTS_DATA } from '@/hooks/use-products/products-data'
-import Image from 'next/image'
 import UserMenu from './UserMenu'
 import { NextRoutes } from '@/utils/constant'
-
-export type ProductItemProps = {
-  id: string
-  slug: string
-  name: string
-  img?: string
-  price?: number
-  isProductPage?: boolean
-}
-
-const ProductItem = ({
-  id,
-  slug,
-  name,
-  img,
-  isProductPage = false
-}: ProductItemProps) => (
-  <div className="bg-product dark:bg-black relative flex w-full">
-    <Link
-      href={{
-        pathname: `${isProductPage ? '' : 'produtos/'}${slug}`,
-        query: { id: id }
-      }}
-    >
-      <div className="flex items-center">
-        <Image
-          className="object-contain object-center"
-          src={`/img/products/${img}`}
-          alt={name}
-          width={50}
-          height={50}
-          loading="lazy"
-        />
-        <p className="dark:text-white ml-2">{name}</p>
-        <p>{isProductPage}</p>
-      </div>
-    </Link>
-  </div>
-)
+// import SearchProducts from './SearchProducts'
 
 const Menu = () => {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
-  const [inputValue, setInputValue] = useState<string>('')
-  const [initialList] = useState(PRODUCTS_DATA)
-  const [filteredList, setFilteredList] = useState(PRODUCTS_DATA)
-  // Search Handler
-  const searchHandler = useCallback(() => {
-    const filteredData = initialList.filter((product) => {
-      return product.name.toLowerCase().includes(inputValue.toLowerCase())
-    })
-    setFilteredList(filteredData)
-  }, [initialList, inputValue])
-
-  // EFFECT: Search Handler
-  useEffect(() => {
-    // Debounce search handler
-    const timer = setTimeout(() => {
-      searchHandler()
-    }, 500)
-
-    // Cleanup
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [searchHandler])
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 border-b dark:border-gray-500">
@@ -87,6 +23,7 @@ const Menu = () => {
           <Logo size="small" />
         </Link>
         <div className="flex md:order-2">
+          {/* Mobile */}
           <button
             type="button"
             data-collapse-toggle="navbar-search"
@@ -112,33 +49,14 @@ const Menu = () => {
             </svg>
             <span className="sr-only">Search</span>
           </button>
+          {/* Desktop */}
           <div className="relative hidden md:flex items-center">
-            <SearchInput
-              inputValue={inputValue}
-              setInputValue={setInputValue}
-              isHandling={false}
-            />
-            {inputValue.length > 0 ? (
-              <div className="bg-black text-white p-2 absolute w-full">
-                {filteredList.map((product) => (
-                  <ProductItem
-                    key={product.id}
-                    id={product.id}
-                    slug={product.slug}
-                    img={product.img}
-                    name={product.name}
-                    isProductPage={pathname.includes(`${NextRoutes.products}/`)}
-                    price={product.price}
-                  />
-                ))}
-              </div>
-            ) : (
-              ''
-            )}
+            {/* <SearchProducts /> */}
             <div className="ml-2">
               <UserMenu />
             </div>
           </div>
+          {/* Mobile */}
           <button
             data-collapse-toggle="navbar-search"
             type="button"
@@ -222,7 +140,7 @@ const Menu = () => {
                 Produtos
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 href={NextRoutes.favorites}
                 className={`block py-2 px-3 rounded md:bg-transparent md:primary md:p-0 md:dark:bg-transparent ${
@@ -233,7 +151,7 @@ const Menu = () => {
               >
                 Favoritos
               </Link>
-            </li>
+            </li> */}
             <li>
               <div className="py-2 px-3 md:p-0 md:py-0">
                 <ThemeSwitcher />

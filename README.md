@@ -33,8 +33,3 @@ ncu -i
 
 O sharp aparenta estar funcionando somente na versão 0.33.1
 
-todo
-
-= carrinho
-compartilhar
-linkar com api

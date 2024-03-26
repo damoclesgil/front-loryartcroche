@@ -4,7 +4,6 @@ import { useSession, signOut } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenuTrigger,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuItem,
   DropdownMenuContent,
@@ -12,11 +11,13 @@ import {
 } from '@/components/ui/dropdown-menu'
 import Link from 'next/link'
 import { ChevronDownIcon } from '@radix-ui/react-icons'
+import { NextRoutes } from '@/utils/constant'
+import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu'
 
 const UserMenu = () => {
   const { data: session, status } = useSession()
 
-  const deslogar = async () => {
+  const desLogar = async () => {
     await signOut({ callbackUrl: '/auth', redirect: false })
   }
 
@@ -25,16 +26,41 @@ const UserMenu = () => {
       {status === 'authenticated' ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="h-9" variant="outline">
-              <UserIcon className="h-4 w-4" />
-              <p className="ml-2">{session?.user?.name}</p>
-              <ChevronDownIcon className="ml-2 h-4 w-4" />
+            <Button
+              className="rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800"
+              id="profile-menu"
+              size="icon"
+              variant="ghost"
+            >
+              <img
+                alt="Avatar"
+                className="rounded-full"
+                height="32"
+                src="img/products/placeholder.svg"
+                style={{
+                  aspectRatio: '32/32',
+                  objectFit: 'cover'
+                }}
+                width="32"
+              />
+              <span className="sr-only">Toggle user menu</span>
             </Button>
+            {/* <p className="ml-2">{session?.user?.name}</p> */}
+            {/* <ChevronDownIcon className="ml-2 h-4 w-4" /> */}
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+          <DropdownMenuContent className="w-full ">
+            <DropdownMenuLabel className="mr-2.5 py-2 px-2 text-sm w-full">
+              {session?.user?.name}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer" onClick={deslogar}>
+
+            <DropdownMenuItem>
+              <UserIcon className="w-4 h-4 mr-2.5" />
+              <Link href={NextRoutes.profile}>Minha Conta</Link>
+            </DropdownMenuItem>
+            {/* <DropdownMenuSeparator /> */}
+            <DropdownMenuItem className="cursor-pointer" onClick={desLogar}>
+              <LogOutIcon className="w-4 h-4 mr-2.5" />
               Sair
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -66,4 +92,24 @@ function UserIcon(props: any) {
   )
 }
 
+function LogOutIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <polyline points="16 17 21 12 16 7" />
+      <line x1="21" x2="9" y1="12" y2="12" />
+    </svg>
+  )
+}
 export default UserMenu

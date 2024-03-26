@@ -9,6 +9,8 @@ import {
 } from '@apollo/experimental-nextjs-app-support/ssr'
 import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
 import { setVerbosity } from 'ts-invariant'
+import { setContext } from '@apollo/client/link/context'
+import { getSession } from 'next-auth/react'
 
 if (process.env.NODE_ENV === 'development') {
   setVerbosity('debug')
@@ -16,11 +18,23 @@ if (process.env.NODE_ENV === 'development') {
   loadErrorMessages()
 }
 
-function makeClient() {
-  const httpLink = new HttpLink({
-    uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`
-  })
+const httpLink = new HttpLink({
+  uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`
+})
 
+const authLink = setContext(async (_, { headers }) => {
+  let session = await getSession()
+
+  const authorization = session ? `Bearer ${session.jwt}` : ``
+  return {
+    headers: {
+      ...headers,
+      authorization
+    }
+  }
+})
+
+function makeClient() {
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
     link:
@@ -29,9 +43,9 @@ function makeClient() {
             new SSRMultipartLink({
               stripDefer: true
             }),
-            httpLink
+            authLink
           ])
-        : httpLink
+        : authLink.concat(httpLink)
   })
 }
 

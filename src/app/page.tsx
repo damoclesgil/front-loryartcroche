@@ -6,7 +6,9 @@ export default function Home() {
   return (
     <Base>
       <main>
-        <code className="font-mono font-bold">src/app/page.tsx</code>
+        <h2>
+          Beautifully designed bags made with love. Perfect for every occasion.
+        </h2>
         <ProductsList />
         <InstagramSection />
       </main>

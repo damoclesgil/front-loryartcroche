@@ -14,5 +14,6 @@ export const NextRoutes = {
   contact: '/contato',
   products: '/produtos',
   favorites: '/favoritos',
-  cart: '/carrinho'
+  cart: '/carrinho',
+  profile: 'minha-conta'
 }

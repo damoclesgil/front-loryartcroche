@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Providers from './providers'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { ApolloWrapper } from '@/utils/apolloWrapper'
+import { SessionProvider } from 'next-auth/react'
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
@@ -19,8 +21,12 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
-        <SpeedInsights />
+        <SessionProvider>
+          <ApolloWrapper>
+            <Providers>{children}</Providers>
+          </ApolloWrapper>
+          <SpeedInsights />
+        </SessionProvider>
       </body>
     </html>
   )

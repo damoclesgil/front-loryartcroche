@@ -74,7 +74,8 @@ export const config = {
     async session({ session, token }: { session: any; token: any }) {
       session.address = token.sub
       session.user.name = token.name
-      return session
+      session.jwt = token.jwt
+      return Promise.resolve(session)
     },
 
     async jwt({ token, user }) {

@@ -151,9 +151,9 @@ export default function Page({ params }: { params: { slug: string } }) {
                   )}
                 </button>
               </div>
-              <p>Compartilhar</p>
+              <p className="my-2">Compartilhar</p>
               <p>Meios de pagamento:</p>
-              <p>Pix, Cartão e Boleto</p>
+              <p className="mb-2">Pix, Cartão e Boleto</p>
               <div className="flex mb-4">
                 <Pix color="#4bb8a9" size={20} className="mr-3" />
                 <CreditCard size={20} className="mr-3" />
