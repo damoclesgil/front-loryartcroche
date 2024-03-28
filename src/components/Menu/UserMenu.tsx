@@ -18,7 +18,7 @@ const UserMenu = () => {
   const { data: session, status } = useSession()
 
   const desLogar = async () => {
-    await signOut({ callbackUrl: '/auth', redirect: false })
+    await signOut({ callbackUrl: NextRoutes.signIn, redirect: false })
   }
 
   return (
@@ -66,7 +66,7 @@ const UserMenu = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Link href="/auth">Entrar</Link>
+        <Link href={NextRoutes.signIn}>Entre ou cadastre-se</Link>
       )}
     </>
   )

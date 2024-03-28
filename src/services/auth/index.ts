@@ -3,6 +3,7 @@ import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import Google from '@auth/core/providers/google'
 import type { NextAuthConfig } from 'next-auth'
+import { NextRoutes } from '@/utils/constant'
 
 declare module 'next-auth' {
   interface User {
@@ -42,7 +43,6 @@ export const config = {
           `${process.env.NEXT_PUBLIC_API_URL}/api/auth/local`,
           {
             method: 'POST',
-
             body: new URLSearchParams({
               identifier: credentials.identifier,
               password: credentials.password
@@ -63,11 +63,11 @@ export const config = {
   },
   secret: process.env.JWT_SECRET,
   pages: {
-    signIn: '/auth',
-    signOut: '/auth',
-    error: '/auth',
-    verifyRequest: '/auth',
-    newUser: '/'
+    signIn: NextRoutes.signIn,
+    signOut: NextRoutes.signUp,
+    error: NextRoutes.signIn,
+    verifyRequest: NextRoutes.signIn,
+    newUser: NextRoutes.home
   },
   // basePath: '/api/auth',
   callbacks: {

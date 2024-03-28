@@ -5,6 +5,7 @@ import Providers from './providers'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ApolloWrapper } from '@/utils/apolloWrapper'
 import { SessionProvider } from 'next-auth/react'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <SessionProvider>
           <ApolloWrapper>
             <Providers>{children}</Providers>
+            <Toaster />
           </ApolloWrapper>
           <SpeedInsights />
         </SessionProvider>

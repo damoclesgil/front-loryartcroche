@@ -10,10 +10,13 @@ export const links = {
 export const NextRoutes = {
   home: '/',
   auth: '/auth',
+  signUp: '/sign-up',
+  signIn: '/sign-in',
+  forgotPassword: '/forgot-password',
   about: '/sobre',
   contact: '/contato',
   products: '/produtos',
   favorites: '/favoritos',
   cart: '/carrinho',
-  profile: 'minha-conta'
+  profile: '/minha-conta'
 }

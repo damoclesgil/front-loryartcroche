@@ -10,54 +10,48 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useForm } from 'react-hook-form'
-import { toast } from '@/components/ui/use-toast'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { schema } from '@/utils/validations/indext'
+import { signInValidate } from '@/utils/validations/indext'
+import { NextRoutes } from '@/utils/constant'
+import { TextError } from '@/components/ui/text-error'
+import { ErrorOutline } from '@styled-icons/material-outlined'
+// import { useState } from 'react'
 
 export function FormSignIn() {
   const { push } = useRouter()
 
   const {
     register,
+    setError,
+    // clearErrors,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isSubmitting, isLoading }
   } = useForm({
-    resolver: zodResolver(schema)
+    resolver: zodResolver(signInValidate)
   })
 
   const submitFormSigIn = handleSubmit(async (data) => {
-    console.log(data)
-
-    // try {
-    //   const result = await signIn('credentials', {
-    //     identifier: data.username,
-    //     password: data.password,
-    //     redirect: false,
-    //     callbackUrl: '/'
-    //   })
-    //   if (result?.url) {
-    //     return push(result.url)
-    //   }
-
-    //   toast({
-    //     variant: 'default',
-    //     title: 'Login efetuado com success!',
-    //     description: '...'
-    //   })
-    // } catch (error) {
-    //   toast({
-    //     variant: 'destructive',
-    //     title: 'OOps Errado!',
-    //     description: 'Login Deu errado'
-    //   })
-    // }
+    const result = await signIn('credentials', {
+      identifier: data.username,
+      password: data.password,
+      redirect: false,
+      callbackUrl: NextRoutes.home
+    })
+    if (result?.url) {
+      return push(NextRoutes.home)
+    } else {
+      setError('manual', {
+        type: 'custom',
+        message: 'Nome de usuário ou Senha é inválido!'
+      })
+    }
   })
 
   return (
-    <div className="mx-auto w-[350px] space-y-6">
+    <div className="mx-auto w-full max-w-sm space-y-6">
       <CardHeader className="space-y-2 text-center">
         <CardTitle className="text-center text-3xl font-bold">
           Entre na sua conta!
@@ -67,18 +61,26 @@ export function FormSignIn() {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {errors.manual && (
+          <TextError className="text-left mb-2">
+            <ErrorOutline className="mr-1 w-4 h-4" />
+            {errors.manual?.message?.toString()}
+          </TextError>
+        )}
         <form onSubmit={submitFormSigIn} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="username">Nome de usuário</Label>
             <Input
               autoComplete="username"
               id="username"
-              placeholder="username"
+              placeholder="Nome de usuário"
               required
               type="username"
               {...register('username')}
             />
-            {errors.username && <p>{errors.username?.message?.toString()}</p>}
+            {errors.username && (
+              <TextError>{errors.username?.message?.toString()}</TextError>
+            )}
           </div>
           <div className="space-y-2">
             <div className="flex items-center">
@@ -96,10 +98,12 @@ export function FormSignIn() {
               type="password"
               {...register('password')}
             />
-            {errors.password && <p>{errors.password?.message?.toString()}</p>}
+            {errors.password && (
+              <TextError>{errors.password?.message?.toString()}</TextError>
+            )}
           </div>
 
-          <Button className="w-full" type="submit" onClick={submitFormSigIn}>
+          <Button className="w-full" type="submit" loading={isSubmitting}>
             Entrar
           </Button>
           <Button className="w-full" variant="outline">
@@ -108,7 +112,7 @@ export function FormSignIn() {
         </form>
         <div className="mt-4 text-center text-sm">
           Não possui uma conta?
-          <Link className="underline ml-2" href="#">
+          <Link className="underline ml-2" href={NextRoutes.signUp}>
             Cadastrar
           </Link>
         </div>

@@ -23,13 +23,13 @@ export function AuthForm() {
     <Auth>
       {isLoginPage ? <FormSignIn /> : <FormSignUp />}
 
-      <Button
+      {/* <Button
         variant="link"
         className="pt-2 block m-auto pl-2"
         onClick={() => loginOrSignUp()}
       >
         {isLoginPage ? 'Não possui conta?' : 'Já possui conta?'}
-      </Button>
+      </Button> */}
     </Auth>
   )
 }

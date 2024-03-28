@@ -1,10 +1,10 @@
 import Auth from '@/templates/Auth'
-import { FormForgotPassword } from './_components/FormForgotPassword'
+import { FormSignUp } from './_components/FormSignUp'
 
 export default function Page() {
   return (
     <Auth>
-      <FormForgotPassword />
+      <FormSignUp />
     </Auth>
   )
 }

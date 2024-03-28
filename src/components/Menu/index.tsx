@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import UserMenu from './UserMenu'
 import { NextRoutes } from '@/utils/constant'
+import { ShoppingCart } from '@styled-icons/material-outlined'
 // import SearchProducts from './SearchProducts'
 
 const Menu = () => {
@@ -52,6 +53,9 @@ const Menu = () => {
           {/* Desktop */}
           <div className="relative hidden md:flex items-center">
             {/* <SearchProducts /> */}
+            <div>
+              <ShoppingCart className="text-black" />
+            </div>
             <div className="ml-2">
               <UserMenu />
             </div>
