@@ -29,7 +29,9 @@ ncu --interactive
 // or
 ncu -i
 ```
-## Alguns problemas de bibliotecas
 
-O sharp aparenta estar funcionando somente na versão 0.33.1
+# Só para lembrar
 
+- https://maildev.github.io/maildev/
+- http://localhost:1080/
+- no-reply@strapi.io

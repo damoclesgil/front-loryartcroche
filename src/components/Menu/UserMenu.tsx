@@ -13,6 +13,7 @@ import Link from 'next/link'
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import { NextRoutes } from '@/utils/constant'
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu'
+import Image from 'next/image'
 
 const UserMenu = () => {
   const { data: session, status } = useSession()
@@ -32,16 +33,16 @@ const UserMenu = () => {
               size="icon"
               variant="ghost"
             >
-              <img
+              <Image
                 alt="Avatar"
                 className="rounded-full"
-                height="32"
+                height={32}
+                width={32}
                 src="img/products/placeholder.svg"
                 style={{
                   aspectRatio: '32/32',
                   objectFit: 'cover'
                 }}
-                width="32"
               />
               <span className="sr-only">Toggle user menu</span>
             </Button>

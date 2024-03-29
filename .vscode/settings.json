@@ -7,6 +7,8 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "editor.fontFamily": "FiraCode Nerd Font",
   "cSpell.language": "pt,pt-BR,en,en-US",
   "cSpell.words": [

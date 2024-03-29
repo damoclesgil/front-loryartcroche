@@ -9,7 +9,7 @@ const TextError = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn('pl-0.5 text-sm text-red-500', className)}
+    className={cn('pl-0.5 text-xs text-red-500', className)}
     {...props}
   />
 ))

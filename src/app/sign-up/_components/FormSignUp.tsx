@@ -14,46 +14,62 @@ import { signIn } from 'next-auth/react'
 import { UsersPermissionsRegisterInput } from '@/graphql/generated/graphql'
 import { CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { NextRoutes } from '@/utils/constant'
+import { TextError } from '@/components/ui/text-error'
+import { ErrorOutline } from '@styled-icons/material-outlined'
+import { signUpValidate } from '@/utils/validations/indext'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 export function FormSignUp() {
-  const { handleSubmit, register, getValues } =
-    useForm<UsersPermissionsRegisterInput>()
+  const {
+    handleSubmit,
+    register,
+    setError,
+    getValues,
+    formState: { errors, isSubmitting }
+  } = useForm<UsersPermissionsRegisterInput>({
+    resolver: zodResolver(signUpValidate)
+  })
   // const { push } = useRouter()
   const [mutate] = useMutation(MutationRegisterDocument, {
-    onCompleted(data, clientOptions) {
+    onCompleted(data) {
       if (data) {
         let formValues = getValues()
         signIn('credentials', {
-          email: formValues.email,
+          identifier: formValues.username,
           password: formValues.password,
-          redirect: false,
-          callbackUrl: '/'
+          redirect: true,
+          callbackUrl: NextRoutes.home
         })
       }
     }
   })
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit(async (values) => {
     try {
       await mutate({
         variables: {
           input: {
-            email: data.email,
-            password: data.password,
-            username: data.username
+            email: values.email,
+            password: values.password,
+            username: values.username
           }
         }
       })
       toast({
         variant: 'default',
-        title: 'Conta Criada com successo!',
-        description: '...'
+        title: 'Conta Criada com sucesso!',
+        description: 'Estamos redirecionado você para a nossa loja 😊'
       })
     } catch (error) {
+      console.log(error)
+      setError('root', {
+        type: 'manual',
+        message: 'Nome de usuário, senha ou e-mail é inválido!'
+      })
       toast({
         variant: 'destructive',
-        title: 'OOps Errado!',
-        description: 'Algo de errado ocorreu 🥲'
+        title: 'OOps 😮!',
+        description: 'Algo de errado, tente novamente em alguns minutos.'
       })
     }
   })
@@ -68,11 +84,19 @@ export function FormSignUp() {
           Insira suas informações para criar uma conta
         </CardDescription>
       </CardHeader>
-
+      {errors.root && (
+        <TextError className="text-left mb-2">
+          <ErrorOutline className="mr-1 w-4 h-4" />
+          {errors.root?.message?.toString()}
+        </TextError>
+      )}
       <form onSubmit={onSubmit} className="space-y-6">
         <div className="space-y-2">
           <Label htmlFor="name">Nome</Label>
           <Input id="name" required {...register('username')} />
+          {errors.username && (
+            <TextError>{errors.username?.message?.toString()}</TextError>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
@@ -82,6 +106,9 @@ export function FormSignUp() {
             {...register('email')}
             required
           />
+          {errors.email && (
+            <TextError>{errors.email?.message?.toString()}</TextError>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="password">Senha</Label>
@@ -91,6 +118,9 @@ export function FormSignUp() {
             type="password"
             {...register('password')}
           />
+          {errors.password && (
+            <TextError>{errors.password?.message?.toString()}</TextError>
+          )}
         </div>
         {/* <div className="space-y-2">
           <Label htmlFor="confirm-password">Confirm password</Label>
@@ -105,7 +135,12 @@ export function FormSignUp() {
             </Link>
           </Label>
         </div>
-        <Button className="w-full" type="submit" onClick={onSubmit}>
+        <Button
+          className="w-full"
+          type="submit"
+          onClick={onSubmit}
+          loading={isSubmitting}
+        >
           Cadastrar
         </Button>
       </form>

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Montserrat, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import Providers from './providers'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -7,7 +7,16 @@ import { ApolloWrapper } from '@/utils/apolloWrapper'
 import { SessionProvider } from 'next-auth/react'
 import { Toaster } from '@/components/ui/toaster'
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' })
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat'
+})
+const playfair_display = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-playfair'
+})
 
 export const metadata: Metadata = {
   title: 'Lory Art Crochê',
@@ -21,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={inter.className}>
+      <body className={`${montserrat.variable} ${playfair_display.variable}`}>
         <SessionProvider>
           <ApolloWrapper>
             <Providers>{children}</Providers>

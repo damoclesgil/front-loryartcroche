@@ -20,7 +20,7 @@ const Logo = ({ size = 'normal' }: LogoProps) => {
       )}
       {size === 'normal' && (
         <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert h-40"
+          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert h-40 object-contain"
           src="/img/logo/logo_LoryArtCrocheColorida.png"
           alt="Lory Art Crochê Logo"
           width={160}

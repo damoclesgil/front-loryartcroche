@@ -1,5 +1,5 @@
 'use client'
-// https://www.tabnews.com.br/GkIgor/hey-dev-usando-zod-no-angular-pra-que
+
 import {
   CardTitle,
   CardHeader,
@@ -18,7 +18,6 @@ import { signInValidate } from '@/utils/validations/indext'
 import { NextRoutes } from '@/utils/constant'
 import { TextError } from '@/components/ui/text-error'
 import { ErrorOutline } from '@styled-icons/material-outlined'
-// import { useState } from 'react'
 
 export function FormSignIn() {
   const { push } = useRouter()
@@ -26,9 +25,8 @@ export function FormSignIn() {
   const {
     register,
     setError,
-    // clearErrors,
     handleSubmit,
-    formState: { errors, isSubmitting, isLoading }
+    formState: { errors, isSubmitting }
   } = useForm({
     resolver: zodResolver(signInValidate)
   })
@@ -52,11 +50,11 @@ export function FormSignIn() {
 
   return (
     <div className="mx-auto w-full max-w-sm space-y-6">
-      <CardHeader className="space-y-2 text-center">
+      <CardHeader className="space-y-2 text-center p-1">
         <CardTitle className="text-center text-3xl font-bold">
           Entre na sua conta!
         </CardTitle>
-        <CardDescription className="text-gray-500 dark:text-gray-400">
+        <CardDescription className="text-sm text-gray-500 dark:text-gray-400">
           Insira suas informações para entrar na sua conta
         </CardDescription>
       </CardHeader>
