@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   description: 'Lorilei, bolsas em crochê modernas e de Luxo'
 }
 
+/* RUN IN A SERVER SIDE */
 export default function RootLayout({
   children
 }: {

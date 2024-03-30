@@ -3,6 +3,7 @@ import Image from 'next/image'
 import formatPrice from '@/utils/format-price'
 import { links, NextRoutes } from '@/utils/constant'
 import { Button, buttonVariants } from '../ui/button'
+import WishlistButton from '@/components/WishlistButton'
 
 export type ProductCardProps = {
   id: string
@@ -14,6 +15,7 @@ export type ProductCardProps = {
 
 const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
   <div className="bg-product dark:bg-black relative flex flex-col w-full">
+    <WishlistButton id={id} />
     <Link
       href={{
         pathname: `${NextRoutes.products}/${slug}`,
