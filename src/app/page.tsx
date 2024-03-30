@@ -1,6 +1,6 @@
 import InstagramSection from '@/components/InstagramSection'
+import ProductList from '@/components/ProductList'
 import Base from '@/templates/Base'
-import ProductsList from './produtos/_components/ProductList'
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
         <h2>
           Beautifully designed bags made with love. Perfect for every occasion.
         </h2>
-        <ProductsList />
+        <ProductList />
         <InstagramSection />
       </main>
     </Base>

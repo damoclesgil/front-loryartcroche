@@ -1,4 +1,5 @@
-import ProductList from './_components/ProductList'
+import ProductList from '@/components/ProductList'
+
 export const dynamic = 'force-dynamic'
 
 export default function Testando() {

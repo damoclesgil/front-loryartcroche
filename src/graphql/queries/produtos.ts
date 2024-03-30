@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+import { ProdutoFragment } from '../fragments/produto'
 
 export const QUERY_PRODUTO = gql`
   query getProduto($produtoId: ID) {
@@ -6,30 +7,12 @@ export const QUERY_PRODUTO = gql`
       data {
         id
         attributes {
-          nome
-          slug
-          descricao
-          preco
-          imagem_destaque {
-            data {
-              attributes {
-                url
-              }
-            }
-          }
-          galeria {
-            data {
-              id
-              attributes {
-                url
-                name
-              }
-            }
-          }
+          ...ProdutoFragment
         }
       }
     }
   }
+  ${ProdutoFragment}
 `
 
 export const QUERY_PRODUTOS = gql`
@@ -38,26 +21,10 @@ export const QUERY_PRODUTOS = gql`
       data {
         id
         attributes {
-          nome
-          slug
-          descricao
-          preco
-          imagem_destaque {
-            data {
-              attributes {
-                url
-              }
-            }
-          }
-          galeria {
-            data {
-              attributes {
-                url
-              }
-            }
-          }
+          ...ProdutoFragment
         }
       }
     }
   }
+  ${ProdutoFragment}
 `

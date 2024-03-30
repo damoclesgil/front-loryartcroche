@@ -1,6 +1,9 @@
+'use client'
+
 import InstagramSection from '@/components/InstagramSection'
-import ProductList from './_components/ProductList'
+import ProductList from '@/components/ProductList'
 import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 
 export default function Produtos() {
   return (
@@ -20,7 +23,7 @@ export default function Produtos() {
             <p className="text-2xl font-semibold">$49.99</p>
             <Button>Buy Now</Button>
           </div>
-          <img
+          <Image
             alt="Featured bag"
             className="aspect-video overflow-hidden rounded-lg object-cover object-center"
             height="400"
@@ -29,7 +32,7 @@ export default function Produtos() {
           />
         </div>
         <div className="grid gap-4 md:gap-8 md:grid-cols-2">
-          <img
+          <Image
             alt="Featured bag"
             className="aspect-video overflow-hidden rounded-lg object-cover object-center"
             height="400"

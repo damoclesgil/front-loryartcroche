@@ -1,22 +1,21 @@
 'use client'
 
-import { PRODUCTS_DATA } from '@/hooks/use-products/products-data'
-import Image from 'next/image'
-
-import dynamic from 'next/dynamic'
 const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
+
+import Image from 'next/image'
+import dynamic from 'next/dynamic'
 import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
 import formatPrice from '@/utils/format-price'
-import Button from '@/components/Button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { LocalShipping, CreditCard } from '@styled-icons/material-outlined'
 import { Pix } from '@styled-icons/fa-brands'
 import Gallery from '@/components/Gallery'
 import Head from 'next/head'
-import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useCart } from '@/hooks/use-cart'
 import { useQuery } from '@apollo/client'
 import { GetProdutoDocument } from '@/graphql/generated/graphql'
+import { links } from '@/utils/constant'
 
 export default function Page({ params }: { params: { slug: string } }) {
   const pathname = usePathname()
@@ -166,7 +165,19 @@ export default function Page({ params }: { params: { slug: string } }) {
                   loading="lazy"
                 />
               </div>
-              <Button>Encomendar</Button>
+              <Button asChild>
+                <a
+                  target="_blank"
+                  className={buttonVariants({
+                    variant: 'default',
+                    className: 'w-full',
+                    size: 'lg'
+                  })}
+                  href={`${links.WhatsApp}`}
+                >
+                  Encomendar
+                </a>
+              </Button>
               {/* <p>Adicionar ao carrinho?</p> */}
               {/* <p>Encomendar?</p> */}
               {/* <p>Compartilhar?</p> */}

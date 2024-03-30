@@ -6,7 +6,7 @@ const config: CodegenConfig = {
   overwrite: true,
   // 'http://127.0.0.1:1337/graphql'
   schema: graphqlURL,
-  documents: 'src/graphql/queries/**/*.ts',
+  documents: ['src/graphql/queries/**/*.ts', 'src/graphql/fragments/**/*.ts'],
   // documents: 'src/graphql/*.graphql',
   generates: {
     // config: {
