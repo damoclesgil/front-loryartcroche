@@ -25,6 +25,8 @@ const httpLink = new HttpLink({
 const authLink = setContext(async (_, { headers }) => {
   let session = await getSession()
 
+  // const token = request.cookies.get('authjs.session-token')
+
   const authorization = session ? `Bearer ${session.jwt}` : ``
   return {
     headers: {

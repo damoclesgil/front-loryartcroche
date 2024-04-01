@@ -37,8 +37,19 @@ export default function RootLayout({
             <Providers>{children}</Providers>
             <Toaster />
           </ApolloWrapper>
-          <SpeedInsights />
         </SessionProvider>
+        <SpeedInsights />
+        {/* <script
+          src="https://static.elfsight.com/platform/platform.js"
+          data-use-service-core
+          defer
+          async
+        ></script> */}
+
+        {/* <script
+          src="https://cdn.lightwidget.com/widgets/lightwidget.js"
+          async
+        ></script> */}
       </body>
     </html>
   )

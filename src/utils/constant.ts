@@ -7,16 +7,22 @@ export const links = {
   Phone: '+55 62 99672-5529'
 }
 
-export const NextRoutes = {
+export const publicRoutes = {
   home: '/',
   auth: '/auth',
   signUp: '/sign-up',
   signIn: '/sign-in',
-  forgotPassword: '/forgot-password',
-  about: '/sobre',
-  contact: '/contato',
   products: '/produtos',
+  about: '/sobre',
+  forgotPassword: '/forgot-password'
+}
+export const privateRoutes = {
   favorites: '/favoritos',
   cart: '/carrinho',
   profile: '/minha-conta'
+}
+
+export const NextRoutes = {
+  ...publicRoutes,
+  ...privateRoutes
 }

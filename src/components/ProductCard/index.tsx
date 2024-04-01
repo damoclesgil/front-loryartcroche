@@ -10,12 +10,14 @@ export type ProductCardProps = {
   slug: string
   name: string
   img?: string
-  price?: number
+  price: number
 }
 
 const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
   <div className="bg-product dark:bg-black relative flex flex-col w-full">
-    <WishlistButton id={id} />
+    <div className="absolute right-0">
+      <WishlistButton id={id} />
+    </div>
     <Link
       href={{
         pathname: `${NextRoutes.products}/${slug}`,
@@ -61,7 +63,7 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
       <h3 className="text-md mb-2">{name}</h3>
     </div>
     <div className="flex justify-end items-center mt-2">
-      <h3 className="text-md mb-2 font-bold">{formatPrice(price || 0)}</h3>
+      <h3 className="text-md mb-2 font-bold">{formatPrice(Number(price))}</h3>
     </div>
   </div>
 )

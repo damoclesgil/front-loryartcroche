@@ -75,3 +75,7 @@ input:focus:-webkit-autofill {
   filter: none;
   border: 1px solid hsl(var(--primary));
 }
+
+/* .eapps-instagram-feed-container a {
+  display: none !important;
+} */

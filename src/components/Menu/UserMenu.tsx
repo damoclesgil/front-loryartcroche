@@ -14,6 +14,7 @@ import { ChevronDownIcon } from '@radix-ui/react-icons'
 import { NextRoutes } from '@/utils/constant'
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu'
 import Image from 'next/image'
+import { Favorite } from '@styled-icons/material-outlined'
 
 const UserMenu = () => {
   const { data: session, status } = useSession()
@@ -58,6 +59,10 @@ const UserMenu = () => {
             <DropdownMenuItem>
               <UserIcon className="w-4 h-4 mr-2.5" />
               <Link href={NextRoutes.profile}>Minha Conta</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Favorite className="w-4 h-4 mr-2.5" />
+              <Link href={NextRoutes.favorites}>Favoritos</Link>
             </DropdownMenuItem>
             {/* <DropdownMenuSeparator /> */}
             <DropdownMenuItem className="cursor-pointer" onClick={desLogar}>

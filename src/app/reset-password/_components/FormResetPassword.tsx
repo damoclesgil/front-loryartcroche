@@ -39,7 +39,7 @@ export function FormResetPassword() {
         body: JSON.stringify({
           password: values.password,
           passwordConfirmation: values.confirm_password,
-          code: code
+          code: code ?? ''
         })
       }
     )

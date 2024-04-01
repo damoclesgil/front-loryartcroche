@@ -18,7 +18,7 @@ const WishlistButton = ({ id }: WishlistButtonProps) => {
   //   } = useWishlist()
 
   const handleClick = () => {
-    console.log(id)
+    console.log(id, 'prevent')
     //   return isInWishlist(id) ? removeFromWishlist(id) : addToWishlist(id)
   }
 
@@ -29,8 +29,14 @@ const WishlistButton = ({ id }: WishlistButtonProps) => {
   //   if (!session) return null
 
   return (
-    <Button variant="link" className="hover:no-underline" onClick={handleClick}>
-      <Favorite size={25} />
+    <Button
+      variant="link"
+      size="icon"
+      className="hover:no-underline bg-white rounded-full mr-2 mt-2"
+      onClick={handleClick}
+    >
+      {/* <Favorite size={25} /> */}
+      <FavoriteBorder size={25} />
     </Button>
   )
 }

@@ -6,8 +6,10 @@ export default function Home() {
   return (
     <Base>
       <main>
-        <h2>
-          Beautifully designed bags made with love. Perfect for every occasion.
+        <h2 className="text-3xl mb-5 font-semibold text-center">
+          Bolsas lindamente desenhadas feitas com amor.
+          <br />
+          Perfeito para todas as ocasiões.
         </h2>
         <ProductList />
         <InstagramSection />

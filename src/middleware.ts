@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getUrl } from './lib/get-url'
-import { NextRoutes } from './utils/constant'
+import { NextRoutes, privateRoutes } from './utils/constant'
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('authjs.session-token')
@@ -10,14 +10,16 @@ export function middleware(request: NextRequest) {
     (pathname === NextRoutes.signIn || pathname === NextRoutes.signUp) &&
     token
   ) {
+    // console.log('AUTHENTICATED')
     return NextResponse.redirect(new URL(getUrl(NextRoutes.home)))
   }
-
-  // PRIVATE ROUTES
+  // pathname === privateRoutes.profile
   if (
-    (pathname === NextRoutes.cart || pathname === NextRoutes.profile) &&
+    (pathname === privateRoutes.favorites ||
+      pathname === privateRoutes.profile) &&
     !token
   ) {
+    // console.log('NOT AUTHENTICATED', token)
     return NextResponse.redirect(new URL(getUrl(NextRoutes.signIn)))
   }
 }

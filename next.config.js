@@ -28,6 +28,9 @@ const nextConfig = {
   // images: { remotePatterns: [{ protocol: 'https', hostname: '**' }] },
   typescript: {
     ignoreBuildErrors: true
+  },
+  experimental: {
+    missingSuspenseWithCSRBailout: false
   }
 }
 
