@@ -1,0 +1,21 @@
+{
+  "name": "Lory art crochê",
+  "short_name": "Lory art crochê",
+  "icons": [
+    {
+      "src": "/img/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/img/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "background_color": "#F59C8A",
+  "description": "Fique por dentro das bolsas feitos à mão.",
+  "display": "fullscreen",
+  "start_url": "/",
+  "theme_color": "#F59C8A"
+}
