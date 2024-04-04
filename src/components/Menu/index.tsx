@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation'
 import UserMenu from './UserMenu'
 import { NextRoutes } from '@/utils/constant'
 import { ShoppingCart } from '@styled-icons/material-outlined'
+import CartMenu from './CartMenu'
 // import SearchProducts from './SearchProducts'
 
 const Menu = () => {
@@ -23,7 +24,7 @@ const Menu = () => {
         >
           <Logo size="small" />
         </Link>
-        <div className="flex md:order-2">
+        <div className="flex md:order-2 items-center">
           {/* Mobile */}
           <button
             type="button"
@@ -50,12 +51,11 @@ const Menu = () => {
             </svg>
             <span className="sr-only">Search</span>
           </button>
+          <CartMenu />
           {/* Desktop */}
           <div className="relative hidden md:flex items-center">
             {/* <SearchProducts /> */}
-            <div>
-              <ShoppingCart className="text-black" />
-            </div>
+
             <div className="ml-2">
               <UserMenu />
             </div>

@@ -2,8 +2,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import formatPrice from '@/utils/format-price'
 import { links, NextRoutes } from '@/utils/constant'
-import { Button, buttonVariants } from '../ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import WishlistButton from '@/components/WishlistButton'
+import CartButton from '@/components/CartButton'
 
 export type ProductCardProps = {
   id: string
@@ -45,6 +46,7 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
         />
       )}
     </Link>
+    <CartButton id={id} />
     <Button asChild>
       <a
         target="_blank"

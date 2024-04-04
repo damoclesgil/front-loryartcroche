@@ -12,10 +12,6 @@ export type CartItem = {
   price?: number
 }
 
-export type CartProviderProps = {
-  children: React.ReactNode
-}
-
 export type CartContextData = {
   items: CartItem[]
   quantity: number
@@ -42,6 +38,10 @@ export const CartContext = createContext<CartContextData>(
   CartContextDefaultValues
 )
 
+export type CartProviderProps = {
+  children: React.ReactNode
+}
+
 const CartProvider = ({ children }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
 
@@ -53,7 +53,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
       setCartItems(data)
     }
   }, [])
-
+  // SE NÃO PASSAR NADA ELE VAI RODAR SÓ UMA VEZ "[]"
   let total = 0
   // let total = cartItems.reduce((acc))
   // const total = data?.reduce((acc, product) => {
