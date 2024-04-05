@@ -13,7 +13,6 @@ const CartButton = ({ id }: CartProps) => {
   const { isInCart, addToCart, removeFromCart } = useCart()
 
   const handleClick = () => {
-    console.log(id, 'prevent')
     return isInCart(id) ? removeFromCart(id) : addToCart(id)
   }
 
@@ -21,6 +20,7 @@ const CartButton = ({ id }: CartProps) => {
     <Button
       variant="link"
       size="icon"
+      title={isInCart(id) ? 'remover do carrinho' : 'adicionar ao carrinho'}
       className="hover:no-underline bg-white rounded-full mr-2 mt-2"
       onClick={handleClick}
     >

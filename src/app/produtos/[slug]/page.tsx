@@ -4,7 +4,6 @@ const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
 
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
 import formatPrice from '@/utils/format-price'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { LocalShipping, CreditCard } from '@styled-icons/material-outlined'
@@ -12,15 +11,33 @@ import { Pix } from '@styled-icons/fa-brands'
 import Gallery from '@/components/Gallery'
 import Head from 'next/head'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useCart } from '@/hooks/use-cart'
 import { useQuery } from '@apollo/client'
 import { links } from '@/utils/constant'
 import { GetProdutoDocument } from '@/graphql/types'
+import WishlistButton from '@/components/WishlistButton'
+import CartButton from '@/components/CartButton'
 
-export default function Page({ params }: { params: { slug: string } }) {
+export default function Page() {
   const pathname = usePathname()
 
   const productId = useSearchParams().get('id')
+
+  const shareProduct = async (product: any) => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: product.name,
+          text: `Check out this product: ${product.name} - ${formatPrice(Number(product.price))}`,
+          url: window.location.href
+        })
+        console.log('Product shared successfully')
+      } catch (error) {
+        console.error('Error sharing product:', error)
+      }
+    } else {
+      console.log('Web Share API not supported')
+    }
+  }
 
   const { data, error, loading } = useQuery(GetProdutoDocument, {
     variables: { produtoId: productId }
@@ -38,8 +55,6 @@ export default function Page({ params }: { params: { slug: string } }) {
       detalhes: data?.produto?.data?.attributes?.descricao
     }
   }
-
-  const { addToCart, isInCart, removeFromCart } = useCart()
 
   return (
     <>
@@ -121,36 +136,15 @@ export default function Page({ params }: { params: { slug: string } }) {
               </div>
 
               <div className="flex items-center">
-                <button
-                  className="mr-2"
-                  onClick={() => {
-                    isInCart(currentProduct?.id)
-                      ? removeFromCart(currentProduct?.id)
-                      : addToCart({
-                          id: currentProduct?.id,
-                          name: currentProduct.name,
-                          img: currentProduct.img,
-                          price: Number(currentProduct.price),
-                          slug: pathname
-                        })
-                  }}
-                >
-                  {isInCart(currentProduct.id) ? (
-                    <Favorite
-                      width={20}
-                      aria-label="Favoritar"
-                      title="Desfavoritar"
-                    />
-                  ) : (
-                    <FavoriteBorder
-                      width={20}
-                      aria-label="Favoritar"
-                      title="Favoritar"
-                    />
-                  )}
-                </button>
+                <WishlistButton id={currentProduct.id} />
+                <CartButton id={currentProduct.id} />
               </div>
-              <p className="my-2">Compartilhar</p>
+              <button
+                className="my-2 text-left"
+                onClick={() => shareProduct(currentProduct)}
+              >
+                Compartilhar
+              </button>
               <p>Meios de pagamento:</p>
               <p className="mb-2">Pix, Cartão e Boleto</p>
               <div className="flex mb-4">
@@ -178,9 +172,6 @@ export default function Page({ params }: { params: { slug: string } }) {
                   Encomendar
                 </a>
               </Button>
-              {/* <p>Adicionar ao carrinho?</p> */}
-              {/* <p>Encomendar?</p> */}
-              {/* <p>Compartilhar?</p> */}
             </div>
           </div>
           <div>
