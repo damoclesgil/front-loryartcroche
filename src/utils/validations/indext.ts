@@ -1,4 +1,4 @@
-// import { UsersPermissionsRegisterInput } from '@/graphql/generated/graphql'
+// import { UsersPermissionsRegisterInput } from '@/graphql/types'
 import { z } from 'zod'
 
 export const fieldsValidations = z.object({

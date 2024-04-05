@@ -1,13 +1,13 @@
 import { getClient } from '@/utils/apollo'
 import { AllProducts } from './AllProducts'
 import { ApolloWrapper } from '@/utils/apolloWrapper'
-import { ProdutosDocument } from '@/graphql/generated/graphql'
+import { GetProdutosDocument } from '@/graphql/types'
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page() {
   const data = await getClient().query({
-    query: ProdutosDocument,
+    query: GetProdutosDocument,
     variables: {}
   })
 

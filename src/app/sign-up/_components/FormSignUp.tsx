@@ -8,10 +8,11 @@ import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@apollo/client'
-import { MutationRegisterDocument } from '@/graphql/generated/graphql'
-// import { useRouter } from 'next/router'
+import {
+  MutationRegisterDocument,
+  UsersPermissionsRegisterInput
+} from '@/graphql/types'
 import { signIn } from 'next-auth/react'
-import { UsersPermissionsRegisterInput } from '@/graphql/generated/graphql'
 import { CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { NextRoutes } from '@/utils/constant'
 import { TextError } from '@/components/ui/text-error'

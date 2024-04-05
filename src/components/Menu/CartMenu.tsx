@@ -1,24 +1,24 @@
 'use client'
 
-// import { useSession } from 'next-auth/react'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
   DropdownMenuContent,
   DropdownMenu
 } from '@/components/ui/dropdown-menu'
-// import Link from 'next/link'
-// import { NextRoutes } from '@/utils/constant'
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu'
 import Empty from '@/components/Empty'
 import { Card } from '../ui/card'
 import { Input } from '../ui/input'
 import Image from 'next/image'
 import Loader from '@/components/Loader'
+import Link from 'next/link'
+import { NextRoutes } from '@/utils/constant'
+import { useCart } from '@/hooks/use-cart'
 
 const CartMenu = () => {
-  //   const { data: session } = useSession()
+  const { items, total, loading } = useCart()
 
   return (
     <>
@@ -40,80 +40,83 @@ const CartMenu = () => {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          {/* <Loader /> */}
-
-          {/* <Empty description="" title="" /> */}
-
-          <div>
-            <div className="flex flex-col h-[300px] overflow-auto gap-4 p-4">
-              <div className="flex items-center gap-4">
-                <Image
-                  alt="Thumbnail"
-                  className="aspect-square rounded-md object-cover"
-                  height="80"
-                  src="img/products/placeholder.svg"
-                  width="80"
-                />
-                <div className="flex-1 grid gap-1 text-sm">
-                  <div className="font-medium">Leather Tote Bag</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    $99.00
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <Button className="w-6 h-6" size="icon" variant="ghost">
-                    <MinusIcon className="w-4 h-4" />
-                    <span className="sr-only">Remove one item</span>
-                  </Button>
-                  <div className="border w-8 h-8 flex items-center justify-center">
-                    1
-                  </div>
-                  <Button className="w-6 h-6" size="icon" variant="ghost">
-                    <PlusIcon className="w-4 h-4" />
-                    <span className="sr-only">Add one item</span>
-                  </Button>
-                </div>
+          {loading ? (
+            <>
+              <Loader />
+            </>
+          ) : (
+            <div>
+              {/* h-[300px] */}
+              <div className="flex flex-col overflow-auto gap-4 p-4">
+                {items.length ? (
+                  <>
+                    {items.map((product) => (
+                      <div className="flex items-center gap-4" key={product.id}>
+                        <Image
+                          alt={product.name}
+                          className="aspect-square rounded-md object-cover"
+                          height="80"
+                          src={product.img}
+                          width="80"
+                        />
+                        <div className="flex-1 grid gap-1 text-sm">
+                          <div className="font-medium">{product.name}</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">
+                            {product.price}
+                          </div>
+                        </div>
+                        <div className="flex items-center">
+                          <Button
+                            className="w-6 h-6"
+                            size="icon"
+                            variant="ghost"
+                          >
+                            <MinusIcon className="w-4 h-4" />
+                            <span className="sr-only">Remover um item</span>
+                          </Button>
+                          <div className="border w-8 h-8 flex items-center justify-center">
+                            1
+                          </div>
+                          <Button
+                            className="w-6 h-6"
+                            size="icon"
+                            variant="ghost"
+                          >
+                            <PlusIcon className="w-4 h-4" />
+                            <span className="sr-only">Adicionar um item</span>
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <Empty
+                    description="Nenhum Produto foi adicionado ao carrinho"
+                    title="Sem produtos aqui :("
+                  />
+                )}
+                <div />
               </div>
-              <div />
-              <div className="flex items-center gap-4">
-                <Image
-                  alt="Thumbnail"
-                  className="aspect-square rounded-md object-cover"
-                  height="80"
-                  src="img/products/placeholder.svg"
-                  width="80"
-                />
-                <div className="flex-1 grid gap-1 text-sm">
-                  <div className="font-medium">Sling Crossbody Bag</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    $79.00
-                  </div>
+              <div className="flex flex-col gap-2 p-4 border-t">
+                <div className="flex items-center justify-between">
+                  <div>Total</div>
+                  <div className="font-medium">{total}</div>
                 </div>
-                <div className="flex items-center">
-                  <Button className="w-6 h-6" size="icon" variant="ghost">
-                    <MinusIcon className="w-4 h-4" />
-                    <span className="sr-only">Remove one item</span>
-                  </Button>
-                  <div className="border w-8 h-8 flex items-center justify-center">
-                    2
-                  </div>
-                  <Button className="w-6 h-6" size="icon" variant="ghost">
-                    <PlusIcon className="w-4 h-4" />
-                    <span className="sr-only">Add one item</span>
-                  </Button>
-                </div>
+                <Button asChild>
+                  <Link
+                    className={buttonVariants({
+                      variant: 'default',
+                      className: 'w-full',
+                      size: 'sm'
+                    })}
+                    href={`${NextRoutes.cart}`}
+                  >
+                    Finalizar Compra
+                  </Link>
+                </Button>
               </div>
             </div>
-            <div className="flex flex-col gap-2 p-4 border-t">
-              <div className="flex items-center justify-between">
-                <div>Subtotal</div>
-                <div className="font-medium">$227.00</div>
-              </div>
-              <Button className="w-full" size="sm">
-                Checkout
-              </Button>
-            </div>
-          </div>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </>

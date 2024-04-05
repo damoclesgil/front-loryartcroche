@@ -1,13 +1,11 @@
 'use client'
 
 import ProductCard from '@/components/ProductCard'
-// import { ProdutoType } from '@/types/produto.type'
 import Empty from '@/components/Empty'
 import Loader from '@/components/Loader'
 import { useSession } from 'next-auth/react'
 import { useQueryFavoritos } from '@/graphql/queries/favoritos'
-// import { Produto } from '@/graphql/generated/graphql'
-// import { Maybe, ProdutoEntity } from '@/graphql/generated/graphql'
+import { getImageUrl } from '@/utils/getImageUrl'
 
 const WishList = () => {
   const { data: session } = useSession()
@@ -58,7 +56,9 @@ const WishList = () => {
               slug={produto?.attributes?.slug ?? 'bolsa'}
               name={produto?.attributes?.nome ?? 'Sem Nome por Enquanto'}
               price={Number(produto?.attributes?.preco) ?? 0}
-              img={`${produto.attributes?.imagem_destaque?.data?.attributes!.url}`}
+              img={getImageUrl(
+                produto.attributes?.imagem_destaque?.data?.attributes!.url
+              )}
             />
           )
         )}

@@ -16,8 +16,8 @@ export const QUERY_PRODUTO = gql`
 `
 
 export const QUERY_PRODUTOS = gql`
-  query produtos {
-    produtos {
+  query getProdutos($filters: ProdutoFiltersInput) {
+    produtos(filters: $filters) {
       data {
         id
         attributes {

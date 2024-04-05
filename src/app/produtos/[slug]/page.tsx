@@ -14,8 +14,8 @@ import Head from 'next/head'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useCart } from '@/hooks/use-cart'
 import { useQuery } from '@apollo/client'
-import { GetProdutoDocument } from '@/graphql/generated/graphql'
 import { links } from '@/utils/constant'
+import { GetProdutoDocument } from '@/graphql/types'
 
 export default function Page({ params }: { params: { slug: string } }) {
   const pathname = usePathname()

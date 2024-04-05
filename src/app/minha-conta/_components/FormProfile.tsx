@@ -1,6 +1,5 @@
 'use client'
 
-import { GetProfileDocument } from '@/graphql/generated/graphql'
 import { useQuery } from '@apollo/client'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
@@ -11,6 +10,7 @@ import { useForm } from 'react-hook-form'
 import { TextError } from '@/components/ui/text-error'
 import Link from 'next/link'
 import { NextRoutes } from '@/utils/constant'
+import { GetProfileDocument } from '@/graphql/types'
 
 export type ProfileInput = {
   email: string | null

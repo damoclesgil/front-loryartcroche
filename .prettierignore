@@ -3,4 +3,3 @@
 build
 coverage
 .next
-src/graphql/generated/**.ts

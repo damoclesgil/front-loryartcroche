@@ -10,7 +10,7 @@ export type ProductCardProps = {
   id: string
   slug: string
   name: string
-  img?: string
+  img: string
   price: number
 }
 
@@ -25,26 +25,14 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => (
         query: { id: id }
       }}
     >
-      {img !== 'undefined' ? (
-        // className="object-contain object-center w-full h-full md:max-w-[18rem] min-h-[18rem] max-h-[18rem]"
-        <Image
-          className="aspect-video overflow-hidden object-cover object-center"
-          src={`${process.env.NEXT_PUBLIC_API_URL}${img}`}
-          alt={name}
-          width={550}
-          height={550}
-          loading="lazy"
-        />
-      ) : (
-        <Image
-          alt="Bag placeholder Lory Art Crochê"
-          className="aspect-video overflow-hidden object-cover object-center"
-          width={550}
-          height={550}
-          loading="lazy"
-          src="img/products/placeholder.svg"
-        />
-      )}
+      <Image
+        className="aspect-video overflow-hidden object-cover object-center"
+        src={img}
+        alt={name}
+        width={550}
+        height={550}
+        loading="lazy"
+      />
     </Link>
     <CartButton id={id} />
     <Button asChild>

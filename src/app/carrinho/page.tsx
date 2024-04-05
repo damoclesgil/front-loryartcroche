@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import Cart from './cart'
+import CartList from './CartList'
 import Base from '@/templates/Base'
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export default function CartPage() {
   return (
     <>
       <Base>
-        <Cart />
+        <CartList />
       </Base>
     </>
   )

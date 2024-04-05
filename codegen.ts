@@ -4,30 +4,32 @@ let graphqlURL = 'http://127.0.0.1:1337/graphql'
 
 const config: CodegenConfig = {
   overwrite: true,
-  // 'http://127.0.0.1:1337/graphql'
   schema: graphqlURL,
   documents: [
     'src/graphql/queries/**/*.ts',
     'src/graphql/fragments/**/*.ts',
     'src/graphql/mutations/**/*.ts'
   ],
-  // documents: 'src/graphql/*.graphql',
   generates: {
-    // config: {
-    //   useIndexSignature: true
-    // },
-    'src/graphql/generated/': {
-      preset: 'client',
-      // preset: 'near-operation-file-preset',
-      plugins: []
-      // plugins: ['typescript', 'typescript-resolvers']
-      // plugins: ['typescript-operations', 'typed-document-node']
+    'src/graphql/types.ts': {
+      plugins: [
+        'typescript',
+        'typescript-operations',
+        'typescript-react-apollo'
+      ],
+      config: {
+        withComponent: false,
+        namingConvention: 'change-case-all#pascalCase',
+        nonOptionalTypename: true,
+        skipTypename: true,
+        reactApolloVersion: 3,
+        withHooks: '@/hooks'
+      }
     },
     './graphql.schema.json': {
       plugins: ['introspection']
     }
   }
-  // namingConvention: 'keep'
 }
 
 export default config

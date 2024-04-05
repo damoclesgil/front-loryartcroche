@@ -1,9 +1,6 @@
 import { gql, QueryHookOptions, useQuery } from '@apollo/client'
 import { ProdutoFragment } from '../fragments/produto'
-import {
-  GetFavoritosQuery,
-  GetFavoritosQueryVariables
-} from '../generated/graphql'
+import { GetFavoritosQuery, GetFavoritosQueryVariables } from '@/graphql/types'
 
 // export type UserType = {
 //   data: {
@@ -19,7 +16,7 @@ import {
 //   attributes: {
 //     produtos: {
 //       data: {
-//         attributes: ProdutoType
+//         attributes
 //       }
 //     }
 //   }

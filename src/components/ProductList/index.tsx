@@ -2,9 +2,9 @@
 
 import { useQuery } from '@apollo/client'
 import ProductCard from '@/components/ProductCard'
-// import { Produto, ProdutoEntity, ProdutosDocument } from '@/graphql/generated/graphql'
 import { QUERY_PRODUTOS } from '@/graphql/queries/produtos'
-import { ProdutoType } from '@/types/produto.type'
+import { ProdutoEntity } from '@/graphql/types'
+import { getImageUrl } from '@/utils/getImageUrl'
 
 const ProductList = () => {
   const { data, error, loading } = useQuery(QUERY_PRODUTOS)
@@ -31,7 +31,7 @@ const ProductList = () => {
   if (data?.produtos?.data.length) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center justify-center my-4 mx-2">
-        {data?.produtos?.data.map((produto: ProdutoType, index: number) => (
+        {data?.produtos?.data.map((produto: ProdutoEntity, index: number) => (
           <ProductCard
             id={produto?.id ? produto.id : ''}
             key={index}
@@ -44,7 +44,9 @@ const ProductList = () => {
             price={
               produto.attributes?.preco ? Number(produto.attributes.preco) : 0
             }
-            img={`${produto.attributes?.imagem_destaque?.data?.attributes!.url}`}
+            img={getImageUrl(
+              produto.attributes?.imagem_destaque?.data?.attributes!.url
+            )}
           />
         ))}
       </div>

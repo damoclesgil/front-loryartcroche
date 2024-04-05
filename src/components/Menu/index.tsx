@@ -9,11 +9,13 @@ import UserMenu from './UserMenu'
 import { NextRoutes } from '@/utils/constant'
 import { ShoppingCart } from '@styled-icons/material-outlined'
 import CartMenu from './CartMenu'
+import { useSession } from 'next-auth/react'
 // import SearchProducts from './SearchProducts'
 
 const Menu = () => {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const { data: session, status } = useSession()
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 border-b dark:border-gray-500">
@@ -51,15 +53,15 @@ const Menu = () => {
             </svg>
             <span className="sr-only">Search</span>
           </button>
-          <CartMenu />
-          {/* Desktop */}
-          <div className="relative hidden md:flex items-center">
-            {/* <SearchProducts /> */}
 
+          {status === 'authenticated' && <CartMenu />}
+
+          <div className="relative hidden md:flex items-center">
             <div className="ml-2">
               <UserMenu />
             </div>
           </div>
+
           {/* Mobile */}
           <button
             data-collapse-toggle="navbar-search"

@@ -1,16 +1,13 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { GET_FAVORITOS, useQueryFavoritos } from '@/graphql/queries/favoritos'
 import { useApolloClient, useMutation } from '@apollo/client'
-import {
-  GetFavoritosQuery,
-  ProdutoFragmentFragmentDoc
-} from '@/graphql/generated/graphql'
+import { GetFavoritosQuery, ProdutoFragmentFragmentDoc } from '@/graphql/types'
 import { useSession } from 'next-auth/react'
 import {
   MUTATION_CREATE_FAVORITO,
   MUTATION_UPDATE_FAVORITO
 } from '@/graphql/mutations/favoritos'
-import { ProdutoType } from '@/types/produto.type'
+import { ProdutoEntity } from '@/graphql/types'
 
 // export type UserType = {
 //   data: {
@@ -22,7 +19,7 @@ import { ProdutoType } from '@/types/produto.type'
 // }
 
 export type WishlistContextData = {
-  items: ProdutoType[]
+  items: ProdutoEntity[]
   isInWishlist: (id: string) => boolean
   addToWishlist: (id: string) => void
   removeFromWishlist: (id: string) => void
@@ -49,8 +46,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
   const { data: session } = useSession()
 
   const [wishlistId, setWishlistId] = useState<string | null>()
-  //                                                <ProdutoEntity[]>
-  const [wishlistItems, setWishlistItems] = useState<ProdutoType[]>([])
+  const [wishlistItems, setWishlistItems] = useState<ProdutoEntity[]>([])
   const apolloClient = useApolloClient()
 
   const [createList, { loading: loadingCreate }] = useMutation(

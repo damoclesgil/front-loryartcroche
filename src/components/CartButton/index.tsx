@@ -3,25 +3,18 @@ import {
   RemoveShoppingCart
 } from '@styled-icons/material-outlined'
 import { Button } from '../ui/button'
-import { useWishlist } from '@/hooks/use-wishlist'
+import { useCart } from '@/hooks/use-cart'
 
-type CartnProps = {
+type CartProps = {
   id: string
 }
 
-const CartButton = ({ id }: CartnProps) => {
-  //   const [session] = useSession()
-
-  const {
-    isInWishlist,
-    addToWishlist,
-    removeFromWishlist,
-    loading: loadingApollo
-  } = useWishlist()
+const CartButton = ({ id }: CartProps) => {
+  const { isInCart, addToCart, removeFromCart } = useCart()
 
   const handleClick = () => {
     console.log(id, 'prevent')
-    return isInWishlist(id) ? removeFromWishlist(id) : addToWishlist(id)
+    return isInCart(id) ? removeFromCart(id) : addToCart(id)
   }
 
   return (
@@ -30,9 +23,8 @@ const CartButton = ({ id }: CartnProps) => {
       size="icon"
       className="hover:no-underline bg-white rounded-full mr-2 mt-2"
       onClick={handleClick}
-      loading={loadingApollo}
     >
-      {isInWishlist(id) ? (
+      {isInCart(id) ? (
         <RemoveShoppingCart size={25} />
       ) : (
         <AddShoppingCart size={25} />

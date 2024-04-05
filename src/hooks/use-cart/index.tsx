@@ -1,5 +1,7 @@
+import { useGetProdutosQuery } from '@/graphql/types'
 import formatPrice from '@/utils/format-price'
 import { getStorageItem, setStorageItem } from '@/utils/localStorage'
+import { cartMapper } from '@/utils/mappers'
 import { useContext, createContext, useEffect, useState } from 'react'
 
 const CART_KEY = 'cartItems'
@@ -17,10 +19,10 @@ export type CartContextData = {
   quantity: number
   total: string
   isInCart: (id: string) => boolean
-  addToCart: (item: CartItem) => void
+  addToCart: (id: string) => void
   removeFromCart: (id: string) => void
   clearCart: () => void
-  // loading: boolean
+  loading: boolean
 }
 
 export const CartContextDefaultValues = {
@@ -30,8 +32,8 @@ export const CartContextDefaultValues = {
   isInCart: () => false,
   addToCart: () => null,
   removeFromCart: () => null,
-  clearCart: () => null
-  // loading: false
+  clearCart: () => null,
+  loading: false
 }
 
 export const CartContext = createContext<CartContextData>(
@@ -43,7 +45,7 @@ export type CartProviderProps = {
 }
 
 const CartProvider = ({ children }: CartProviderProps) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useState<string[]>([])
 
   // let data = []
   useEffect(() => {
@@ -54,34 +56,37 @@ const CartProvider = ({ children }: CartProviderProps) => {
     }
   }, [])
   // SE NÃO PASSAR NADA ELE VAI RODAR SÓ UMA VEZ "[]"
-  let total = 0
-  // let total = cartItems.reduce((acc))
-  // const total = data?.reduce((acc, product) => {
-  //   return acc + product
-  // })
 
-  const isInCart = (id: string) =>
-    id ? cartItems.some((cartItem: CartItem) => cartItem.id === id) : false
+  const { data, loading } = useGetProdutosQuery({
+    skip: !cartItems?.length,
+    variables: {
+      filters: {
+        id: {
+          in: cartItems
+        }
+      }
+    }
+  })
 
-  const saveCart = (cartItems: CartItem[]) => {
+  const total = data?.produtos?.data?.reduce((acc, product) => {
+    return acc + (Number(product.attributes?.preco) ?? 0)
+  }, 0)
+
+  const isInCart = (id: string) => (id ? cartItems.includes(id) : false)
+
+  const saveCart = (cartItems: string[]) => {
     setCartItems(cartItems)
     setStorageItem(CART_KEY, cartItems)
   }
 
-  const getCartItems = () => {
-    return cartItems
-  }
-
-  const addToCart = (cartItem: CartItem) => {
-    if (!isInCart(cartItem.id)) {
-      saveCart([...cartItems, cartItem])
+  const addToCart = (id: string) => {
+    if (!isInCart(id)) {
+      saveCart([...cartItems, id])
     }
   }
 
   const removeFromCart = (id: string) => {
-    const newCartItems = cartItems.filter(
-      (cartItem: CartItem) => cartItem.id !== id
-    )
+    const newCartItems = cartItems.filter((itemId: string) => itemId !== id)
     saveCart(newCartItems)
   }
 
@@ -92,14 +97,14 @@ const CartProvider = ({ children }: CartProviderProps) => {
   return (
     <CartContext.Provider
       value={{
-        items: cartItems,
+        items: cartMapper(data?.produtos?.data),
         quantity: cartItems.length,
         total: formatPrice(total || 0),
         isInCart,
         addToCart,
-        // getCartItems,
         removeFromCart,
-        clearCart
+        clearCart,
+        loading
       }}
     >
       {children}
