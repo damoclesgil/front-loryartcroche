@@ -8,9 +8,46 @@ import Image from 'next/image'
 import { useCart } from '@/hooks/use-cart'
 import formatPrice from '@/utils/format-price'
 import { Loader } from '@styled-icons/remix-line'
+import React from 'react'
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements } from '@stripe/react-stripe-js'
+import CheckoutForm from './_components/CheckoutForm'
+import { useSession } from 'next-auth/react'
+
+const stripePromise = loadStripe(
+  `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
+)
 
 const CartList = () => {
+  const [clientSecret, setClientSecret] = React.useState('')
   const { items, total, loading } = useCart()
+  // const { data: session } = useSession()
+
+  // console.log(session?.user?.jwt)
+  // React.useEffect(() => {
+  //   // Create PaymentIntent as soon as the page loads
+  //   fetch(
+  //     `${process.env.NEXT_PUBLIC_API_URL}/api/ordem/create-payment-intent`,
+  //     {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${session?.user?.jwt}`
+  //       },
+  //       body: JSON.stringify({ produtos: [{ id: '1' }] })
+  //     }
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => setClientSecret(data.clientSecret))
+  // }, [])
+
+  const appearance = {
+    theme: 'stripe'
+  }
+  const options = {
+    clientSecret,
+    appearance
+  }
 
   if (loading) {
     return (
@@ -53,7 +90,7 @@ const CartList = () => {
                           className="w-12 border-0 border-b bg-gray-100/40 appearance-none text-center dark:bg-gray-800/40"
                           min="1"
                           type="number"
-                          value="1"
+                          defaultValue={1}
                         />
                         <Button className="w-6 h-6" size="icon" variant="ghost">
                           <PlusIcon className="w-4 h-4" />
@@ -85,9 +122,12 @@ const CartList = () => {
               <span className="font-semibold">{total}</span>
             </div>
           </div>
-          <Button className="w-full" size="lg">
-            Prosseguir para o Checkout
-          </Button>
+
+          {clientSecret && (
+            <Elements options={options} stripe={stripePromise}>
+              <CheckoutForm />
+            </Elements>
+          )}
         </Card>
       </div>
     </>

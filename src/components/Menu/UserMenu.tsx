@@ -14,7 +14,7 @@ import { ChevronDownIcon } from '@radix-ui/react-icons'
 import { NextRoutes } from '@/utils/constant'
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu'
 import Image from 'next/image'
-import { Favorite } from '@styled-icons/material-outlined'
+import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
 
 const UserMenu = () => {
   const { data: session, status } = useSession()
@@ -34,7 +34,8 @@ const UserMenu = () => {
               size="icon"
               variant="ghost"
             >
-              <Image
+              <UserIcon className="w-4 h-4" />
+              {/* <Image
                 alt="Avatar"
                 className="rounded-full"
                 height={32}
@@ -44,7 +45,7 @@ const UserMenu = () => {
                   aspectRatio: '32/32',
                   objectFit: 'cover'
                 }}
-              />
+              /> */}
               <span className="sr-only">Toggle user menu</span>
             </Button>
             {/* <p className="ml-2">{session?.user?.name}</p> */}
@@ -61,7 +62,7 @@ const UserMenu = () => {
               <Link href={NextRoutes.profile}>Minha Conta</Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Favorite className="w-4 h-4 mr-2.5" />
+              <FavoriteBorder className="w-4 h-4 mr-2.5" />
               <Link href={NextRoutes.favorites}>Favoritos</Link>
             </DropdownMenuItem>
             {/* <DropdownMenuSeparator /> */}

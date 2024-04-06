@@ -35,11 +35,6 @@ const CartMenu = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-full">
-          <DropdownMenuLabel className="mr-2.5 py-2 px-2 text-sm w-full">
-            asda
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-
           {loading ? (
             <>
               <Loader />

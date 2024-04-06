@@ -16,6 +16,7 @@ export function middleware(request: NextRequest) {
   // pathname === privateRoutes.profile
   if (
     (pathname === privateRoutes.favorites ||
+      pathname === privateRoutes.cart ||
       pathname === privateRoutes.profile) &&
     !token
   ) {

@@ -53,8 +53,8 @@ const Menu = () => {
             </svg>
             <span className="sr-only">Search</span>
           </button>
-
-          {status === 'authenticated' && <CartMenu />}
+          <CartMenu />
+          {/* {status === 'authenticated' && } */}
 
           <div className="relative hidden md:flex items-center">
             <div className="ml-2">
