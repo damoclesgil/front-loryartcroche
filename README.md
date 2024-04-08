@@ -17,7 +17,7 @@ This project uses lot of stuff as:
 - [Prettier](https://prettier.io/)
 - [Husky](https://github.com/typicode/husky)
 
-## ...
+##
 
 // react-fancybox
 
@@ -32,6 +32,6 @@ ncu -i
 
 # Só para lembrar
 
-- https://maildev.github.io/maildev/
-- http://localhost:1080/
-- no-reply@strapi.io
+- <https://maildev.github.io/maildev/>
+- <http://localhost:1080/>
+- <no-reply@strapi.io>

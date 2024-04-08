@@ -34,6 +34,7 @@ const WishlistButton = ({ id }: WishlistButtonProps) => {
       className="hover:no-underline bg-white rounded-full mr-2 mt-2"
       onClick={handleClick}
       loading={loadingApollo}
+      disabled={loadingApollo}
     >
       {isInWishlist(id) ? <Favorite size={25} /> : <FavoriteBorder size={25} />}
     </Button>

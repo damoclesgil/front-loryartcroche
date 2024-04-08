@@ -30,7 +30,7 @@ export const createPaymentIntent = async ({
   token
 }: PaymentIntentParams) => {
   return fetcher({
-    url: 'api/ordem/create-payment-intent',
+    url: '/api/ordem/create-payment-intent',
     body: JSON.stringify({ cart: items }),
     token
   })
@@ -48,11 +48,13 @@ export const createPayment = ({
   token
 }: CreatePaymentParams) => {
   return fetcher({
-    url: 'api/ordem',
+    url: '/api/ordens',
     body: JSON.stringify({
-      cart: items,
-      paymentIntentId: paymentIntent?.id,
-      paymentMethod: paymentIntent?.payment_method
+      data: {
+        cart: items,
+        paymentIntentId: paymentIntent?.id,
+        paymentMethod: paymentIntent?.payment_method
+      }
     }),
     token
   })

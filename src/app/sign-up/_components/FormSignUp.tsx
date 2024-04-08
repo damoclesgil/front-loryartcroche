@@ -140,6 +140,7 @@ export function FormSignUp() {
           className="w-full"
           type="submit"
           onClick={onSubmit}
+          disabled={isSubmitting}
           loading={isSubmitting}
         >
           Cadastrar

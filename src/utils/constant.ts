@@ -14,6 +14,7 @@ export const publicRoutes = {
   signIn: '/sign-in',
   products: '/produtos',
   about: '/sobre',
+  success: '/sucesso',
   forgotPassword: '/forgot-password'
 }
 export const privateRoutes = {

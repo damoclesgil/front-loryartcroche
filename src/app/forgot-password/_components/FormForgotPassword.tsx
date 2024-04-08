@@ -103,6 +103,7 @@ export function FormForgotPassword() {
             className="w-full"
             type="submit"
             onClick={onSubmit}
+            disabled={isSubmitting}
             loading={isSubmitting}
           >
             Enviar E-mail
