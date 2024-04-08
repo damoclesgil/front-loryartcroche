@@ -1,8 +1,7 @@
 import Image from 'next/image'
-// import LogoLoryArtCroche from 'img/logo/logo_LoryArtCrocheColorida.png'
 
 export type LogoProps = {
-  size?: 'small' | 'normal'
+  size?: 'small' | 'normal' | 'medium'
 }
 
 const Logo = ({ size = 'normal' }: LogoProps) => {
@@ -10,7 +9,7 @@ const Logo = ({ size = 'normal' }: LogoProps) => {
     <div className="relative flex place-items-center">
       {size === 'small' && (
         <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert w-full h-[4.2rem]"
+          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
           src="/img/logo/logo_LoryArtCrocheColorida.png"
           alt="Lory Art Crochê Logo"
           width={70}
@@ -18,9 +17,19 @@ const Logo = ({ size = 'normal' }: LogoProps) => {
           priority
         />
       )}
+      {size === 'medium' && (
+        <Image
+          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert object-contain"
+          src="/img/logo/logo_LoryArtCrocheColorida.png"
+          alt="Lory Art Crochê Logo"
+          width={112}
+          height={112}
+          priority
+        />
+      )}
       {size === 'normal' && (
         <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert h-40 object-contain"
+          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert object-contain"
           src="/img/logo/logo_LoryArtCrocheColorida.png"
           alt="Lory Art Crochê Logo"
           width={160}

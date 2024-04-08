@@ -7,47 +7,21 @@ import { Input } from '@/components/ui/input'
 import Image from 'next/image'
 import { useCart } from '@/hooks/use-cart'
 import formatPrice from '@/utils/format-price'
-import { Loader } from '@styled-icons/remix-line'
+import Loader from '@/components/Loader'
 import React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
-import CheckoutForm from './_components/CheckoutForm'
-import { useSession } from 'next-auth/react'
+import PaymentForm from './_components/PaymentForm'
 
 const stripePromise = loadStripe(
-  `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
+  `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
+  {
+    locale: 'pt-BR'
+  }
 )
 
 const CartList = () => {
-  const [clientSecret, setClientSecret] = React.useState('')
-  const { items, total, loading } = useCart()
-  // const { data: session } = useSession()
-
-  // console.log(session?.user?.jwt)
-  // React.useEffect(() => {
-  //   // Create PaymentIntent as soon as the page loads
-  //   fetch(
-  //     `${process.env.NEXT_PUBLIC_API_URL}/api/ordem/create-payment-intent`,
-  //     {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${session?.user?.jwt}`
-  //       },
-  //       body: JSON.stringify({ produtos: [{ id: '1' }] })
-  //     }
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => setClientSecret(data.clientSecret))
-  // }, [])
-
-  const appearance = {
-    theme: 'stripe'
-  }
-  const options = {
-    clientSecret,
-    appearance
-  }
+  const { items, total, loading, removeFromCart } = useCart()
 
   if (loading) {
     return (
@@ -98,7 +72,12 @@ const CartList = () => {
                         </Button>
                       </div>
                       <Button size="default">Salvar para depois</Button>
-                      <Button size="default">Remover</Button>
+                      <Button
+                        size="default"
+                        onClick={() => removeFromCart(product.id)}
+                      >
+                        Remover
+                      </Button>
                     </div>
                   </div>
                   <div className="text-lg font-semibold ml-auto">
@@ -116,18 +95,19 @@ const CartList = () => {
           )}
         </div>
         <Card className="p-6">
-          <div className="grid gap-2">
+          <div className="grid gap-2 mb-6">
             <div className="flex items-center justify-between">
               <span className="font-semibold">Total</span>
               <span className="font-semibold">{total}</span>
             </div>
           </div>
 
-          {clientSecret && (
-            <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm />
-            </Elements>
-          )}
+          <h2 className="mb-6"> Selecione a forma de Pagamento: </h2>
+
+          <h3 className="mb-4">Cartão de Crédito</h3>
+          <Elements stripe={stripePromise}>
+            <PaymentForm />
+          </Elements>
         </Card>
       </div>
     </>

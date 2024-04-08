@@ -11,6 +11,7 @@ import { TextError } from '@/components/ui/text-error'
 import Link from 'next/link'
 import { NextRoutes } from '@/utils/constant'
 import { GetProfileDocument } from '@/graphql/types'
+import Loader from '@/components/Loader'
 
 export type ProfileInput = {
   email: string | null
@@ -44,7 +45,7 @@ export default function FormProfile() {
   if (loading) {
     return (
       <>
-        <p>Obtendo dados do usuário</p>
+        <Loader />
       </>
     )
   }

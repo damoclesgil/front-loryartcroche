@@ -5,6 +5,8 @@ import ProductCard from '@/components/ProductCard'
 import { QUERY_PRODUTOS } from '@/graphql/queries/produtos'
 import { ProdutoEntity } from '@/graphql/types'
 import { getImageUrl } from '@/utils/getImageUrl'
+import Loader from '@/components/Loader'
+import Empty from '../Empty'
 
 const ProductList = () => {
   const { data, error, loading } = useQuery(QUERY_PRODUTOS)
@@ -14,17 +16,16 @@ const ProductList = () => {
   }
 
   if (loading) {
-    return (
-      <>
-        <p>Carregando Produtos...</p>
-      </>
-    )
+    return <Loader />
   }
 
   if (data?.produtos?.data.length === 0) {
     return (
       <>
-        <p>Nenhum Produto Cadastrado</p>
+        <Empty
+          title="Nenhuma Bolsa Registrada"
+          description="Nenhuma de Bolsa foi encontrada"
+        />
       </>
     )
   }
