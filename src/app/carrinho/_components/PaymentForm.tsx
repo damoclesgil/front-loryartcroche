@@ -88,14 +88,14 @@ export default function PaymentForm() {
       if (data.error) {
         setError(data.error)
       } else {
-        console.log(data)
+        // console.log(data)
         setFreeProducts(false)
         theClientSecret = data.client_secret
         setClientSecret(data.client_secret)
       }
 
-      console.log(theClientSecret)
-      console.log(clientSecret)
+      // console.log(theClientSecret)
+      // console.log(clientSecret)
 
       if (theClientSecret) {
         const payload = await stripe.confirmCardPayment(theClientSecret, {

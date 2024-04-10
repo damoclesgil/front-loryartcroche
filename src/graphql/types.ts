@@ -30,6 +30,7 @@ export type Scalars = {
   Float: { input: number; output: number }
   DateTime: { input: any; output: any }
   JSON: { input: any; output: any }
+  Long: { input: any; output: any }
   Upload: { input: any; output: any }
 }
 
@@ -81,6 +82,61 @@ export type DateTimeFilterInput = {
   null?: InputMaybe<Scalars['Boolean']['input']>
   or?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>
   startsWith?: InputMaybe<Scalars['DateTime']['input']>
+}
+
+export type EmailDesignerEmailTemplate = {
+  bodyHtml?: Maybe<Scalars['String']['output']>
+  bodyText?: Maybe<Scalars['String']['output']>
+  createdAt?: Maybe<Scalars['DateTime']['output']>
+  design?: Maybe<Scalars['JSON']['output']>
+  enabled?: Maybe<Scalars['Boolean']['output']>
+  name?: Maybe<Scalars['String']['output']>
+  subject?: Maybe<Scalars['String']['output']>
+  tags?: Maybe<Scalars['JSON']['output']>
+  templateReferenceId?: Maybe<Scalars['Int']['output']>
+  updatedAt?: Maybe<Scalars['DateTime']['output']>
+}
+
+export type EmailDesignerEmailTemplateEntity = {
+  attributes?: Maybe<EmailDesignerEmailTemplate>
+  id?: Maybe<Scalars['ID']['output']>
+}
+
+export type EmailDesignerEmailTemplateEntityResponse = {
+  data?: Maybe<EmailDesignerEmailTemplateEntity>
+}
+
+export type EmailDesignerEmailTemplateEntityResponseCollection = {
+  data: Array<EmailDesignerEmailTemplateEntity>
+  meta: ResponseCollectionMeta
+}
+
+export type EmailDesignerEmailTemplateFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<EmailDesignerEmailTemplateFiltersInput>>>
+  bodyHtml?: InputMaybe<StringFilterInput>
+  bodyText?: InputMaybe<StringFilterInput>
+  createdAt?: InputMaybe<DateTimeFilterInput>
+  design?: InputMaybe<JsonFilterInput>
+  enabled?: InputMaybe<BooleanFilterInput>
+  id?: InputMaybe<IdFilterInput>
+  name?: InputMaybe<StringFilterInput>
+  not?: InputMaybe<EmailDesignerEmailTemplateFiltersInput>
+  or?: InputMaybe<Array<InputMaybe<EmailDesignerEmailTemplateFiltersInput>>>
+  subject?: InputMaybe<StringFilterInput>
+  tags?: InputMaybe<JsonFilterInput>
+  templateReferenceId?: InputMaybe<IntFilterInput>
+  updatedAt?: InputMaybe<DateTimeFilterInput>
+}
+
+export type EmailDesignerEmailTemplateInput = {
+  bodyHtml?: InputMaybe<Scalars['String']['input']>
+  bodyText?: InputMaybe<Scalars['String']['input']>
+  design?: InputMaybe<Scalars['JSON']['input']>
+  enabled?: InputMaybe<Scalars['Boolean']['input']>
+  name?: InputMaybe<Scalars['String']['input']>
+  subject?: InputMaybe<Scalars['String']['input']>
+  tags?: InputMaybe<Scalars['JSON']['input']>
+  templateReferenceId?: InputMaybe<Scalars['Int']['input']>
 }
 
 export type Favorito = {
@@ -158,8 +214,10 @@ export type FloatFilterInput = {
 }
 
 export type GenericMorph =
+  | EmailDesignerEmailTemplate
   | Favorito
   | I18NLocale
+  | Ordem
   | Produto
   | UploadFile
   | UploadFolder
@@ -274,10 +332,37 @@ export type JsonFilterInput = {
   startsWith?: InputMaybe<Scalars['JSON']['input']>
 }
 
+export type LongFilterInput = {
+  and?: InputMaybe<Array<InputMaybe<Scalars['Long']['input']>>>
+  between?: InputMaybe<Array<InputMaybe<Scalars['Long']['input']>>>
+  contains?: InputMaybe<Scalars['Long']['input']>
+  containsi?: InputMaybe<Scalars['Long']['input']>
+  endsWith?: InputMaybe<Scalars['Long']['input']>
+  eq?: InputMaybe<Scalars['Long']['input']>
+  eqi?: InputMaybe<Scalars['Long']['input']>
+  gt?: InputMaybe<Scalars['Long']['input']>
+  gte?: InputMaybe<Scalars['Long']['input']>
+  in?: InputMaybe<Array<InputMaybe<Scalars['Long']['input']>>>
+  lt?: InputMaybe<Scalars['Long']['input']>
+  lte?: InputMaybe<Scalars['Long']['input']>
+  ne?: InputMaybe<Scalars['Long']['input']>
+  nei?: InputMaybe<Scalars['Long']['input']>
+  not?: InputMaybe<LongFilterInput>
+  notContains?: InputMaybe<Scalars['Long']['input']>
+  notContainsi?: InputMaybe<Scalars['Long']['input']>
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['Long']['input']>>>
+  notNull?: InputMaybe<Scalars['Boolean']['input']>
+  null?: InputMaybe<Scalars['Boolean']['input']>
+  or?: InputMaybe<Array<InputMaybe<Scalars['Long']['input']>>>
+  startsWith?: InputMaybe<Scalars['Long']['input']>
+}
+
 export type Mutation = {
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>
+  createEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>
   createFavorito?: Maybe<FavoritoEntityResponse>
+  createOrdem?: Maybe<OrdemEntityResponse>
   createProduto?: Maybe<ProdutoEntityResponse>
   createUploadFile?: Maybe<UploadFileEntityResponse>
   createUploadFolder?: Maybe<UploadFolderEntityResponse>
@@ -285,7 +370,9 @@ export type Mutation = {
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse
+  deleteEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>
   deleteFavorito?: Maybe<FavoritoEntityResponse>
+  deleteOrdem?: Maybe<OrdemEntityResponse>
   deleteProduto?: Maybe<ProdutoEntityResponse>
   deleteUploadFile?: Maybe<UploadFileEntityResponse>
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>
@@ -304,8 +391,10 @@ export type Mutation = {
   removeFile?: Maybe<UploadFileEntityResponse>
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   resetPassword?: Maybe<UsersPermissionsLoginPayload>
+  updateEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>
   updateFavorito?: Maybe<FavoritoEntityResponse>
   updateFileInfo: UploadFileEntityResponse
+  updateOrdem?: Maybe<OrdemEntityResponse>
   updateProduto?: Maybe<ProdutoEntityResponse>
   updateUploadFile?: Maybe<UploadFileEntityResponse>
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>
@@ -322,8 +411,16 @@ export type MutationChangePasswordArgs = {
   passwordConfirmation: Scalars['String']['input']
 }
 
+export type MutationCreateEmailDesignerEmailTemplateArgs = {
+  data: EmailDesignerEmailTemplateInput
+}
+
 export type MutationCreateFavoritoArgs = {
   data: FavoritoInput
+}
+
+export type MutationCreateOrdemArgs = {
+  data: OrdemInput
 }
 
 export type MutationCreateProdutoArgs = {
@@ -346,7 +443,15 @@ export type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput
 }
 
+export type MutationDeleteEmailDesignerEmailTemplateArgs = {
+  id: Scalars['ID']['input']
+}
+
 export type MutationDeleteFavoritoArgs = {
+  id: Scalars['ID']['input']
+}
+
+export type MutationDeleteOrdemArgs = {
   id: Scalars['ID']['input']
 }
 
@@ -403,6 +508,11 @@ export type MutationResetPasswordArgs = {
   passwordConfirmation: Scalars['String']['input']
 }
 
+export type MutationUpdateEmailDesignerEmailTemplateArgs = {
+  data: EmailDesignerEmailTemplateInput
+  id: Scalars['ID']['input']
+}
+
 export type MutationUpdateFavoritoArgs = {
   data: FavoritoInput
   id: Scalars['ID']['input']
@@ -411,6 +521,11 @@ export type MutationUpdateFavoritoArgs = {
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID']['input']
   info?: InputMaybe<FileInfoInput>
+}
+
+export type MutationUpdateOrdemArgs = {
+  data: OrdemInput
+  id: Scalars['ID']['input']
 }
 
 export type MutationUpdateProdutoArgs = {
@@ -444,6 +559,61 @@ export type MutationUploadArgs = {
   info?: InputMaybe<FileInfoInput>
   ref?: InputMaybe<Scalars['String']['input']>
   refId?: InputMaybe<Scalars['ID']['input']>
+}
+
+export type Ordem = {
+  card_brand?: Maybe<Scalars['String']['output']>
+  card_last4?: Maybe<Scalars['String']['output']>
+  createdAt?: Maybe<Scalars['DateTime']['output']>
+  payment_intent_id?: Maybe<Scalars['String']['output']>
+  produtos?: Maybe<ProdutoRelationResponseCollection>
+  total_in_cents: Scalars['Long']['output']
+  updatedAt?: Maybe<Scalars['DateTime']['output']>
+  user?: Maybe<UsersPermissionsUserEntityResponse>
+}
+
+export type OrdemProdutosArgs = {
+  filters?: InputMaybe<ProdutoFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>
+}
+
+export type OrdemEntity = {
+  attributes?: Maybe<Ordem>
+  id?: Maybe<Scalars['ID']['output']>
+}
+
+export type OrdemEntityResponse = {
+  data?: Maybe<OrdemEntity>
+}
+
+export type OrdemEntityResponseCollection = {
+  data: Array<OrdemEntity>
+  meta: ResponseCollectionMeta
+}
+
+export type OrdemFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<OrdemFiltersInput>>>
+  card_brand?: InputMaybe<StringFilterInput>
+  card_last4?: InputMaybe<StringFilterInput>
+  createdAt?: InputMaybe<DateTimeFilterInput>
+  id?: InputMaybe<IdFilterInput>
+  not?: InputMaybe<OrdemFiltersInput>
+  or?: InputMaybe<Array<InputMaybe<OrdemFiltersInput>>>
+  payment_intent_id?: InputMaybe<StringFilterInput>
+  produtos?: InputMaybe<ProdutoFiltersInput>
+  total_in_cents?: InputMaybe<LongFilterInput>
+  updatedAt?: InputMaybe<DateTimeFilterInput>
+  user?: InputMaybe<UsersPermissionsUserFiltersInput>
+}
+
+export type OrdemInput = {
+  card_brand?: InputMaybe<Scalars['String']['input']>
+  card_last4?: InputMaybe<Scalars['String']['input']>
+  payment_intent_id?: InputMaybe<Scalars['String']['input']>
+  produtos?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>
+  total_in_cents?: InputMaybe<Scalars['Long']['input']>
+  user?: InputMaybe<Scalars['ID']['input']>
 }
 
 export type Pagination = {
@@ -518,11 +688,15 @@ export type ProdutoRelationResponseCollection = {
 }
 
 export type Query = {
+  emailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>
+  emailDesignerEmailTemplates?: Maybe<EmailDesignerEmailTemplateEntityResponseCollection>
   favorito?: Maybe<FavoritoEntityResponse>
   favoritos?: Maybe<FavoritoEntityResponseCollection>
   i18NLocale?: Maybe<I18NLocaleEntityResponse>
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>
   me?: Maybe<UsersPermissionsMe>
+  ordem?: Maybe<OrdemEntityResponse>
+  ordens?: Maybe<OrdemEntityResponseCollection>
   produto?: Maybe<ProdutoEntityResponse>
   produtos?: Maybe<ProdutoEntityResponseCollection>
   uploadFile?: Maybe<UploadFileEntityResponse>
@@ -533,6 +707,16 @@ export type Query = {
   usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>
   usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>
+}
+
+export type QueryEmailDesignerEmailTemplateArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>
+}
+
+export type QueryEmailDesignerEmailTemplatesArgs = {
+  filters?: InputMaybe<EmailDesignerEmailTemplateFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>
 }
 
 export type QueryFavoritoArgs = {
@@ -551,6 +735,16 @@ export type QueryI18NLocaleArgs = {
 
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>
+}
+
+export type QueryOrdemArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>
+}
+
+export type QueryOrdensArgs = {
+  filters?: InputMaybe<OrdemFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>
 }
@@ -996,6 +1190,8 @@ export type ProdutoFragmentFragment = {
         __typename: 'UploadFile'
         url: string
         name: string
+        width?: number | null
+        height?: number | null
       } | null
     }>
   } | null
@@ -1042,6 +1238,8 @@ export type MutationUpdateFavoritoMutation = {
                     __typename: 'UploadFile'
                     url: string
                     name: string
+                    width?: number | null
+                    height?: number | null
                   } | null
                 }>
               } | null
@@ -1100,6 +1298,8 @@ export type MutationCreateFavoritoMutation = {
                     __typename: 'UploadFile'
                     url: string
                     name: string
+                    width?: number | null
+                    height?: number | null
                   } | null
                 }>
               } | null
@@ -1167,6 +1367,8 @@ export type GetFavoritosQuery = {
                     __typename: 'UploadFile'
                     url: string
                     name: string
+                    width?: number | null
+                    height?: number | null
                   } | null
                 }>
               } | null
@@ -1211,6 +1413,8 @@ export type GetProdutoQuery = {
               __typename: 'UploadFile'
               url: string
               name: string
+              width?: number | null
+              height?: number | null
             } | null
           }>
         } | null
@@ -1252,6 +1456,8 @@ export type GetProdutosQuery = {
               __typename: 'UploadFile'
               url: string
               name: string
+              width?: number | null
+              height?: number | null
             } | null
           }>
         } | null
@@ -1291,6 +1497,8 @@ export const ProdutoFragmentFragmentDoc = gql`
         attributes {
           url
           name
+          width
+          height
         }
       }
     }

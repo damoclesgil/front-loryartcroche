@@ -7,6 +7,25 @@ import styles from './gallery.module.css'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { Close } from '@styled-icons/material-outlined/Close'
+import { getImageUrl } from '@/utils/getImageUrl'
+import Fancybox from './Fancybox'
+
+// import ReactImageZoom from 'react-image-zoom'
+// import SliderImage from 'react-zoom-slider'
+// import ReactImageMagnify from 'react-image-magnify'
+
+/* Libs Slides */
+// https://flickity.metafizzy.co/style
+// react slick slide
+// Fancybox (Essa aqui abre uma parte que consegue selecionar ) https://fancyapps.com/fancybox/
+/* Libs Zoom */
+// react-zoom-slider
+// https://www.npmjs.com/package/react-image-zoom
+// https://www.npmjs.com/package/react-image-magnify
+// https://www.npmjs.com/package/drift-zoom#demo-
+
+// Eu estou querendo usar 3 libs a react-slick depois a fancybox quando clicar e uma para dar zoom.
+// Acjo que vou ficar som com o fancyapps https://fancyapps.com/
 
 const commonSettings = {
   infinite: false,
@@ -91,64 +110,111 @@ const Gallery = ({ items }, props) => {
   }
 
   return (
-    <div className={`${styles['wrapper']}`}>
-      <div className="slide-one">
-        <Slider {...slide1Settings} ref={(slider) => (sliderRef1 = slider)}>
-          {items.map((item, index) => (
-            <Image
-              width={295}
-              height={165}
-              role="button"
-              key={`thumb-${index}`}
-              src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.url}`}
-              alt={`Thumb - ${item.attributes.name}`}
-              onClick={() => {
-                sliderModal.current.slickGoTo(index, true)
-                setIsOpen(true)
-              }}
-            />
-          ))}
-        </Slider>
-      </div>
-      <div className="slide-two">
-        <Slider {...slide2Settings} ref={(slider) => (sliderRef2 = slider)}>
-          {items.map((item, index) => (
-            <Image
-              width={295}
-              height={165}
-              role="button"
-              key={`thumb-${index}`}
-              src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.url}`}
-              alt={`Thumb - ${item.attributes.name}`}
-              onClick={() => {
-                sliderRef1.slickGoTo(index, true)
-                sliderRef2.slickGoTo(index, true)
-              }}
-            />
-          ))}
-        </Slider>
-      </div>
-
-      <div
-        className={`fixed w-full h-full top-0 left-0 bg-gray-900 bg-opacity-75 flex justify-center items-center z-10 transition-opacity ${
-          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-        aria-label="modal"
-        aria-hidden={!isOpen}
+    <>
+      {/* <Fancybox
+        options={{
+          Carousel: {
+            infinite: false
+          }
+        }}
       >
-        <button
-          className="text-white absolute top-[1%] right-0 w-10 h-10 p-0 text-right z-20"
-          role="button"
-          aria-label="close modal"
-          onClick={() => setIsOpen(false)}
-        >
-          <Close size={40} />
-        </button>
+        <a data-fancybox="gallery" href="https://lipsum.app/id/60/1600x1200">
+          <img
+            alt=""
+            src="https://lipsum.app/id/60/200x150"
+            width="200"
+            height="150"
+          />
+        </a>
+        <a data-fancybox="gallery" href="https://lipsum.app/id/61/1600x1200">
+          <img
+            alt=""
+            src="https://lipsum.app/id/61/200x150"
+            width="200"
+            height="150"
+          />
+        </a>
+      </Fancybox> */}
+      <div className={`${styles['wrapper']}`}>
+        <div className="slide-one">
+          <Fancybox
+            options={{
+              Carousel: {
+                infinite: false
+              }
+            }}
+          >
+            {items.map((item, index) => (
+              <a
+                data-fancybox="gallery"
+                href={getImageUrl(item.attributes.url)}
+                key={'gallery_' + index}
+              >
+                <img
+                  alt={item.attributes.name}
+                  src={getImageUrl(item.attributes.url)}
+                  width={item.attributes.width}
+                  height={item.attributes.height}
+                />
+              </a>
+            ))}
+          </Fancybox>
+
+          {/* <Slider {...slide1Settings} ref={(slider) => (sliderRef1 = slider)}>
+            {items.map((item, index) => (
+              <>
+                <Image
+                  width={295}
+                  height={165}
+                  role="button"
+                  key={`thumb-${index}`}
+                  src={getImageUrl(item.attributes.url)}
+                  alt={`Thumb - ${item.attributes.name}`}
+                  draggable={false}
+                />
+              </>
+            ))}
+          </Slider> */}
+        </div>
+        {/* <div className="slide-two">
+          <Slider {...slide2Settings} ref={(slider) => (sliderRef2 = slider)}>
+            {items.map((item, index) => (
+              <Image
+                width={295}
+                height={165}
+                role="button"
+                key={`thumb-${index}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL}${item.attributes.url}`}
+                alt={`Thumb - ${item.attributes.name}`}
+                onClick={() => {
+                  sliderRef1.slickGoTo(index, true)
+                  sliderRef2.slickGoTo(index, true)
+                }}
+              />
+            ))}
+          </Slider>
+        </div> */}
+        {/* 
         <div
-          className="slide-modal max-h-[54rem]"
-          style={{ maxWidth: 'min(42rem, 100%)' }}
+          className={`fixed w-full h-full top-0 left-0 bg-gray-900 bg-opacity-75 flex justify-center items-center z-10 transition-opacity ${
+            isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+          aria-label="modal"
+          aria-hidden={!isOpen}
         >
-          <Slider ref={sliderModal} {...modalSettings}>
+          <button
+            className="text-white absolute top-[1%] right-0 w-10 h-10 p-0 text-right z-20"
+            role="button"
+            aria-label="close modal"
+            onClick={() => setIsOpen(false)}
+          >
+            <Close size={40} />
+          </button>
+          <div
+            className="slide-modal max-h-[54rem]"
+            style={{ maxWidth: 'min(42rem, 100%)' }}
+          >
+            <Slider ref={sliderModal} {...modalSettings}>
             {items.map((item, index) => (
               <Image
                 width={1200}
@@ -159,9 +225,10 @@ const Gallery = ({ items }, props) => {
               />
             ))}
           </Slider>
-        </div>
+          </div>
+        </div> */}
       </div>
-    </div>
+    </>
   )
 }
 

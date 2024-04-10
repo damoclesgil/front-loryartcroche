@@ -135,3 +135,4 @@
 .wrapper :global .slick-slide img {
   @apply block w-full h-full object-contain object-center;
 }
+

@@ -19,6 +19,8 @@ export const ProdutoFragment = gql`
         attributes {
           url
           name
+          width
+          height
         }
       }
     }

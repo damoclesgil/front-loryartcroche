@@ -86,7 +86,7 @@ export default function Page() {
                   loading="lazy"
                 />
               </div> */}
-              <Gallery items={currentProduct.gallery} />
+              <Gallery items={currentProduct.gallery} key="-1" />
               {/* <p>Galeria de imagens?</p> */}
             </div>
             <div className="flex flex-col mt-4 md:mt-0">
