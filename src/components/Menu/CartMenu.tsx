@@ -24,15 +24,25 @@ const CartMenu = () => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            className="w-8 h-8 rounded-full text-gray-600  border border-gray-200 dark:border-gray-800"
-            id="cart"
-            size="icon"
-            variant="ghost"
-          >
-            <ShoppingBagIcon className="w-4 h-4" />
-            <span className="sr-only">Toggle cart</span>
-          </Button>
+          {/*  border border-gray-200 dark:border-gray-800 */}
+          <div className="relative">
+            <Button
+              className="w-10 h-10 rounded-full text-gray-700"
+              id="cart"
+              size="icon"
+              variant="ghost"
+            >
+              <ShoppingBagIcon className="w-6 h-6" />
+              <span className="sr-only">Toggle cart</span>
+            </Button>
+            {items.length !== 0 && (
+              <>
+                <div className="absolute bg-primary top-[1px] right-[1px] text-white font-bold flex items-center text-xs rounded-full justify-center w-5 h-5">
+                  <p>{items.length}</p>
+                </div>
+              </>
+            )}
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-full">
           {loading ? (

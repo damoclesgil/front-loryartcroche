@@ -1,9 +1,8 @@
 'use client'
 
-const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
-
+// import dynamic from 'next/dynamic'
+// const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
 import Image from 'next/image'
-import dynamic from 'next/dynamic'
 import formatPrice from '@/utils/format-price'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { LocalShipping, CreditCard } from '@styled-icons/material-outlined'
@@ -12,15 +11,26 @@ import Gallery from '@/components/Gallery'
 import Head from 'next/head'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useQuery } from '@apollo/client'
-import { links } from '@/utils/constant'
+// import { links } from '@/utils/constant'
 import { GetProdutoDocument } from '@/graphql/types'
 import WishlistButton from '@/components/WishlistButton'
-import CartButton from '@/components/CartButton'
+// import CartButton from '@/components/CartButton'
+import Link from 'next/link'
+import { Share1Icon } from '@radix-ui/react-icons'
+import { useCart } from '@/hooks/use-cart'
+import { useState } from 'react'
 
 export default function Page() {
+  const [selectedColor, setSelectedColor] = useState('Rosa')
   const pathname = usePathname()
 
   const productId = useSearchParams().get('id')
+
+  const { isInCart, addToCart, removeFromCart } = useCart()
+
+  const handleClick = (id: string) => {
+    return isInCart(id) ? removeFromCart(id) : addToCart(id)
+  }
 
   const shareProduct = async (product: any) => {
     if (navigator.share) {
@@ -73,42 +83,33 @@ export default function Page() {
       </Head>
       {currentProduct && (
         <>
-          {/* flex flex-col md:flex-row */}
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr] justify-between">
             <div className="flex flex-col">
-              {/* <div className="w-full">
-                <Image
-                  className="object-cover"
-                  src={`/img/products/${currentProduct.img}`}
-                  alt={currentProduct.name}
-                  width={580}
-                  height={580}
-                  loading="lazy"
-                />
-              </div> */}
               <Gallery items={currentProduct.gallery} key="-1" />
-              {/* <p>Galeria de imagens?</p> */}
             </div>
             <div className="flex flex-col mt-4 md:mt-0">
-              <p className="font-semibold text-lg mb-2">
+              <h1 className="font-semibold text-[3rem] mb-2">
                 {currentProduct.name}
-              </p>
+              </h1>
               <p className="font-bold text-lg mb-2">
                 {formatPrice(Number(currentProduct.price))}
               </p>
-              <p className="text-md">Feito sob encomenda</p>
-              <p className="mb-4">12 Dias para produção.</p>
-              <div className="flex items-center mb-4  text-primary">
+              <div className="text-md">{currentProduct.detalhes}</div>
+              {/* <p className="text-md">Feito sob encomenda</p> */}
+              {/* <p className="mb-4">12 Dias para produção.</p> */}
+              <div className="flex mt-2 items-center mb-4 text-primary">
                 <LocalShipping size={30} />
                 <div className="ml-4 text-sm">
                   <p>Frete grátis para Goiânia e regiões próximas</p>
                   <p>Verificar disponibilidade</p>
                 </div>
               </div>
-              <p className="mb-2">Cores:</p>
-              <div className="flex mb-2">
-                {/* <Link
-                  className={`p-3 mr-2 border-primary focus:border-2 rounded-sm ${
+              <p className="mb-2 text-md">
+                Cor: <strong>{selectedColor}</strong>
+              </p>
+              <div className="flex items-center mb-2">
+                <Link
+                  className={`w-8 h-8 rounded-full bg-primary border-gray-600 border-[3px] focus:border-2 mr-1.5 ${
                     pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
                       ? 'border-2 '
                       : 'border'
@@ -118,9 +119,20 @@ export default function Page() {
                     query: { id: 1 }
                   }}
                 >
-                  Rosa
+                  {/* <div className="w-5 h-5 rounded-full bg-primary"></div> */}
                 </Link>
                 <Link
+                  className={`w-8 h-8 rounded-full bg-[#888] border-gray-600 border-[3px] focus:border-2 ${
+                    pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
+                      ? 'border-2 '
+                      : 'border'
+                  }`}
+                  href={{
+                    pathname: `bolsa-de-croche-cor-de-rosa`,
+                    query: { id: 1 }
+                  }}
+                ></Link>
+                {/* <Link
                   className={`p-3 ml-2 border-primary focus:border-2 rounded-sm ${
                     pathname === '/produtos/bolsa-de-croche-cor-azul'
                       ? 'border-2 '
@@ -137,14 +149,16 @@ export default function Page() {
 
               <div className="flex items-center">
                 <WishlistButton id={currentProduct.id} />
-                <CartButton id={currentProduct.id} />
+                {/* <CartButton id={currentProduct.id} /> */}
               </div>
               <button
-                className="my-2 text-left"
+                className="my-2 text-left flex items-center"
                 onClick={() => shareProduct(currentProduct)}
               >
-                Compartilhar
+                <Share1Icon className="w-4 h-4 mr-2 " />
+                <span>Compartilhar</span>
               </button>
+
               <p>Meios de pagamento:</p>
               <p className="mb-2">Pix, Cartão e Boleto</p>
               <div className="flex mb-4">
@@ -159,7 +173,7 @@ export default function Page() {
                   loading="lazy"
                 />
               </div>
-              <Button asChild>
+              {/* <Button asChild>
                 <a
                   target="_blank"
                   className={buttonVariants({
@@ -171,10 +185,19 @@ export default function Page() {
                 >
                   Encomendar
                 </a>
+              </Button> */}
+              <Button
+                onClick={() => handleClick(currentProduct.id)}
+                className="mt-4 uppercase font-bold"
+                size="lg"
+              >
+                {isInCart(currentProduct.id)
+                  ? 'Remover do Carrinho'
+                  : 'Adicionar ao Carrinho'}
               </Button>
             </div>
           </div>
-          <div>
+          {/* <div>
             <Tabs
               contentFirstTab={
                 <div
@@ -183,7 +206,7 @@ export default function Page() {
               }
               contentSecondTab={<p>Muito bom mesmo, está de parabéns</p>}
             />
-          </div>
+          </div> */}
         </>
       )}
     </>

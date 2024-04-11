@@ -23,7 +23,7 @@ function Fancybox(props: {
 
     return () => {
       NativeFancybox.unbind(container)
-      //   NativeFancybox.close()
+      // NativeFancybox.close()
     }
   })
 

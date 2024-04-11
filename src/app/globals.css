@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -58,9 +57,9 @@
     font-family: var(--font-montserrat);
     @apply bg-background text-foreground;
   }
-  h1 {
+  /* h1 {
     font-family: var(--font-playfair);
-  }
+  } */
 }
 
 input:-webkit-autofill {

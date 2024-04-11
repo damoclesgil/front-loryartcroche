@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <Base>
       <main>
-        <h2 className="text-3xl mb-5 font-semibold text-center">
+        <h2 className="text-3xl mb-12 font-semibold text-center">
           Bolsas lindamente desenhadas feitas com amor.
           <br />
           Perfeito para todas as ocasiões.

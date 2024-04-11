@@ -1,0 +1,54 @@
+.lory-carousel {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.lory-carousel__slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lory-carousel__slide img {
+  width: 100%;
+  height: auto;
+}
+
+.f-carousel {
+  --f-button-width: 38px;
+  --f-button-height: 38px;
+
+  --f-button-svg-width: 16px;
+  --f-button-svg-height: 16px;
+  --f-button-svg-stroke-width: 2.5;
+
+  --f-button-color: rgb(71 85 105);
+  --f-button-border-radius: 50%;
+  --f-button-shadow: 0 6px 12px -2px rgb(50 50 93 / 25%),
+    0 3px 7px -3px rgb(0 0 0 / 30%);
+
+  --f-button-bg: #fff;
+  --f-button-hover-bg: #f9f9f9;
+  --f-button-active-bg: #f0f0f0;
+}
+
+/* .lory-carousel .f-button.is-prev {
+  @apply bg-white rounded-full hover:bg-[#f9f9f9];
+  color: rgb(71 85 105);
+  transform: translateY(-50%);
+  box-shadow: 0 6px 12px -2px rgb(50 50 93 / 25%);
+} */
+#myPanzoom {
+  max-width: 600px;
+  height: 300px;
+  background: #eee;
+}
+@media (min-width: 640px) {
+  .lory-carousel {
+    max-width: 600px;
+  }
+  .f-carousel {
+    --f-button-prev-pos: -20px;
+    --f-button-next-pos: -20px;
+  }
+}

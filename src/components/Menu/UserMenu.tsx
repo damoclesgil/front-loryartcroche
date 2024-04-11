@@ -29,12 +29,12 @@ const UserMenu = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
-              className="rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800"
+              className="rounded-full focus:ring-2 focus:ring-gray-200 text-gray-700"
               id="profile-menu"
               size="icon"
               variant="ghost"
             >
-              <UserIcon className="w-4 h-4" />
+              <UserIcon className="w-6 h-6" />
               {/* <Image
                 alt="Avatar"
                 className="rounded-full"
