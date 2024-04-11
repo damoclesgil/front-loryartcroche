@@ -14,7 +14,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className="bg-[#fff5ed] w-full pt-4">
+      <div className="bg-[#fff5ed] w-full pt-4 mt-12">
         <div className="grid items-center md:items-start w-full justify-center md:justify-between mt-7 grid-cols-1 md:grid-cols-3 gap-6 max-w-screen-xl mx-auto">
           <div className="flex flex-col items-center md:items-start">
             <Link href="/" className="no-underline mb-4">

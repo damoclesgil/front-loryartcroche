@@ -10,6 +10,7 @@ import WishList from './_components/WishList'
 export default function Favoritos() {
   return (
     <main>
+      <h1 className="text-2xl text-center font-bold">Meus Favoritos</h1>
       <WishList />
       <InstagramSection />
     </main>

@@ -16,9 +16,10 @@ import Loader from '@/components/Loader'
 import Link from 'next/link'
 import { NextRoutes } from '@/utils/constant'
 import { useCart } from '@/hooks/use-cart'
+import formatPrice from '@/utils/format-price'
 
 const CartMenu = () => {
-  const { items, total, loading } = useCart()
+  const { items, total, loading, removeFromCart } = useCart()
 
   return (
     <>
@@ -64,13 +65,22 @@ const CartMenu = () => {
                           src={product.img}
                           width="80"
                         />
-                        <div className="flex-1 grid gap-1 text-sm">
-                          <div className="font-medium">{product.name}</div>
-                          <div className="text-sm text-gray-500 dark:text-gray-400">
-                            {product.price}
+                        <div>
+                          <div className="text-md font-medium">
+                            {product.name}
                           </div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">
+                            {formatPrice(Number(product.price))}
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="link"
+                            onClick={() => removeFromCart(product.id)}
+                          >
+                            <span>Remover</span>
+                          </Button>
                         </div>
-                        <div className="flex items-center">
+                        {/* <div className="flex items-center">
                           <Button
                             className="w-6 h-6"
                             size="icon"
@@ -90,36 +100,38 @@ const CartMenu = () => {
                             <PlusIcon className="w-4 h-4" />
                             <span className="sr-only">Adicionar um item</span>
                           </Button>
-                        </div>
+                        </div> */}
                       </div>
                     ))}
                   </>
                 ) : (
                   <Empty
-                    description="Nenhum Produto foi adicionado ao carrinho"
-                    title="Sem produtos aqui :("
+                    description="Nenhum produto foi adicionado ao carrinho"
+                    title="Sem produtos aqui 🥲"
                   />
                 )}
                 <div />
               </div>
-              <div className="flex flex-col gap-2 p-4 border-t">
-                <div className="flex items-center justify-between">
-                  <div>Total</div>
-                  <div className="font-medium">{total}</div>
+              {items.length !== 0 && (
+                <div className="flex flex-col gap-2 p-4 border-t">
+                  <div className="flex items-center justify-between">
+                    <div>Total</div>
+                    <div className="font-medium">{total}</div>
+                  </div>
+                  <Button asChild>
+                    <Link
+                      className={buttonVariants({
+                        variant: 'default',
+                        className: 'w-full font-bold',
+                        size: 'default'
+                      })}
+                      href={`${NextRoutes.cart}`}
+                    >
+                      Comprar
+                    </Link>
+                  </Button>
                 </div>
-                <Button asChild>
-                  <Link
-                    className={buttonVariants({
-                      variant: 'default',
-                      className: 'w-full',
-                      size: 'sm'
-                    })}
-                    href={`${NextRoutes.cart}`}
-                  >
-                    Finalizar Compra
-                  </Link>
-                </Button>
-              </div>
+              )}
             </div>
           )}
         </DropdownMenuContent>

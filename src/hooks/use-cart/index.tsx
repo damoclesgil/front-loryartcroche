@@ -20,8 +20,11 @@ export type CartContextData = {
   total: string
   isInCart: (id: string) => boolean
   addToCart: (id: string) => void
+  increment: () => void
+  decrement: () => void
   removeFromCart: (id: string) => void
   clearCart: () => void
+  count: number
   loading: boolean
 }
 
@@ -31,8 +34,11 @@ export const CartContextDefaultValues = {
   total: 'R$ 0,00',
   isInCart: () => false,
   addToCart: () => null,
+  increment: () => null,
+  decrement: () => null,
   removeFromCart: () => null,
   clearCart: () => null,
+  count: 0,
   loading: false
 }
 
@@ -46,6 +52,7 @@ export type CartProviderProps = {
 
 const CartProvider = ({ children }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState<string[]>([])
+  const [count, setCount] = useState(0)
 
   // let data = []
   useEffect(() => {
@@ -85,6 +92,22 @@ const CartProvider = ({ children }: CartProviderProps) => {
     }
   }
 
+  const increment = () => {
+    setCount(function (prevCount) {
+      return (prevCount += 1)
+    })
+  }
+
+  const decrement = () => {
+    setCount(function (prevCount) {
+      if (prevCount > 0) {
+        return (prevCount -= 1)
+      } else {
+        return (prevCount = 0)
+      }
+    })
+  }
+
   const removeFromCart = (id: string) => {
     const newCartItems = cartItems.filter((itemId: string) => itemId !== id)
     saveCart(newCartItems)
@@ -101,7 +124,10 @@ const CartProvider = ({ children }: CartProviderProps) => {
         quantity: cartItems.length,
         total: formatPrice(total || 0),
         isInCart,
+        increment,
+        decrement,
         addToCart,
+        count: count,
         removeFromCart,
         clearCart,
         loading

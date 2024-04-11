@@ -27,7 +27,12 @@ const WishlistButton = ({ id }: WishlistButtonProps) => {
       loading={loadingApollo}
       disabled={loadingApollo}
     >
-      {isInWishlist(id) ? <Favorite size={25} /> : <FavoriteBorder size={25} />}
+      {!loadingApollo &&
+        (isInWishlist(id) ? (
+          <Favorite size={25} />
+        ) : (
+          <FavoriteBorder size={25} />
+        ))}
     </Button>
   )
 }

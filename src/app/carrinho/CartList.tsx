@@ -12,6 +12,7 @@ import React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import PaymentForm from './_components/PaymentForm'
+import { Trash, Trash2 } from '@styled-icons/feather'
 
 const stripePromise = loadStripe(
   `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
@@ -21,7 +22,8 @@ const stripePromise = loadStripe(
 )
 
 const CartList = () => {
-  const { items, total, loading, removeFromCart } = useCart()
+  const { items, total, loading, removeFromCart, increment, decrement, count } =
+    useCart()
 
   if (loading) {
     return (
@@ -56,7 +58,13 @@ const CartList = () => {
                         {product.name}
                       </h2>
                       <div className="flex items-center gap-2">
-                        <Button className="w-6 h-6" size="icon" variant="ghost">
+                        <Button
+                          className="w-6 h-6"
+                          size="icon"
+                          variant="ghost"
+                          title="Diminuir Quantidade"
+                          onClick={() => decrement()}
+                        >
                           <MinusIcon className="w-4 h-4" />
                           <span className="sr-only">Diminuir Quantidade</span>
                         </Button>
@@ -64,20 +72,31 @@ const CartList = () => {
                           className="w-12 border-0 border-b bg-gray-100/40 appearance-none text-center dark:bg-gray-800/40"
                           min="1"
                           type="number"
-                          defaultValue={1}
+                          disabled
+                          value={count}
                         />
-                        <Button className="w-6 h-6" size="icon" variant="ghost">
+                        <Button
+                          className="w-6 h-6"
+                          title="Aumentar Quantidade"
+                          size="icon"
+                          variant="ghost"
+                          onClick={() => increment()}
+                        >
                           <PlusIcon className="w-4 h-4" />
                           <span className="sr-only">Aumentar Quantidade</span>
                         </Button>
                       </div>
-                      <Button size="default">Salvar para depois</Button>
-                      <Button
-                        size="default"
-                        onClick={() => removeFromCart(product.id)}
-                      >
-                        Remover
-                      </Button>
+                      {/* <Button size="default">Salvar para depois</Button> */}
+                      <div className="ml-[-1rem]">
+                        <Button
+                          size="default"
+                          variant={'link'}
+                          onClick={() => removeFromCart(product.id)}
+                        >
+                          <Trash2 size={20} className="mr-1" />
+                          remover
+                        </Button>
+                      </div>
                     </div>
                   </div>
                   <div className="text-lg font-semibold ml-auto">
@@ -94,7 +113,7 @@ const CartList = () => {
             />
           )}
         </div>
-        <Card className="p-6">
+        <Card className="mb-8 p-6">
           <div className="grid gap-2 mb-6">
             <div className="flex items-center justify-between">
               <span className="font-semibold">Total</span>
@@ -104,7 +123,7 @@ const CartList = () => {
 
           <h2 className="mb-6"> Selecione a forma de Pagamento: </h2>
 
-          <h3 className="mb-4">Cartão de Crédito</h3>
+          <h3 className="mb-1">Cartão de Crédito</h3>
           <Elements stripe={stripePromise}>
             <PaymentForm />
           </Elements>

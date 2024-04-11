@@ -20,7 +20,8 @@ export const publicRoutes = {
 export const privateRoutes = {
   favorites: '/favoritos',
   cart: '/carrinho',
-  profile: '/minha-conta'
+  profile: '/minha-conta',
+  myOrders: '/minhas-compras'
 }
 
 export const NextRoutes = {

@@ -7,6 +7,15 @@ import { usePathname } from 'next/navigation'
 const NavList = ({ hiddenMobile = false }) => {
   const pathname = usePathname()
 
+  const defaultLinkClasses =
+    'block py-2 px-3 rounded md:bg-transparent md:primary md:p-0 md:dark:bg-transparent hover:text-primary'
+
+  const activeLinkClasses =
+    'text-primary bg-gray-100 dark:bg-gray-700 md:hover:bg-transparent'
+
+  const descativeLinkClasses =
+    'text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 md:dark:hover:bg-transparent md:hover:bg-transparent dark:text-white md:dark:text-bg-gray-700 dark:hover:text-white'
+
   return (
     <>
       <ul
@@ -15,10 +24,10 @@ const NavList = ({ hiddenMobile = false }) => {
         <li>
           <Link
             href={NextRoutes.home}
-            className={`block py-2 px-3 rounded md:bg-transparent md:primary md:p-0 md:dark:bg-transparent ${
+            className={`${defaultLinkClasses} ${
               pathname === NextRoutes.home
-                ? 'text-primary bg-gray-100 dark:bg-gray-700 md:hover:bg-transparent'
-                : 'text-gray-900 hover:bg-gray-100  dark:hover:bg-gray-700 md:dark:hover:bg-transparent md:hover:bg-transparent dark:text-white md:dark:text-bg-gray-700 dark:hover:text-white'
+                ? activeLinkClasses
+                : descativeLinkClasses
             }`}
             aria-current="page"
           >
@@ -28,10 +37,10 @@ const NavList = ({ hiddenMobile = false }) => {
         <li>
           <Link
             href={NextRoutes.products}
-            className={`block py-2 px-3 rounded md:bg-transparent md:primary md:p-0 md:dark:bg-transparent ${
+            className={`${defaultLinkClasses} ${
               pathname === NextRoutes.products
-                ? 'text-primary bg-gray-100 dark:bg-gray-700 md:hover:bg-transparent'
-                : 'text-gray-900 hover:bg-gray-100  dark:hover:bg-gray-700 md:dark:hover:bg-transparent md:hover:bg-transparent dark:text-white md:dark:text-bg-gray-700 dark:hover:text-white'
+                ? activeLinkClasses
+                : descativeLinkClasses
             }`}
           >
             Produtos

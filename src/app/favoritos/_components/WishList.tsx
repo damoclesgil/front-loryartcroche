@@ -6,6 +6,8 @@ import Loader from '@/components/Loader'
 import { useSession } from 'next-auth/react'
 import { useQueryFavoritos } from '@/graphql/queries/favoritos'
 import { getImageUrl } from '@/utils/getImageUrl'
+import Link from 'next/link'
+import { NextRoutes } from '@/utils/constant'
 
 const WishList = () => {
   const { data: session } = useSession()
@@ -41,7 +43,15 @@ const WishList = () => {
   if (data?.favoritos?.data[0].attributes?.produtos?.data.length === 0) {
     return (
       <>
-        <Empty title="Nenhum Produto Encontrado" description="" />
+        <Empty title="Nenhum Produto Adicionado as Favoritos" description="" />
+        <p className="text-center">
+          Visite nossa página de
+          <Link href={NextRoutes.products} className="text-primary">
+            {' '}
+            produtos{' '}
+          </Link>
+          e adicione <br /> aos favoritos os produtos que você mais gostou 😊
+        </p>
       </>
     )
   }

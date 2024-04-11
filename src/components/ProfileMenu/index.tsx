@@ -6,27 +6,44 @@ import { AccountCircle } from '@styled-icons/remix-line'
 import Link from 'next/link'
 import { Button } from '../ui/button'
 import { signOut } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 const ProfileMenu = () => {
+  const pathname = usePathname()
+
   const { push } = useRouter()
 
+  const defaultLinkClasses =
+    'cursor-pointer decoration-inherit flex items-center px-2 py-3 transition-colors hover:bg-primary block w-full'
+
+  const activeLinkClasses = 'bg-primary'
+
+  const descativeLinkClasses = 'bg-transparent'
+
   return (
-    <nav className="flex border border-primary md:flex-col h-[10rem]">
+    <nav className="flex lg:border lg:border-primary flex-col lg:items-center lg:max-w-[15rem] lg:max-h-[9.1rem]">
       <Link
         href={NextRoutes.profile}
-        className="cursor-pointer decoration-inherit flex items-center px-2 py-3 transition-colors hover:bg-primary"
+        className={`${defaultLinkClasses} ${
+          pathname === NextRoutes.profile
+            ? activeLinkClasses
+            : descativeLinkClasses
+        }`}
       >
         <AccountCircle size={24} />
-        <span>Meu Perfil</span>
+        <span className="ml-2">Meu Perfil</span>
       </Link>
 
       <Link
-        className="cursor-pointer decoration-inherit flex items-center px-2 py-3 transition-colors hover:bg-primary"
-        href={NextRoutes.cart}
+        href={NextRoutes.myOrders}
+        className={`${defaultLinkClasses} ${
+          pathname === NextRoutes.myOrders
+            ? activeLinkClasses
+            : descativeLinkClasses
+        }`}
       >
         <FormatListBulleted size={24} />
-        <span>Minhas Compras</span>
+        <span className="ml-2">Minhas Compras</span>
       </Link>
 
       {/* <Link href={NextRoutes.cart}>
@@ -34,9 +51,8 @@ const ProfileMenu = () => {
         <span>Meus Cartões</span>
       </Link> */}
 
-      <Button
-        className="cursor-pointer text-left decoration-inherit hover:no-underline flex items-center justify-start px-2 py-3 transition-colors text-gray-900 hover:bg-primary"
-        variant={'link'}
+      <button
+        className={defaultLinkClasses}
         disabled={true}
         onClick={async () => {
           const data = await signOut({
@@ -47,8 +63,8 @@ const ProfileMenu = () => {
         }}
       >
         <ExitToApp size={24} title="Sign out" />
-        <span>Sign out</span>
-      </Button>
+        <span className="ml-2">Sign out</span>
+      </button>
     </nav>
   )
 }

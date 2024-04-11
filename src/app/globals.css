@@ -75,6 +75,12 @@ input:focus:-webkit-autofill {
   border: 1px solid hsl(var(--primary));
 }
 
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* .eapps-instagram-feed-container a {
   display: none !important;
 } */

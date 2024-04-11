@@ -8,13 +8,10 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import { LocalShipping, CreditCard } from '@styled-icons/material-outlined'
 import { Pix } from '@styled-icons/fa-brands'
 import Gallery from '@/components/Gallery'
-import Head from 'next/head'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useQuery } from '@apollo/client'
-// import { links } from '@/utils/constant'
 import { GetProdutoDocument } from '@/graphql/types'
 import WishlistButton from '@/components/WishlistButton'
-// import CartButton from '@/components/CartButton'
 import Link from 'next/link'
 import { Share1Icon } from '@radix-ui/react-icons'
 import { useCart } from '@/hooks/use-cart'
@@ -67,20 +64,7 @@ export default function Page() {
   }
 
   return (
-    <>
-      <Head>
-        <link
-          rel="stylesheet"
-          type="text/css"
-          charSet="UTF-8"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-        />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-        />
-      </Head>
+    <div className="mb-1">
       {currentProduct && (
         <>
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr] justify-between">
@@ -97,7 +81,7 @@ export default function Page() {
               <div className="text-md">{currentProduct.detalhes}</div>
               {/* <p className="text-md">Feito sob encomenda</p> */}
               {/* <p className="mb-4">12 Dias para produção.</p> */}
-              <div className="flex mt-2 items-center mb-4 text-primary">
+              <div className="flex mt-2 items-center mb-2 text-primary">
                 <LocalShipping size={30} />
                 <div className="ml-4 text-sm">
                   <p>Frete grátis para Goiânia e regiões próximas</p>
@@ -107,7 +91,7 @@ export default function Page() {
               <p className="mb-2 text-md">
                 Cor: <strong>{selectedColor}</strong>
               </p>
-              <div className="flex items-center mb-2">
+              <div className="flex items-center">
                 <Link
                   className={`w-8 h-8 rounded-full bg-primary border-gray-600 border-[3px] focus:border-2 mr-1.5 ${
                     pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
@@ -147,12 +131,12 @@ export default function Page() {
                 </Link> */}
               </div>
 
-              <div className="flex items-center">
+              <div className="flex items-center mb-2 ml-[-0.5rem]">
                 <WishlistButton id={currentProduct.id} />
                 {/* <CartButton id={currentProduct.id} /> */}
               </div>
               <button
-                className="my-2 text-left flex items-center"
+                className="mb-2 text-left flex items-center"
                 onClick={() => shareProduct(currentProduct)}
               >
                 <Share1Icon className="w-4 h-4 mr-2 " />
@@ -209,6 +193,6 @@ export default function Page() {
           </div> */}
         </>
       )}
-    </>
+    </div>
   )
 }
