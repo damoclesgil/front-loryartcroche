@@ -24,5 +24,15 @@ export const ProdutoFragment = gql`
         }
       }
     }
+    cores {
+      cor
+      produtoReferente {
+        data {
+          attributes {
+            slug
+          }
+        }
+      }
+    }
   }
 `

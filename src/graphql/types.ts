@@ -59,6 +59,30 @@ export type BooleanFilterInput = {
   startsWith?: InputMaybe<Scalars['Boolean']['input']>
 }
 
+export type ComponentComponentsProdutoComponentColor = {
+  cor?: Maybe<Enum_Componentcomponentsprodutocomponentcolor_Cor>
+  id: Scalars['ID']['output']
+  produtoReferente?: Maybe<ProdutoEntityResponse>
+}
+
+export type ComponentComponentsProdutoComponentColorFiltersInput = {
+  and?: InputMaybe<
+    Array<InputMaybe<ComponentComponentsProdutoComponentColorFiltersInput>>
+  >
+  cor?: InputMaybe<StringFilterInput>
+  not?: InputMaybe<ComponentComponentsProdutoComponentColorFiltersInput>
+  or?: InputMaybe<
+    Array<InputMaybe<ComponentComponentsProdutoComponentColorFiltersInput>>
+  >
+  produtoReferente?: InputMaybe<ProdutoFiltersInput>
+}
+
+export type ComponentComponentsProdutoComponentColorInput = {
+  cor?: InputMaybe<Enum_Componentcomponentsprodutocomponentcolor_Cor>
+  id?: InputMaybe<Scalars['ID']['input']>
+  produtoReferente?: InputMaybe<Scalars['ID']['input']>
+}
+
 export type DateTimeFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>
   between?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>
@@ -82,6 +106,15 @@ export type DateTimeFilterInput = {
   null?: InputMaybe<Scalars['Boolean']['input']>
   or?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>
   startsWith?: InputMaybe<Scalars['DateTime']['input']>
+}
+
+export enum Enum_Componentcomponentsprodutocomponentcolor_Cor {
+  Azul = 'Azul',
+  Branco = 'Branco',
+  Laranja = 'Laranja',
+  Rosa = 'Rosa',
+  Verde = 'Verde',
+  Vermelho = 'Vermelho'
 }
 
 export type EmailDesignerEmailTemplate = {
@@ -214,6 +247,7 @@ export type FloatFilterInput = {
 }
 
 export type GenericMorph =
+  | ComponentComponentsProdutoComponentColor
   | EmailDesignerEmailTemplate
   | Favorito
   | I18NLocale
@@ -631,6 +665,7 @@ export type PaginationArg = {
 }
 
 export type Produto = {
+  cores?: Maybe<Array<Maybe<ComponentComponentsProdutoComponentColor>>>
   createdAt?: Maybe<Scalars['DateTime']['output']>
   descricao?: Maybe<Scalars['String']['output']>
   galeria?: Maybe<UploadFileRelationResponseCollection>
@@ -639,6 +674,12 @@ export type Produto = {
   preco: Scalars['Float']['output']
   slug?: Maybe<Scalars['String']['output']>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
+}
+
+export type ProdutoCoresArgs = {
+  filters?: InputMaybe<ComponentComponentsProdutoComponentColorFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>
 }
 
 export type ProdutoGaleriaArgs = {
@@ -663,6 +704,7 @@ export type ProdutoEntityResponseCollection = {
 
 export type ProdutoFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<ProdutoFiltersInput>>>
+  cores?: InputMaybe<ComponentComponentsProdutoComponentColorFiltersInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
   descricao?: InputMaybe<StringFilterInput>
   id?: InputMaybe<IdFilterInput>
@@ -675,6 +717,9 @@ export type ProdutoFiltersInput = {
 }
 
 export type ProdutoInput = {
+  cores?: InputMaybe<
+    Array<InputMaybe<ComponentComponentsProdutoComponentColorInput>>
+  >
   descricao?: InputMaybe<Scalars['String']['input']>
   galeria?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>
   imagem_destaque?: InputMaybe<Scalars['ID']['input']>
@@ -1195,6 +1240,17 @@ export type ProdutoFragmentFragment = {
       } | null
     }>
   } | null
+  cores?: Array<{
+    __typename: 'ComponentComponentsProdutoComponentColor'
+    cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
+    produtoReferente?: {
+      __typename: 'ProdutoEntityResponse'
+      data?: {
+        __typename: 'ProdutoEntity'
+        attributes?: { __typename: 'Produto'; slug?: string | null } | null
+      } | null
+    } | null
+  } | null> | null
 }
 
 export type MutationUpdateFavoritoMutationVariables = Exact<{
@@ -1243,6 +1299,20 @@ export type MutationUpdateFavoritoMutation = {
                   } | null
                 }>
               } | null
+              cores?: Array<{
+                __typename: 'ComponentComponentsProdutoComponentColor'
+                cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
+                produtoReferente?: {
+                  __typename: 'ProdutoEntityResponse'
+                  data?: {
+                    __typename: 'ProdutoEntity'
+                    attributes?: {
+                      __typename: 'Produto'
+                      slug?: string | null
+                    } | null
+                  } | null
+                } | null
+              } | null> | null
             } | null
           }>
         } | null
@@ -1303,6 +1373,20 @@ export type MutationCreateFavoritoMutation = {
                   } | null
                 }>
               } | null
+              cores?: Array<{
+                __typename: 'ComponentComponentsProdutoComponentColor'
+                cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
+                produtoReferente?: {
+                  __typename: 'ProdutoEntityResponse'
+                  data?: {
+                    __typename: 'ProdutoEntity'
+                    attributes?: {
+                      __typename: 'Produto'
+                      slug?: string | null
+                    } | null
+                  } | null
+                } | null
+              } | null> | null
             } | null
           }>
         } | null
@@ -1372,6 +1456,20 @@ export type GetFavoritosQuery = {
                   } | null
                 }>
               } | null
+              cores?: Array<{
+                __typename: 'ComponentComponentsProdutoComponentColor'
+                cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
+                produtoReferente?: {
+                  __typename: 'ProdutoEntityResponse'
+                  data?: {
+                    __typename: 'ProdutoEntity'
+                    attributes?: {
+                      __typename: 'Produto'
+                      slug?: string | null
+                    } | null
+                  } | null
+                } | null
+              } | null> | null
             } | null
           }>
         } | null
@@ -1418,6 +1516,20 @@ export type GetProdutoQuery = {
             } | null
           }>
         } | null
+        cores?: Array<{
+          __typename: 'ComponentComponentsProdutoComponentColor'
+          cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
+          produtoReferente?: {
+            __typename: 'ProdutoEntityResponse'
+            data?: {
+              __typename: 'ProdutoEntity'
+              attributes?: {
+                __typename: 'Produto'
+                slug?: string | null
+              } | null
+            } | null
+          } | null
+        } | null> | null
       } | null
     } | null
   } | null
@@ -1461,6 +1573,20 @@ export type GetProdutosQuery = {
             } | null
           }>
         } | null
+        cores?: Array<{
+          __typename: 'ComponentComponentsProdutoComponentColor'
+          cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
+          produtoReferente?: {
+            __typename: 'ProdutoEntityResponse'
+            data?: {
+              __typename: 'ProdutoEntity'
+              attributes?: {
+                __typename: 'Produto'
+                slug?: string | null
+              } | null
+            } | null
+          } | null
+        } | null> | null
       } | null
     }>
   } | null
@@ -1499,6 +1625,16 @@ export const ProdutoFragmentFragmentDoc = gql`
           name
           width
           height
+        }
+      }
+    }
+    cores {
+      cor
+      produtoReferente {
+        data {
+          attributes {
+            slug
+          }
         }
       }
     }

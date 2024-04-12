@@ -10,12 +10,13 @@ import { Pix } from '@styled-icons/fa-brands'
 import Gallery from '@/components/Gallery'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useQuery } from '@apollo/client'
-import { GetProdutoDocument } from '@/graphql/types'
+import { GetProdutoDocument, useGetProdutoQuery } from '@/graphql/types'
 import WishlistButton from '@/components/WishlistButton'
 import Link from 'next/link'
 import { Share1Icon } from '@radix-ui/react-icons'
 import { useCart } from '@/hooks/use-cart'
 import { useState } from 'react'
+import Loader from '@/components/Loader'
 
 export default function Page() {
   const [selectedColor, setSelectedColor] = useState('Rosa')
@@ -41,15 +42,28 @@ export default function Page() {
       } catch (error) {
         console.error('Error sharing product:', error)
       }
-    } else {
-      console.log('Web Share API not supported')
     }
   }
 
-  const { data, error, loading } = useQuery(GetProdutoDocument, {
-    variables: { produtoId: productId }
+  // const { data, error, loading } = useQuery(GetProdutoDocument, {
+  //   variables: { produtoId: productId }
+  // })
+  const { data, loading, error } = useGetProdutoQuery({
+    variables: {
+      produtoId: productId
+    }
   })
+
   let currentProduct = null
+
+  if (loading) {
+    return <Loader />
+  }
+
+  if (error) {
+    console.log(error)
+    throw error
+  }
 
   if (data) {
     currentProduct = {
@@ -59,7 +73,15 @@ export default function Page() {
       img: data?.produto?.data?.attributes?.imagem_destaque?.data?.attributes
         ?.url,
       gallery: data?.produto?.data?.attributes?.galeria?.data,
-      detalhes: data?.produto?.data?.attributes?.descricao
+      detalhes: data?.produto?.data?.attributes?.descricao,
+      cores:
+        data?.produto?.data?.attributes?.cores &&
+        data?.produto?.data?.attributes?.cores.map((item) => {
+          return {
+            cor: item?.cor,
+            slug: item?.produtoReferente?.data?.attributes?.slug
+          }
+        })
     }
   }
 
@@ -87,6 +109,25 @@ export default function Page() {
                   <p>Frete grátis para Goiânia e regiões próximas</p>
                   <p>Verificar disponibilidade</p>
                 </div>
+              </div>
+              <div className="flex items-center">
+                {currentProduct.cores &&
+                  currentProduct.cores.map((pColor, iColor) => (
+                    <Link
+                      key={`color_${iColor}`}
+                      className={`w-8 h-8 rounded-full bg-primary border-gray-600 border-[3px] focus:border-2 mr-1.5 ${
+                        pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
+                          ? 'border-2 '
+                          : 'border'
+                      }`}
+                      href={{
+                        pathname: `${pColor.slug}`,
+                        query: { id: 1 }
+                      }}
+                    >
+                      {/* <p>{pColor.slug}</p> */}
+                    </Link>
+                  ))}
               </div>
               <p className="mb-2 text-md">
                 Cor: <strong>{selectedColor}</strong>
@@ -131,7 +172,7 @@ export default function Page() {
                 </Link> */}
               </div>
 
-              <div className="flex items-center mb-2 ml-[-0.5rem]">
+              <div className="flex items-center mb-2 ml-[-0.35rem]">
                 <WishlistButton id={currentProduct.id} />
                 {/* <CartButton id={currentProduct.id} /> */}
               </div>
