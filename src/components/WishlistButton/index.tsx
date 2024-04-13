@@ -1,12 +1,9 @@
 import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
 import { Button } from '../ui/button'
-import { useWishlist } from '@/hooks/use-wishlist'
+import { idProduto, useWishlist } from '@/hooks/use-wishlist'
+// import { ProdutoEntity } from '@/graphql/types'
 
-type WishlistButtonProps = {
-  id: string
-}
-
-const WishlistButton = ({ id }: WishlistButtonProps) => {
+const WishlistButton = ({ id }: idProduto) => {
   const {
     isInWishlist,
     addToWishlist,

@@ -17,9 +17,7 @@ This project uses lot of stuff as:
 - [Prettier](https://prettier.io/)
 - [Husky](https://github.com/typicode/husky)
 
-##
-
-// react-fancybox
+## aa
 
 Update Libs
 
@@ -30,8 +28,14 @@ ncu --interactive
 ncu -i
 ```
 
-# Só para lembrar
+## Só para lembrar
 
 - <https://maildev.github.io/maildev/>
 - <http://localhost:1080/>
 - <no-reply@strapi.io>
+
+## todo
+
+- [] colocar uma opção de gerar o rgb talvez?
+- [] configurar o CKEditor rich text.
+- [] configurar color picker

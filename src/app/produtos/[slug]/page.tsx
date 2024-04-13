@@ -9,8 +9,7 @@ import { LocalShipping, CreditCard } from '@styled-icons/material-outlined'
 import { Pix } from '@styled-icons/fa-brands'
 import Gallery from '@/components/Gallery'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useQuery } from '@apollo/client'
-import { GetProdutoDocument, useGetProdutoQuery } from '@/graphql/types'
+import { useGetProdutoQuery, type ProdutoEntity } from '@/graphql/types'
 import WishlistButton from '@/components/WishlistButton'
 import Link from 'next/link'
 import { Share1Icon } from '@radix-ui/react-icons'
@@ -74,14 +73,11 @@ export default function Page() {
         ?.url,
       gallery: data?.produto?.data?.attributes?.galeria?.data,
       detalhes: data?.produto?.data?.attributes?.descricao,
-      cores:
-        data?.produto?.data?.attributes?.cores &&
-        data?.produto?.data?.attributes?.cores.map((item) => {
-          return {
-            cor: item?.cor,
-            slug: item?.produtoReferente?.data?.attributes?.slug
-          }
-        })
+      cor: data?.produto?.data?.attributes?.cor,
+      slug: data?.produto?.data?.attributes?.slug,
+      nomeCor: data?.produto?.data?.attributes?.nomeCor,
+      produtoReferentes:
+        data?.produto?.data?.attributes?.produtosReferentes?.data
     }
   }
 
@@ -110,66 +106,53 @@ export default function Page() {
                   <p>Verificar disponibilidade</p>
                 </div>
               </div>
+
+              {currentProduct.nomeCor && (
+                <p className="mb-2 text-md">
+                  Cor: <strong>{currentProduct.nomeCor}</strong>
+                </p>
+              )}
+
               <div className="flex items-center">
-                {currentProduct.cores &&
-                  currentProduct.cores.map((pColor, iColor) => (
+                {currentProduct?.cor && (
+                  <Link
+                    style={{
+                      backgroundColor: currentProduct?.cor
+                        ? currentProduct?.cor
+                        : '#fff'
+                    }}
+                    className={`w-8 h-8 rounded-full border-gray-600 border-[3px] focus:border-2 mr-1.5 ${
+                      pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
+                        ? 'border-2 '
+                        : 'border'
+                    }`}
+                    href={{
+                      pathname: currentProduct.slug,
+                      query: { id: currentProduct.id }
+                    }}
+                  ></Link>
+                )}
+
+                {currentProduct.produtoReferentes &&
+                  currentProduct.produtoReferentes.map((product, iColor) => (
                     <Link
                       key={`color_${iColor}`}
-                      className={`w-8 h-8 rounded-full bg-primary border-gray-600 border-[3px] focus:border-2 mr-1.5 ${
+                      style={{
+                        backgroundColor: product.attributes?.cor
+                          ? product.attributes?.cor
+                          : '#fff'
+                      }}
+                      className={`w-8 h-8 rounded-full border-gray-600 focus:border-2 mr-1.5 ${
                         pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
                           ? 'border-2 '
                           : 'border'
                       }`}
                       href={{
-                        pathname: `${pColor.slug}`,
-                        query: { id: 1 }
+                        pathname: product.attributes?.slug,
+                        query: { id: product.id }
                       }}
-                    >
-                      {/* <p>{pColor.slug}</p> */}
-                    </Link>
+                    ></Link>
                   ))}
-              </div>
-              <p className="mb-2 text-md">
-                Cor: <strong>{selectedColor}</strong>
-              </p>
-              <div className="flex items-center">
-                <Link
-                  className={`w-8 h-8 rounded-full bg-primary border-gray-600 border-[3px] focus:border-2 mr-1.5 ${
-                    pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
-                      ? 'border-2 '
-                      : 'border'
-                  }`}
-                  href={{
-                    pathname: `bolsa-de-croche-cor-de-rosa`,
-                    query: { id: 1 }
-                  }}
-                >
-                  {/* <div className="w-5 h-5 rounded-full bg-primary"></div> */}
-                </Link>
-                <Link
-                  className={`w-8 h-8 rounded-full bg-[#888] border-gray-600 border-[3px] focus:border-2 ${
-                    pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
-                      ? 'border-2 '
-                      : 'border'
-                  }`}
-                  href={{
-                    pathname: `bolsa-de-croche-cor-de-rosa`,
-                    query: { id: 1 }
-                  }}
-                ></Link>
-                {/* <Link
-                  className={`p-3 ml-2 border-primary focus:border-2 rounded-sm ${
-                    pathname === '/produtos/bolsa-de-croche-cor-azul'
-                      ? 'border-2 '
-                      : 'border'
-                  }`}
-                  href={{
-                    pathname: `bolsa-de-croche-cor-azul`,
-                    query: { id: 2 }
-                  }}
-                >
-                  Azul
-                </Link> */}
               </div>
 
               <div className="flex items-center mb-2 ml-[-0.35rem]">

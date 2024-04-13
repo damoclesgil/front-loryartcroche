@@ -17,12 +17,13 @@ import { ProdutoEntity } from '@/graphql/types'
 //     }
 //   }
 // }
+export type idProduto = Pick<ProdutoEntity, 'id'>
 
 export type WishlistContextData = {
   items: ProdutoEntity[]
-  isInWishlist: (id: string) => boolean
-  addToWishlist: (id: string) => void
-  removeFromWishlist: (id: string) => void
+  isInWishlist: (id: idProduto) => boolean
+  addToWishlist: (id: idProduto) => void
+  removeFromWishlist: (id: idProduto) => void
   loading: boolean
 }
 
@@ -100,10 +101,10 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
     [wishlistItems]
   )
 
-  const isInWishlist = (id: string) =>
+  const isInWishlist = (id: idProduto) =>
     wishlistItems.some((produto) => produto.id === id)
 
-  const optimisticGameResponse = (id: string) => {
+  const optimisticGameResponse = (id: idProduto) => {
     const produto = apolloClient.readFragment({
       id: `Produto:${id}`,
       fragment: ProdutoFragmentFragmentDoc
@@ -138,7 +139,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
     )
   }
 
-  const addToWishlist = (id: string) => {
+  const addToWishlist = (id: idProduto) => {
     // se não existir wishlist - cria
     if (!wishlistId) {
       return createList({
@@ -214,7 +215,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
     })
   }
 
-  const removeFromWishlist = (id: string) => {
+  const removeFromWishlist = (id: idProduto) => {
     console.log('removeFromWishlist')
     return updateList({
       variables: {
@@ -222,7 +223,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
         data: {
           user: session?.user?.id,
           produtos: [
-            ...wishlistIds.filter((produtoId: string) => produtoId !== id)
+            ...wishlistIds.filter((produtoId: idProduto) => produtoId !== id)
           ]
         }
       }

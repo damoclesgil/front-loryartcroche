@@ -60,27 +60,16 @@ export type BooleanFilterInput = {
 }
 
 export type ComponentComponentsProdutoComponentColor = {
-  cor?: Maybe<Enum_Componentcomponentsprodutocomponentcolor_Cor>
+  cor?: Maybe<Scalars['String']['output']>
   id: Scalars['ID']['output']
-  produtoReferente?: Maybe<ProdutoEntityResponse>
+  nomeDaCor?: Maybe<Enum_Componentcomponentsprodutocomponentcolor_Nomedacor>
+  produto_referentes?: Maybe<ProdutoRelationResponseCollection>
 }
 
-export type ComponentComponentsProdutoComponentColorFiltersInput = {
-  and?: InputMaybe<
-    Array<InputMaybe<ComponentComponentsProdutoComponentColorFiltersInput>>
-  >
-  cor?: InputMaybe<StringFilterInput>
-  not?: InputMaybe<ComponentComponentsProdutoComponentColorFiltersInput>
-  or?: InputMaybe<
-    Array<InputMaybe<ComponentComponentsProdutoComponentColorFiltersInput>>
-  >
-  produtoReferente?: InputMaybe<ProdutoFiltersInput>
-}
-
-export type ComponentComponentsProdutoComponentColorInput = {
-  cor?: InputMaybe<Enum_Componentcomponentsprodutocomponentcolor_Cor>
-  id?: InputMaybe<Scalars['ID']['input']>
-  produtoReferente?: InputMaybe<Scalars['ID']['input']>
+export type ComponentComponentsProdutoComponentColorProduto_ReferentesArgs = {
+  filters?: InputMaybe<ProdutoFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>
 }
 
 export type DateTimeFilterInput = {
@@ -108,7 +97,16 @@ export type DateTimeFilterInput = {
   startsWith?: InputMaybe<Scalars['DateTime']['input']>
 }
 
-export enum Enum_Componentcomponentsprodutocomponentcolor_Cor {
+export enum Enum_Componentcomponentsprodutocomponentcolor_Nomedacor {
+  Azul = 'Azul',
+  Branco = 'Branco',
+  Laranja = 'Laranja',
+  Rosa = 'Rosa',
+  Verde = 'Verde',
+  Vermelho = 'Vermelho'
+}
+
+export enum Enum_Produto_Nomecor {
   Azul = 'Azul',
   Branco = 'Branco',
   Laranja = 'Laranja',
@@ -173,6 +171,7 @@ export type EmailDesignerEmailTemplateInput = {
 }
 
 export type Favorito = {
+  corField?: Maybe<Scalars['String']['output']>
   createdAt?: Maybe<Scalars['DateTime']['output']>
   produtos?: Maybe<ProdutoRelationResponseCollection>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
@@ -201,6 +200,7 @@ export type FavoritoEntityResponseCollection = {
 
 export type FavoritoFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<FavoritoFiltersInput>>>
+  corField?: InputMaybe<StringFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
   id?: InputMaybe<IdFilterInput>
   not?: InputMaybe<FavoritoFiltersInput>
@@ -211,6 +211,7 @@ export type FavoritoFiltersInput = {
 }
 
 export type FavoritoInput = {
+  corField?: InputMaybe<Scalars['String']['input']>
   produtos?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>
   user?: InputMaybe<Scalars['ID']['input']>
 }
@@ -665,25 +666,27 @@ export type PaginationArg = {
 }
 
 export type Produto = {
-  cores?: Maybe<Array<Maybe<ComponentComponentsProdutoComponentColor>>>
+  cor?: Maybe<Scalars['String']['output']>
   createdAt?: Maybe<Scalars['DateTime']['output']>
   descricao?: Maybe<Scalars['String']['output']>
   galeria?: Maybe<UploadFileRelationResponseCollection>
   imagem_destaque?: Maybe<UploadFileEntityResponse>
   nome?: Maybe<Scalars['String']['output']>
+  nomeCor?: Maybe<Enum_Produto_Nomecor>
   preco: Scalars['Float']['output']
+  produtosReferentes?: Maybe<ProdutoRelationResponseCollection>
   slug?: Maybe<Scalars['String']['output']>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
 }
 
-export type ProdutoCoresArgs = {
-  filters?: InputMaybe<ComponentComponentsProdutoComponentColorFiltersInput>
+export type ProdutoGaleriaArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>
 }
 
-export type ProdutoGaleriaArgs = {
-  filters?: InputMaybe<UploadFileFiltersInput>
+export type ProdutoProdutosReferentesArgs = {
+  filters?: InputMaybe<ProdutoFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>
 }
@@ -704,27 +707,29 @@ export type ProdutoEntityResponseCollection = {
 
 export type ProdutoFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<ProdutoFiltersInput>>>
-  cores?: InputMaybe<ComponentComponentsProdutoComponentColorFiltersInput>
+  cor?: InputMaybe<StringFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
   descricao?: InputMaybe<StringFilterInput>
   id?: InputMaybe<IdFilterInput>
   nome?: InputMaybe<StringFilterInput>
+  nomeCor?: InputMaybe<StringFilterInput>
   not?: InputMaybe<ProdutoFiltersInput>
   or?: InputMaybe<Array<InputMaybe<ProdutoFiltersInput>>>
   preco?: InputMaybe<FloatFilterInput>
+  produtosReferentes?: InputMaybe<ProdutoFiltersInput>
   slug?: InputMaybe<StringFilterInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
 }
 
 export type ProdutoInput = {
-  cores?: InputMaybe<
-    Array<InputMaybe<ComponentComponentsProdutoComponentColorInput>>
-  >
+  cor?: InputMaybe<Scalars['String']['input']>
   descricao?: InputMaybe<Scalars['String']['input']>
   galeria?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>
   imagem_destaque?: InputMaybe<Scalars['ID']['input']>
   nome?: InputMaybe<Scalars['String']['input']>
+  nomeCor?: InputMaybe<Enum_Produto_Nomecor>
   preco?: InputMaybe<Scalars['Float']['input']>
+  produtosReferentes?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>
   slug?: InputMaybe<Scalars['String']['input']>
 }
 
@@ -1219,6 +1224,8 @@ export type ProdutoFragmentFragment = {
   slug?: string | null
   descricao?: string | null
   preco: number
+  cor?: string | null
+  nomeCor?: Enum_Produto_Nomecor | null
   imagem_destaque?: {
     __typename: 'UploadFileEntityResponse'
     data?: {
@@ -1240,17 +1247,19 @@ export type ProdutoFragmentFragment = {
       } | null
     }>
   } | null
-  cores?: Array<{
-    __typename: 'ComponentComponentsProdutoComponentColor'
-    cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
-    produtoReferente?: {
-      __typename: 'ProdutoEntityResponse'
-      data?: {
-        __typename: 'ProdutoEntity'
-        attributes?: { __typename: 'Produto'; slug?: string | null } | null
+  produtosReferentes?: {
+    __typename: 'ProdutoRelationResponseCollection'
+    data: Array<{
+      __typename: 'ProdutoEntity'
+      id?: string | null
+      attributes?: {
+        __typename: 'Produto'
+        cor?: string | null
+        nomeCor?: Enum_Produto_Nomecor | null
+        slug?: string | null
       } | null
-    } | null
-  } | null> | null
+    }>
+  } | null
 }
 
 export type MutationUpdateFavoritoMutationVariables = Exact<{
@@ -1278,6 +1287,8 @@ export type MutationUpdateFavoritoMutation = {
               slug?: string | null
               descricao?: string | null
               preco: number
+              cor?: string | null
+              nomeCor?: Enum_Produto_Nomecor | null
               imagem_destaque?: {
                 __typename: 'UploadFileEntityResponse'
                 data?: {
@@ -1299,20 +1310,19 @@ export type MutationUpdateFavoritoMutation = {
                   } | null
                 }>
               } | null
-              cores?: Array<{
-                __typename: 'ComponentComponentsProdutoComponentColor'
-                cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
-                produtoReferente?: {
-                  __typename: 'ProdutoEntityResponse'
-                  data?: {
-                    __typename: 'ProdutoEntity'
-                    attributes?: {
-                      __typename: 'Produto'
-                      slug?: string | null
-                    } | null
+              produtosReferentes?: {
+                __typename: 'ProdutoRelationResponseCollection'
+                data: Array<{
+                  __typename: 'ProdutoEntity'
+                  id?: string | null
+                  attributes?: {
+                    __typename: 'Produto'
+                    cor?: string | null
+                    nomeCor?: Enum_Produto_Nomecor | null
+                    slug?: string | null
                   } | null
-                } | null
-              } | null> | null
+                }>
+              } | null
             } | null
           }>
         } | null
@@ -1352,6 +1362,8 @@ export type MutationCreateFavoritoMutation = {
               slug?: string | null
               descricao?: string | null
               preco: number
+              cor?: string | null
+              nomeCor?: Enum_Produto_Nomecor | null
               imagem_destaque?: {
                 __typename: 'UploadFileEntityResponse'
                 data?: {
@@ -1373,20 +1385,19 @@ export type MutationCreateFavoritoMutation = {
                   } | null
                 }>
               } | null
-              cores?: Array<{
-                __typename: 'ComponentComponentsProdutoComponentColor'
-                cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
-                produtoReferente?: {
-                  __typename: 'ProdutoEntityResponse'
-                  data?: {
-                    __typename: 'ProdutoEntity'
-                    attributes?: {
-                      __typename: 'Produto'
-                      slug?: string | null
-                    } | null
+              produtosReferentes?: {
+                __typename: 'ProdutoRelationResponseCollection'
+                data: Array<{
+                  __typename: 'ProdutoEntity'
+                  id?: string | null
+                  attributes?: {
+                    __typename: 'Produto'
+                    cor?: string | null
+                    nomeCor?: Enum_Produto_Nomecor | null
+                    slug?: string | null
                   } | null
-                } | null
-              } | null> | null
+                }>
+              } | null
             } | null
           }>
         } | null
@@ -1435,6 +1446,8 @@ export type GetFavoritosQuery = {
               slug?: string | null
               descricao?: string | null
               preco: number
+              cor?: string | null
+              nomeCor?: Enum_Produto_Nomecor | null
               imagem_destaque?: {
                 __typename: 'UploadFileEntityResponse'
                 data?: {
@@ -1456,20 +1469,19 @@ export type GetFavoritosQuery = {
                   } | null
                 }>
               } | null
-              cores?: Array<{
-                __typename: 'ComponentComponentsProdutoComponentColor'
-                cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
-                produtoReferente?: {
-                  __typename: 'ProdutoEntityResponse'
-                  data?: {
-                    __typename: 'ProdutoEntity'
-                    attributes?: {
-                      __typename: 'Produto'
-                      slug?: string | null
-                    } | null
+              produtosReferentes?: {
+                __typename: 'ProdutoRelationResponseCollection'
+                data: Array<{
+                  __typename: 'ProdutoEntity'
+                  id?: string | null
+                  attributes?: {
+                    __typename: 'Produto'
+                    cor?: string | null
+                    nomeCor?: Enum_Produto_Nomecor | null
+                    slug?: string | null
                   } | null
-                } | null
-              } | null> | null
+                }>
+              } | null
             } | null
           }>
         } | null
@@ -1495,6 +1507,8 @@ export type GetProdutoQuery = {
         slug?: string | null
         descricao?: string | null
         preco: number
+        cor?: string | null
+        nomeCor?: Enum_Produto_Nomecor | null
         imagem_destaque?: {
           __typename: 'UploadFileEntityResponse'
           data?: {
@@ -1516,20 +1530,19 @@ export type GetProdutoQuery = {
             } | null
           }>
         } | null
-        cores?: Array<{
-          __typename: 'ComponentComponentsProdutoComponentColor'
-          cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
-          produtoReferente?: {
-            __typename: 'ProdutoEntityResponse'
-            data?: {
-              __typename: 'ProdutoEntity'
-              attributes?: {
-                __typename: 'Produto'
-                slug?: string | null
-              } | null
+        produtosReferentes?: {
+          __typename: 'ProdutoRelationResponseCollection'
+          data: Array<{
+            __typename: 'ProdutoEntity'
+            id?: string | null
+            attributes?: {
+              __typename: 'Produto'
+              cor?: string | null
+              nomeCor?: Enum_Produto_Nomecor | null
+              slug?: string | null
             } | null
-          } | null
-        } | null> | null
+          }>
+        } | null
       } | null
     } | null
   } | null
@@ -1552,6 +1565,8 @@ export type GetProdutosQuery = {
         slug?: string | null
         descricao?: string | null
         preco: number
+        cor?: string | null
+        nomeCor?: Enum_Produto_Nomecor | null
         imagem_destaque?: {
           __typename: 'UploadFileEntityResponse'
           data?: {
@@ -1573,20 +1588,19 @@ export type GetProdutosQuery = {
             } | null
           }>
         } | null
-        cores?: Array<{
-          __typename: 'ComponentComponentsProdutoComponentColor'
-          cor?: Enum_Componentcomponentsprodutocomponentcolor_Cor | null
-          produtoReferente?: {
-            __typename: 'ProdutoEntityResponse'
-            data?: {
-              __typename: 'ProdutoEntity'
-              attributes?: {
-                __typename: 'Produto'
-                slug?: string | null
-              } | null
+        produtosReferentes?: {
+          __typename: 'ProdutoRelationResponseCollection'
+          data: Array<{
+            __typename: 'ProdutoEntity'
+            id?: string | null
+            attributes?: {
+              __typename: 'Produto'
+              cor?: string | null
+              nomeCor?: Enum_Produto_Nomecor | null
+              slug?: string | null
             } | null
-          } | null
-        } | null> | null
+          }>
+        } | null
       } | null
     }>
   } | null
@@ -1628,13 +1642,15 @@ export const ProdutoFragmentFragmentDoc = gql`
         }
       }
     }
-    cores {
-      cor
-      produtoReferente {
-        data {
-          attributes {
-            slug
-          }
+    cor
+    nomeCor
+    produtosReferentes {
+      data {
+        id
+        attributes {
+          cor
+          nomeCor
+          slug
         }
       }
     }
