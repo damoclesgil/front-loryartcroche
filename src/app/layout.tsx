@@ -39,17 +39,18 @@ export default function RootLayout({
           </ApolloWrapper>
         </SessionProvider>
         <SpeedInsights />
-        <script
+        {/* <script
           src="https://static.elfsight.com/platform/platform.js"
           data-use-service-core
           defer
           async
-        ></script>
+        ></script> */}
 
-        <script
+        {/* Api da lightwidget */}
+        {/* <script
           src="https://cdn.lightwidget.com/widgets/lightwidget.js"
           async
-        ></script>
+        ></script> */}
       </body>
     </html>
   )
