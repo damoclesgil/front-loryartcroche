@@ -174,7 +174,7 @@ export default function Page() {
                 <CreditCard size={20} className="mr-3" />
                 <Image
                   className="object-cover"
-                  src="/img/products/ic-new-boleto.svg"
+                  src="/img/ic-new-boleto.svg"
                   alt="Boleto"
                   width={24}
                   height={16}

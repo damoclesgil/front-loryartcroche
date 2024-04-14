@@ -34,7 +34,7 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => {
         }}
       >
         <Image
-          className="object-contain object-center h-auto block m-auto mt-3.5"
+          className="object-contain object-center w-full h-auto block m-auto mt-3.5 min-h-[245px] max-h-[245px]"
           src={img}
           alt={name}
           width={270}
@@ -43,9 +43,11 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => {
         />
       </Link>
 
-      {/* <CartButton id={id} />
+      <div className="absolute bottom-14 right-0 opacity-0 cart-btn transition-opacity duration-150">
+        <CartButton id={id} />
+      </div>
 
-      <Button asChild>
+      {/* <Button asChild>
         <a
           target="_blank"
           className={buttonVariants({
@@ -57,7 +59,7 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => {
         >
           Encomendar
         </a>
-      </Button> */}
+      </Button>  */}
 
       <div className="flex flex-col justify-center items-center m-2">
         <h3 className="text-md product-name transition-colors duration-150">

@@ -50,6 +50,7 @@ export const config = {
           }
         )
         const data = await response.json()
+        console.log(data)
         if (data.user) {
           return { ...data.user, jwt: data.jwt }
         } else {

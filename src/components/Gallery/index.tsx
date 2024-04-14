@@ -36,14 +36,13 @@ const Gallery = ({ items }: GalleryProps) => {
         <Carousel options={{ infinite: false }}>
           {items.map((item, index) => (
             <div
-              className="f-carousel__slide f-panzoom"
+              className="f-carousel__slide"
               data-fancybox="gallery"
               data-src={getImageUrl(item.attributes.url)}
               data-thumb-src={getImageUrl(item.attributes.url)}
               key={'gallery_' + index}
             >
               <Image
-                className="f-panzoom__content"
                 alt={item.attributes.name}
                 src={getImageUrl(item.attributes.url)}
                 width={item.attributes.width}

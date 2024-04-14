@@ -51,4 +51,8 @@
     --f-button-prev-pos: -20px;
     --f-button-next-pos: -20px;
   }
+  .f-carousel img {
+    max-height: 540px;
+    object-fit: cover;
+  }
 }

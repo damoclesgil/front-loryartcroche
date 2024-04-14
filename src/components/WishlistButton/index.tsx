@@ -22,6 +22,7 @@ const WishlistButton = ({ id }: idProduto) => {
       className="hover:no-underline bg-white rounded-full mr-2 mt-2"
       onClick={handleClick}
       loading={loadingApollo}
+      title={isInWishlist(id) ? 'desfavoritar' : 'favoritar'}
       disabled={loadingApollo}
     >
       {!loadingApollo &&

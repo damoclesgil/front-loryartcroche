@@ -4,7 +4,7 @@ import ProfileMenu from '@/components/ProfileMenu'
 
 const Profile = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Base>
+    <Base sizeBg="medium" backgroundImg="croche-pink">
       <div className="w-full lg:grid lg:grid-cols-[15rem_auto] gap-7 md:px-6">
         <ProfileMenu />
         <div className="w-full bg-white text-gray-900">{children}</div>
