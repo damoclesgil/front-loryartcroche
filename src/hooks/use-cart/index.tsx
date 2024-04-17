@@ -19,7 +19,7 @@ export type CartContextData = {
   quantity: number
   total: string
   isInCart: (id: string) => boolean
-  addToCart: (id: string) => void
+  addToCart: (id: string) => void // agora vai ter que receber o id e qty eu acho.
   increment: () => void
   decrement: () => void
   removeFromCart: (id: string) => void
