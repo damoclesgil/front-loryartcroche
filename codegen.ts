@@ -20,10 +20,10 @@ const config: CodegenConfig = {
       config: {
         withComponent: false,
         namingConvention: 'change-case-all#pascalCase',
-        nonOptionalTypename: true,
-        skipTypename: true,
         reactApolloVersion: 3,
-        withHooks: '@/hooks'
+        withHooks: '@/hooks',
+        skipTypename: true,
+        nonOptionalTypename: false
       }
     },
     './graphql.schema.json': {

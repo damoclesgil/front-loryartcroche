@@ -171,7 +171,6 @@ export type EmailDesignerEmailTemplateInput = {
 }
 
 export type Favorito = {
-  corField?: Maybe<Scalars['String']['output']>
   createdAt?: Maybe<Scalars['DateTime']['output']>
   produtos?: Maybe<ProdutoRelationResponseCollection>
   updatedAt?: Maybe<Scalars['DateTime']['output']>
@@ -200,7 +199,6 @@ export type FavoritoEntityResponseCollection = {
 
 export type FavoritoFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<FavoritoFiltersInput>>>
-  corField?: InputMaybe<StringFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
   id?: InputMaybe<IdFilterInput>
   not?: InputMaybe<FavoritoFiltersInput>
@@ -211,7 +209,6 @@ export type FavoritoFiltersInput = {
 }
 
 export type FavoritoInput = {
-  corField?: InputMaybe<Scalars['String']['input']>
   produtos?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>
   user?: InputMaybe<Scalars['ID']['input']>
 }
@@ -1218,8 +1215,53 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>
 }
 
+export type OrdemPagamentoFragmentFragment = {
+  card_brand?: string | null
+  card_last4?: string | null
+  payment_intent_id?: string | null
+  createdAt?: any | null
+  updatedAt?: any | null
+  total_in_cents: any
+  produtos?: {
+    data: Array<{
+      id?: string | null
+      attributes?: {
+        nome?: string | null
+        slug?: string | null
+        descricao?: string | null
+        preco: number
+        cor?: string | null
+        nomeCor?: Enum_Produto_Nomecor | null
+        imagem_destaque?: {
+          data?: { attributes?: { url: string } | null } | null
+        } | null
+        galeria?: {
+          data: Array<{
+            id?: string | null
+            attributes?: {
+              url: string
+              name: string
+              width?: number | null
+              height?: number | null
+            } | null
+          }>
+        } | null
+        produtosReferentes?: {
+          data: Array<{
+            id?: string | null
+            attributes?: {
+              cor?: string | null
+              nomeCor?: Enum_Produto_Nomecor | null
+              slug?: string | null
+            } | null
+          }>
+        } | null
+      } | null
+    }>
+  } | null
+}
+
 export type ProdutoFragmentFragment = {
-  __typename: 'Produto'
   nome?: string | null
   slug?: string | null
   descricao?: string | null
@@ -1227,19 +1269,12 @@ export type ProdutoFragmentFragment = {
   cor?: string | null
   nomeCor?: Enum_Produto_Nomecor | null
   imagem_destaque?: {
-    __typename: 'UploadFileEntityResponse'
-    data?: {
-      __typename: 'UploadFileEntity'
-      attributes?: { __typename: 'UploadFile'; url: string } | null
-    } | null
+    data?: { attributes?: { url: string } | null } | null
   } | null
   galeria?: {
-    __typename: 'UploadFileRelationResponseCollection'
     data: Array<{
-      __typename: 'UploadFileEntity'
       id?: string | null
       attributes?: {
-        __typename: 'UploadFile'
         url: string
         name: string
         width?: number | null
@@ -1248,12 +1283,9 @@ export type ProdutoFragmentFragment = {
     }>
   } | null
   produtosReferentes?: {
-    __typename: 'ProdutoRelationResponseCollection'
     data: Array<{
-      __typename: 'ProdutoEntity'
       id?: string | null
       attributes?: {
-        __typename: 'Produto'
         cor?: string | null
         nomeCor?: Enum_Produto_Nomecor | null
         slug?: string | null
@@ -1262,27 +1294,28 @@ export type ProdutoFragmentFragment = {
   } | null
 }
 
+export type UserFragmentFragment = {
+  username: string
+  email: string
+  provider?: string | null
+  confirmed?: boolean | null
+  blocked?: boolean | null
+}
+
 export type MutationUpdateFavoritoMutationVariables = Exact<{
   id: Scalars['ID']['input']
   data: FavoritoInput
 }>
 
 export type MutationUpdateFavoritoMutation = {
-  __typename: 'Mutation'
   updateFavorito?: {
-    __typename: 'FavoritoEntityResponse'
     data?: {
-      __typename: 'FavoritoEntity'
       id?: string | null
       attributes?: {
-        __typename: 'Favorito'
         produtos?: {
-          __typename: 'ProdutoRelationResponseCollection'
           data: Array<{
-            __typename: 'ProdutoEntity'
             id?: string | null
             attributes?: {
-              __typename: 'Produto'
               nome?: string | null
               slug?: string | null
               descricao?: string | null
@@ -1290,19 +1323,12 @@ export type MutationUpdateFavoritoMutation = {
               cor?: string | null
               nomeCor?: Enum_Produto_Nomecor | null
               imagem_destaque?: {
-                __typename: 'UploadFileEntityResponse'
-                data?: {
-                  __typename: 'UploadFileEntity'
-                  attributes?: { __typename: 'UploadFile'; url: string } | null
-                } | null
+                data?: { attributes?: { url: string } | null } | null
               } | null
               galeria?: {
-                __typename: 'UploadFileRelationResponseCollection'
                 data: Array<{
-                  __typename: 'UploadFileEntity'
                   id?: string | null
                   attributes?: {
-                    __typename: 'UploadFile'
                     url: string
                     name: string
                     width?: number | null
@@ -1311,12 +1337,9 @@ export type MutationUpdateFavoritoMutation = {
                 }>
               } | null
               produtosReferentes?: {
-                __typename: 'ProdutoRelationResponseCollection'
                 data: Array<{
-                  __typename: 'ProdutoEntity'
                   id?: string | null
                   attributes?: {
-                    __typename: 'Produto'
                     cor?: string | null
                     nomeCor?: Enum_Produto_Nomecor | null
                     slug?: string | null
@@ -1326,13 +1349,7 @@ export type MutationUpdateFavoritoMutation = {
             } | null
           }>
         } | null
-        user?: {
-          __typename: 'UsersPermissionsUserEntityResponse'
-          data?: {
-            __typename: 'UsersPermissionsUserEntity'
-            id?: string | null
-          } | null
-        } | null
+        user?: { data?: { id?: string | null } | null } | null
       } | null
     } | null
   } | null
@@ -1343,21 +1360,14 @@ export type MutationCreateFavoritoMutationVariables = Exact<{
 }>
 
 export type MutationCreateFavoritoMutation = {
-  __typename: 'Mutation'
   createFavorito?: {
-    __typename: 'FavoritoEntityResponse'
     data?: {
-      __typename: 'FavoritoEntity'
       id?: string | null
       attributes?: {
-        __typename: 'Favorito'
         produtos?: {
-          __typename: 'ProdutoRelationResponseCollection'
           data: Array<{
-            __typename: 'ProdutoEntity'
             id?: string | null
             attributes?: {
-              __typename: 'Produto'
               nome?: string | null
               slug?: string | null
               descricao?: string | null
@@ -1365,19 +1375,12 @@ export type MutationCreateFavoritoMutation = {
               cor?: string | null
               nomeCor?: Enum_Produto_Nomecor | null
               imagem_destaque?: {
-                __typename: 'UploadFileEntityResponse'
-                data?: {
-                  __typename: 'UploadFileEntity'
-                  attributes?: { __typename: 'UploadFile'; url: string } | null
-                } | null
+                data?: { attributes?: { url: string } | null } | null
               } | null
               galeria?: {
-                __typename: 'UploadFileRelationResponseCollection'
                 data: Array<{
-                  __typename: 'UploadFileEntity'
                   id?: string | null
                   attributes?: {
-                    __typename: 'UploadFile'
                     url: string
                     name: string
                     width?: number | null
@@ -1386,12 +1389,9 @@ export type MutationCreateFavoritoMutation = {
                 }>
               } | null
               produtosReferentes?: {
-                __typename: 'ProdutoRelationResponseCollection'
                 data: Array<{
-                  __typename: 'ProdutoEntity'
                   id?: string | null
                   attributes?: {
-                    __typename: 'Produto'
                     cor?: string | null
                     nomeCor?: Enum_Produto_Nomecor | null
                     slug?: string | null
@@ -1401,13 +1401,7 @@ export type MutationCreateFavoritoMutation = {
             } | null
           }>
         } | null
-        user?: {
-          __typename: 'UsersPermissionsUserEntityResponse'
-          data?: {
-            __typename: 'UsersPermissionsUserEntity'
-            id?: string | null
-          } | null
-        } | null
+        user?: { data?: { id?: string | null } | null } | null
       } | null
     } | null
   } | null
@@ -1417,31 +1411,21 @@ export type MutationRegisterMutationVariables = Exact<{
   input: UsersPermissionsRegisterInput
 }>
 
-export type MutationRegisterMutation = {
-  __typename: 'Mutation'
-  register: { __typename: 'UsersPermissionsLoginPayload'; jwt?: string | null }
-}
+export type MutationRegisterMutation = { register: { jwt?: string | null } }
 
 export type GetFavoritosQueryVariables = Exact<{
   filters?: InputMaybe<FavoritoFiltersInput>
 }>
 
 export type GetFavoritosQuery = {
-  __typename: 'Query'
   favoritos?: {
-    __typename: 'FavoritoEntityResponseCollection'
     data: Array<{
-      __typename: 'FavoritoEntity'
       id?: string | null
       attributes?: {
-        __typename: 'Favorito'
         produtos?: {
-          __typename: 'ProdutoRelationResponseCollection'
           data: Array<{
-            __typename: 'ProdutoEntity'
             id?: string | null
             attributes?: {
-              __typename: 'Produto'
               nome?: string | null
               slug?: string | null
               descricao?: string | null
@@ -1449,19 +1433,12 @@ export type GetFavoritosQuery = {
               cor?: string | null
               nomeCor?: Enum_Produto_Nomecor | null
               imagem_destaque?: {
-                __typename: 'UploadFileEntityResponse'
-                data?: {
-                  __typename: 'UploadFileEntity'
-                  attributes?: { __typename: 'UploadFile'; url: string } | null
-                } | null
+                data?: { attributes?: { url: string } | null } | null
               } | null
               galeria?: {
-                __typename: 'UploadFileRelationResponseCollection'
                 data: Array<{
-                  __typename: 'UploadFileEntity'
                   id?: string | null
                   attributes?: {
-                    __typename: 'UploadFile'
                     url: string
                     name: string
                     width?: number | null
@@ -1470,12 +1447,64 @@ export type GetFavoritosQuery = {
                 }>
               } | null
               produtosReferentes?: {
-                __typename: 'ProdutoRelationResponseCollection'
                 data: Array<{
-                  __typename: 'ProdutoEntity'
                   id?: string | null
                   attributes?: {
-                    __typename: 'Produto'
+                    cor?: string | null
+                    nomeCor?: Enum_Produto_Nomecor | null
+                    slug?: string | null
+                  } | null
+                }>
+              } | null
+            } | null
+          }>
+        } | null
+      } | null
+    }>
+  } | null
+}
+
+export type OrdensDePagamentosQueryVariables = Exact<{ [key: string]: never }>
+
+export type OrdensDePagamentosQuery = {
+  ordens?: {
+    data: Array<{
+      id?: string | null
+      attributes?: {
+        card_brand?: string | null
+        card_last4?: string | null
+        payment_intent_id?: string | null
+        createdAt?: any | null
+        updatedAt?: any | null
+        total_in_cents: any
+        produtos?: {
+          data: Array<{
+            id?: string | null
+            attributes?: {
+              nome?: string | null
+              slug?: string | null
+              descricao?: string | null
+              preco: number
+              cor?: string | null
+              nomeCor?: Enum_Produto_Nomecor | null
+              imagem_destaque?: {
+                data?: { attributes?: { url: string } | null } | null
+              } | null
+              galeria?: {
+                data: Array<{
+                  id?: string | null
+                  attributes?: {
+                    url: string
+                    name: string
+                    width?: number | null
+                    height?: number | null
+                  } | null
+                }>
+              } | null
+              produtosReferentes?: {
+                data: Array<{
+                  id?: string | null
+                  attributes?: {
                     cor?: string | null
                     nomeCor?: Enum_Produto_Nomecor | null
                     slug?: string | null
@@ -1495,14 +1524,10 @@ export type GetProdutoQueryVariables = Exact<{
 }>
 
 export type GetProdutoQuery = {
-  __typename: 'Query'
   produto?: {
-    __typename: 'ProdutoEntityResponse'
     data?: {
-      __typename: 'ProdutoEntity'
       id?: string | null
       attributes?: {
-        __typename: 'Produto'
         nome?: string | null
         slug?: string | null
         descricao?: string | null
@@ -1510,19 +1535,12 @@ export type GetProdutoQuery = {
         cor?: string | null
         nomeCor?: Enum_Produto_Nomecor | null
         imagem_destaque?: {
-          __typename: 'UploadFileEntityResponse'
-          data?: {
-            __typename: 'UploadFileEntity'
-            attributes?: { __typename: 'UploadFile'; url: string } | null
-          } | null
+          data?: { attributes?: { url: string } | null } | null
         } | null
         galeria?: {
-          __typename: 'UploadFileRelationResponseCollection'
           data: Array<{
-            __typename: 'UploadFileEntity'
             id?: string | null
             attributes?: {
-              __typename: 'UploadFile'
               url: string
               name: string
               width?: number | null
@@ -1531,12 +1549,9 @@ export type GetProdutoQuery = {
           }>
         } | null
         produtosReferentes?: {
-          __typename: 'ProdutoRelationResponseCollection'
           data: Array<{
-            __typename: 'ProdutoEntity'
             id?: string | null
             attributes?: {
-              __typename: 'Produto'
               cor?: string | null
               nomeCor?: Enum_Produto_Nomecor | null
               slug?: string | null
@@ -1553,14 +1568,10 @@ export type GetProdutosQueryVariables = Exact<{
 }>
 
 export type GetProdutosQuery = {
-  __typename: 'Query'
   produtos?: {
-    __typename: 'ProdutoEntityResponseCollection'
     data: Array<{
-      __typename: 'ProdutoEntity'
       id?: string | null
       attributes?: {
-        __typename: 'Produto'
         nome?: string | null
         slug?: string | null
         descricao?: string | null
@@ -1568,19 +1579,12 @@ export type GetProdutosQuery = {
         cor?: string | null
         nomeCor?: Enum_Produto_Nomecor | null
         imagem_destaque?: {
-          __typename: 'UploadFileEntityResponse'
-          data?: {
-            __typename: 'UploadFileEntity'
-            attributes?: { __typename: 'UploadFile'; url: string } | null
-          } | null
+          data?: { attributes?: { url: string } | null } | null
         } | null
         galeria?: {
-          __typename: 'UploadFileRelationResponseCollection'
           data: Array<{
-            __typename: 'UploadFileEntity'
             id?: string | null
             attributes?: {
-              __typename: 'UploadFile'
               url: string
               name: string
               width?: number | null
@@ -1589,12 +1593,9 @@ export type GetProdutosQuery = {
           }>
         } | null
         produtosReferentes?: {
-          __typename: 'ProdutoRelationResponseCollection'
           data: Array<{
-            __typename: 'ProdutoEntity'
             id?: string | null
             attributes?: {
-              __typename: 'Produto'
               cor?: string | null
               nomeCor?: Enum_Produto_Nomecor | null
               slug?: string | null
@@ -1609,13 +1610,7 @@ export type GetProdutosQuery = {
 export type GetProfileQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetProfileQuery = {
-  __typename: 'Query'
-  me?: {
-    __typename: 'UsersPermissionsMe'
-    id: string
-    username: string
-    email?: string | null
-  } | null
+  me?: { id: string; username: string; email?: string | null } | null
 }
 
 export const ProdutoFragmentFragmentDoc = gql`
@@ -1654,6 +1649,34 @@ export const ProdutoFragmentFragmentDoc = gql`
         }
       }
     }
+  }
+`
+export const OrdemPagamentoFragmentFragmentDoc = gql`
+  fragment OrdemPagamentoFragment on Ordem {
+    card_brand
+    card_last4
+    payment_intent_id
+    createdAt
+    updatedAt
+    total_in_cents
+    produtos {
+      data {
+        id
+        attributes {
+          ...ProdutoFragment
+        }
+      }
+    }
+  }
+  ${ProdutoFragmentFragmentDoc}
+`
+export const UserFragmentFragmentDoc = gql`
+  fragment userFragment on UsersPermissionsUser {
+    username
+    email
+    provider
+    confirmed
+    blocked
   }
 `
 export const MutationUpdateFavoritoDocument = gql`
@@ -1928,6 +1951,84 @@ export type GetFavoritosSuspenseQueryHookResult = ReturnType<
 export type GetFavoritosQueryResult = Apollo.QueryResult<
   GetFavoritosQuery,
   GetFavoritosQueryVariables
+>
+export const OrdensDePagamentosDocument = gql`
+  query ordensDePagamentos {
+    ordens {
+      data {
+        id
+        attributes {
+          ...OrdemPagamentoFragment
+        }
+      }
+    }
+  }
+  ${OrdemPagamentoFragmentFragmentDoc}
+`
+
+/**
+ * __useOrdensDePagamentosQuery__
+ *
+ * To run a query within a React component, call `useOrdensDePagamentosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrdensDePagamentosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrdensDePagamentosQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOrdensDePagamentosQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    OrdensDePagamentosQuery,
+    OrdensDePagamentosQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<
+    OrdensDePagamentosQuery,
+    OrdensDePagamentosQueryVariables
+  >(OrdensDePagamentosDocument, options)
+}
+export function useOrdensDePagamentosLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    OrdensDePagamentosQuery,
+    OrdensDePagamentosQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<
+    OrdensDePagamentosQuery,
+    OrdensDePagamentosQueryVariables
+  >(OrdensDePagamentosDocument, options)
+}
+export function useOrdensDePagamentosSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    OrdensDePagamentosQuery,
+    OrdensDePagamentosQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<
+    OrdensDePagamentosQuery,
+    OrdensDePagamentosQueryVariables
+  >(OrdensDePagamentosDocument, options)
+}
+export type OrdensDePagamentosQueryHookResult = ReturnType<
+  typeof useOrdensDePagamentosQuery
+>
+export type OrdensDePagamentosLazyQueryHookResult = ReturnType<
+  typeof useOrdensDePagamentosLazyQuery
+>
+export type OrdensDePagamentosSuspenseQueryHookResult = ReturnType<
+  typeof useOrdensDePagamentosSuspenseQuery
+>
+export type OrdensDePagamentosQueryResult = Apollo.QueryResult<
+  OrdensDePagamentosQuery,
+  OrdensDePagamentosQueryVariables
 >
 export const GetProdutoDocument = gql`
   query getProduto($produtoId: ID) {

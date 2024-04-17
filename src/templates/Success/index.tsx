@@ -21,7 +21,7 @@ const Success = () => {
             <br />
             Seu produto já está disponível para download dentro da sua
             <Link
-              href={NextRoutes.profile}
+              href={NextRoutes.myOrders}
               className="text-primary underline-offset-4 hover:underline"
             >
               {' '}
