@@ -11,6 +11,7 @@ import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
 import { setVerbosity } from 'ts-invariant'
 import { setContext } from '@apollo/client/link/context'
 import { getSession } from 'next-auth/react'
+import { concatPagination } from '@apollo/client/utilities'
 
 if (process.env.NODE_ENV === 'development') {
   setVerbosity('debug')
@@ -38,7 +39,16 @@ const authLink = setContext(async (_, { headers }) => {
 
 function makeClient() {
   return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
+    cache: new NextSSRInMemoryCache({
+      addTypename: false
+      // typePolicies: {
+      //   Query: {
+      //     fields: {
+      //       produtos: concatPagination()
+      //     }
+      //   }
+      // }
+    }),
     link:
       typeof window === 'undefined'
         ? ApolloLink.from([
