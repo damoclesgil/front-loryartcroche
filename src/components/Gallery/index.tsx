@@ -6,25 +6,23 @@ import Fancybox from './Fancybox'
 import Carousel from './Carousel'
 import {
   Maybe,
-  ProdutoGaleriaArgs,
+  Scalars,
+  UploadFile,
+  UploadFileEntity,
+  UploadFileEntityResponse,
   UploadFileRelationResponseCollection
 } from '@/graphql/types'
 
 type GalleryProps = {
   items: {
-    id: string
-    attributes: {
-      url: string
-      name: string
-      width: number
-      height: number
-    }
+    id?: Maybe<Scalars['ID']['output']>
+    attributes?: Maybe<UploadFile>
   }[]
 }
+// UploadFileEntity
 
 const Gallery = ({ items }: GalleryProps) => {
   return (
-    // items.map
     <>
       <Fancybox
         options={{
@@ -38,15 +36,15 @@ const Gallery = ({ items }: GalleryProps) => {
             <div
               className="f-carousel__slide"
               data-fancybox="gallery"
-              data-src={getImageUrl(item.attributes.url)}
-              data-thumb-src={getImageUrl(item.attributes.url)}
+              data-src={getImageUrl(item.attributes?.url)}
+              data-thumb-src={getImageUrl(item.attributes?.url)}
               key={'gallery_' + index}
             >
               <Image
-                alt={item.attributes.name}
-                src={getImageUrl(item.attributes.url)}
-                width={item.attributes.width}
-                height={item.attributes.height}
+                alt={item.attributes?.name || ''}
+                src={getImageUrl(item.attributes?.url)}
+                width={item.attributes?.width || 200}
+                height={item.attributes?.height || 200}
               />
             </div>
           ))}

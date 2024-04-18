@@ -12,10 +12,10 @@ import { Button } from '../ui/button'
 const ProductList = () => {
   const { data, error, loading, fetchMore } = useGetProdutosQuery({
     variables: {
-      pagination: {
-        pageSize: 1
-        // limit: 1
-      }
+      // pagination: {
+      //   pageSize: 1
+      //   // limit: 1
+      // }
     },
     fetchPolicy: 'no-cache'
     // nextFetchPolicy: 'cache-first'

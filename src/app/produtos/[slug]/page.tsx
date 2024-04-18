@@ -50,7 +50,8 @@ export default function Page() {
   const { data, loading, error } = useGetProdutoQuery({
     variables: {
       produtoId: productId
-    }
+    },
+    fetchPolicy: 'no-cache'
   })
 
   let currentProduct = null
@@ -79,6 +80,7 @@ export default function Page() {
       produtoReferentes:
         data?.produto?.data?.attributes?.produtosReferentes?.data
     }
+    // console.log(data)
   }
 
   return (
@@ -87,6 +89,7 @@ export default function Page() {
         <>
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr] justify-between">
             <div className="flex flex-col">
+              {/*  @ts-ignore */}
               <Gallery items={currentProduct.gallery} key="-1" />
             </div>
             <div className="flex flex-col mt-4 md:mt-0">
@@ -96,7 +99,11 @@ export default function Page() {
               <p className="font-bold text-lg mb-2">
                 {formatPrice(Number(currentProduct.price))}
               </p>
-              <div className="text-md">{currentProduct.detalhes}</div>
+              <div
+                // @ts-ignore
+                dangerouslySetInnerHTML={{ __html: currentProduct.detalhes }}
+              />
+              {/* <div className="text-md">{currentProduct.detalhes}</div> */}
               {/* <p className="text-md">Feito sob encomenda</p> */}
               {/* <p className="mb-4">12 Dias para produção.</p> */}
               {/* <div className="flex mt-2 items-center mb-2 text-primary">
