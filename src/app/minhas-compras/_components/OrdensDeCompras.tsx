@@ -11,7 +11,7 @@ export default function OrdensDeCompras() {
     data: dataOrdensPagamento,
     error,
     loading
-  } = useOrdensDePagamentosQuery()
+  } = useOrdensDePagamentosQuery({ fetchPolicy: 'no-cache' })
 
   if (error) {
     throw error
@@ -29,6 +29,7 @@ export default function OrdensDeCompras() {
     // 4242 4242 4242 4242
 
     const mappedOrdensDeCompras = ordensComprasMapper(dataOrdensPagamento)
+    // console.log(mappedOrdensDeCompras)
     // console.log(data.ordens?.data)
     // console.log(mappedOrdensDeCompras)
     return (

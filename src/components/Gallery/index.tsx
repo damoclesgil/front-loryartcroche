@@ -34,7 +34,7 @@ const Gallery = ({ items }: GalleryProps) => {
         <Carousel options={{ infinite: false }}>
           {items.map((item, index) => (
             <div
-              className="f-carousel__slide"
+              className="f-carousel__slide cursor-pointer"
               data-fancybox="gallery"
               data-src={getImageUrl(item.attributes?.url)}
               data-thumb-src={getImageUrl(item.attributes?.url)}

@@ -1,46 +1,67 @@
 'use client'
 
-import { useQuery } from '@apollo/client'
 import ProductCard from '@/components/ProductCard'
-import { QUERY_PRODUTOS } from '@/graphql/queries/produtos'
-import { ProdutoEntity, useGetProdutosQuery } from '@/graphql/types'
+import {
+  // GetProdutosDocument,
+  // ProdutoEntity,
+  useGetProdutosQuery
+  // useGetProdutosSuspenseQuery
+} from '@/graphql/types'
 import { getImageUrl } from '@/utils/getImageUrl'
 import Loader from '@/components/Loader'
 import Empty from '../Empty'
 import { Button } from '../ui/button'
+// import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 
 const ProductList = () => {
+  // const { data, error, fetchMore } = useGetProdutosSuspenseQuery({
+  //   variables: {
+  //     sort: ['id:ASC']
+  //   }
+  // })
+
+  // const { data, error, fetchMore } = useSuspenseQuery(GetProdutosDocument, {
+  //   variables: { sort: ['id:ASC'] }
+  // })
+
   const { data, error, loading, fetchMore } = useGetProdutosQuery({
     variables: {
-      // pagination: {
-      //   pageSize: 1
-      //   // limit: 1
-      // }
-    },
-    fetchPolicy: 'no-cache'
-    // nextFetchPolicy: 'cache-first'
+      // filters: {
+      //   id:
+      // },
+      sort: ['id:ASC'],
+      pagination: {
+        pageSize: 10,
+        page: 1
+      }
+    }
+    // fetchPolicy: 'no-cache'
+    // nextFetchPolicy: 'no-cache'
   })
 
   const handleShowMore = () => {
     fetchMore({
       variables: {
         pagination: {
-          pageSize: 2
-          // page
-          // limit: 2
-        }
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        console.log(fetchMoreResult.produtos.data)
-        return {
-          produtos: {
-            data: [
-              ...previousResult.produtos.data,
-              ...fetchMoreResult.produtos.data
-            ]
-          }
+          pageSize: data?.produtos?.meta.pagination.pageSize,
+          page: data?.produtos?.meta.pagination.page
+            ? data?.produtos?.meta.pagination.page + 1
+            : 1
         }
       }
+
+      // updateQuery: (previousResult, { fetchMoreResult }) => {
+      //   console.log('previousResult', previousResult)
+      //   console.log('fetchMore', fetchMoreResult)
+      //   return {
+      //     produtos: {
+      //       data: [
+      //         ...previousResult.produtos.data,
+      //         ...fetchMoreResult.produtos.data
+      //       ]
+      //     }
+      //   }
+      // }
     })
   }
 
@@ -53,7 +74,6 @@ const ProductList = () => {
   }
 
   if (data?.produtos?.data.length === 0) {
-    console.log(data?.produtos?.data)
     return (
       <>
         <Empty
@@ -88,8 +108,13 @@ const ProductList = () => {
             />
           ))}
         </div>
-
-        <Button onClick={handleShowMore}>Carregar Mais</Button>
+        <div className="flex items-center justify-center">
+          <p>total: {data.produtos.meta.pagination.total}</p>
+          <p>pageSize: {data.produtos.meta.pagination.pageSize}</p>
+        </div>
+        <div className="flex items-center justify-center">
+          <Button onClick={handleShowMore}>Carregar Mais</Button>
+        </div>
       </>
     )
   }

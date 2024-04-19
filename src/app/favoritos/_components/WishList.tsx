@@ -40,7 +40,7 @@ const WishList = () => {
       </>
     )
   }
-  if (data?.favoritos?.data.length === 0) {
+  if (data?.favoritos?.data[0].attributes?.produtos?.data.length === 0) {
     return (
       <>
         <Empty title="Nenhum Produto Adicionado as Favoritos" description="" />
@@ -55,7 +55,7 @@ const WishList = () => {
       </>
     )
   }
-  if (data?.favoritos?.data.length) {
+  if (data?.favoritos?.data[0].attributes?.produtos?.data.length) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center justify-center my-4 mx-2">
         {data?.favoritos?.data[0].attributes?.produtos?.data.map(

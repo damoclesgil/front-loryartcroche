@@ -28,6 +28,14 @@ export const QUERY_PRODUTOS = gql`
           ...ProdutoFragment
         }
       }
+      meta {
+        pagination {
+          total
+          pageSize
+          pageCount
+          page
+        }
+      }
     }
   }
   ${ProdutoFragment}

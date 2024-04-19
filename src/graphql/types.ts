@@ -1262,7 +1262,7 @@ export type GetFavoritosQueryVariables = Exact<{
 }>;
 
 
-export type GetFavoritosQuery = { favoritos?: { data: Array<{ id?: string | null, attributes?: { produtos?: { data: Array<{ id?: string | null, attributes?: { nome?: string | null, slug?: string | null, descricao?: string | null, preco: number, cor?: string | null, nomeCor?: Enum_Produto_Nomecor | null, imagem_destaque?: { data?: { attributes?: { url: string } | null } | null } | null, galeria?: { data: Array<{ id?: string | null, attributes?: { url: string, name: string, width?: number | null, height?: number | null } | null }> } | null, produtosReferentes?: { data: Array<{ id?: string | null, attributes?: { cor?: string | null, nomeCor?: Enum_Produto_Nomecor | null, slug?: string | null } | null }> } | null } | null }> } | null } | null }> } | null };
+export type GetFavoritosQuery = { favoritos?: { data: Array<{ id?: string | null, attributes?: { produtos?: { data: Array<{ id?: string | null, attributes?: { nome?: string | null, slug?: string | null, descricao?: string | null, preco: number, cor?: string | null, nomeCor?: Enum_Produto_Nomecor | null, imagem_destaque?: { data?: { attributes?: { url: string } | null } | null } | null, galeria?: { data: Array<{ id?: string | null, attributes?: { url: string, name: string, width?: number | null, height?: number | null } | null }> } | null, produtosReferentes?: { data: Array<{ id?: string | null, attributes?: { cor?: string | null, nomeCor?: Enum_Produto_Nomecor | null, slug?: string | null } | null }> } | null } | null }> } | null } | null }>, meta: { pagination: { total: number } } } | null };
 
 export type OrdensDePagamentosQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1283,7 +1283,7 @@ export type GetProdutosQueryVariables = Exact<{
 }>;
 
 
-export type GetProdutosQuery = { produtos?: { data: Array<{ id?: string | null, attributes?: { nome?: string | null, slug?: string | null, descricao?: string | null, preco: number, cor?: string | null, nomeCor?: Enum_Produto_Nomecor | null, imagem_destaque?: { data?: { attributes?: { url: string } | null } | null } | null, galeria?: { data: Array<{ id?: string | null, attributes?: { url: string, name: string, width?: number | null, height?: number | null } | null }> } | null, produtosReferentes?: { data: Array<{ id?: string | null, attributes?: { cor?: string | null, nomeCor?: Enum_Produto_Nomecor | null, slug?: string | null } | null }> } | null } | null }> } | null };
+export type GetProdutosQuery = { produtos?: { data: Array<{ id?: string | null, attributes?: { nome?: string | null, slug?: string | null, descricao?: string | null, preco: number, cor?: string | null, nomeCor?: Enum_Produto_Nomecor | null, imagem_destaque?: { data?: { attributes?: { url: string } | null } | null } | null, galeria?: { data: Array<{ id?: string | null, attributes?: { url: string, name: string, width?: number | null, height?: number | null } | null }> } | null, produtosReferentes?: { data: Array<{ id?: string | null, attributes?: { cor?: string | null, nomeCor?: Enum_Produto_Nomecor | null, slug?: string | null } | null }> } | null } | null }>, meta: { pagination: { total: number, pageSize: number, pageCount: number, page: number } } } | null };
 
 export type GetProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1505,6 +1505,11 @@ export const GetFavoritosDocument = gql`
         }
       }
     }
+    meta {
+      pagination {
+        total
+      }
+    }
   }
 }
     ${ProdutoFragmentFragmentDoc}`;
@@ -1637,6 +1642,14 @@ export const GetProdutosDocument = gql`
       id
       attributes {
         ...ProdutoFragment
+      }
+    }
+    meta {
+      pagination {
+        total
+        pageSize
+        pageCount
+        page
       }
     }
   }

@@ -18,6 +18,11 @@ export const GET_FAVORITOS = gql`
           }
         }
       }
+      meta {
+        pagination {
+          total
+        }
+      }
     }
   }
   ${ProdutoFragment}

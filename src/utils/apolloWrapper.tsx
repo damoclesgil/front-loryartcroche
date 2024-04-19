@@ -1,6 +1,6 @@
 'use client'
 
-import { ApolloLink, HttpLink } from '@apollo/client'
+import { ApolloLink, from, HttpLink, InMemoryCache } from '@apollo/client'
 import {
   NextSSRApolloClient,
   ApolloNextAppProvider,
@@ -12,6 +12,8 @@ import { setVerbosity } from 'ts-invariant'
 import { setContext } from '@apollo/client/link/context'
 import { getSession } from 'next-auth/react'
 import { concatPagination } from '@apollo/client/utilities'
+import { removeTypenameFromVariables } from '@apollo/client/link/remove-typename'
+const removeTypenameLink = removeTypenameFromVariables()
 
 if (process.env.NODE_ENV === 'development') {
   setVerbosity('debug')
@@ -37,17 +39,59 @@ const authLink = setContext(async (_, { headers }) => {
   }
 })
 
+const theLink = from([removeTypenameLink, authLink.concat(httpLink)])
+
 function makeClient() {
   return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache({
+    /** 
+     {
       addTypename: false
-      // typePolicies: {
-      //   Query: {
-      //     fields: {
-      //       produtos: concatPagination()
-      //     }
-      //   }
-      // }
+       typePolicies: {
+         Query: {
+           fields: {
+             produtos: concatPagination()
+           }
+         }
+       }
+    } 
+     */
+    // cache: new InMemoryCache({
+    cache: new NextSSRInMemoryCache({
+      addTypename: true,
+      typePolicies: {
+        Query: {
+          fields: {
+            produtos: {
+              keyArgs: false,
+              // read(existing, {
+              //   args {
+              //     page: 1
+              //   }
+              // }),
+              // merge(existing, incoming) {
+              //   let olderData = existing.data ? existing.data : []
+              //   console.log('existing', existing)
+              //   console.log('olderData', olderData)
+              //   console.log('incoming', incoming)
+              //   const data = [...olderData, ...incoming.data]
+              //   return data
+              // }
+              // https://stackoverflow.com/questions/65127544/apolloclient-v3-fetchmore-with-nested-query-results
+              merge(existing, incoming) {
+                if (!incoming) return existing
+                if (!existing) return incoming
+                const { data, ...rest } = incoming
+                // We only need to merge the nodes array.
+                // The rest of the fields (pagination) should always be overwritten by incoming
+                let result = rest
+                result.data = [...existing.data, ...data]
+                console.log('result', result)
+                return result
+              }
+            }
+          }
+        }
+      }
     }),
     link:
       typeof window === 'undefined'
@@ -57,7 +101,7 @@ function makeClient() {
             }),
             authLink
           ])
-        : authLink.concat(httpLink)
+        : theLink
   })
 }
 
