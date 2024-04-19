@@ -2,23 +2,19 @@
 
 // import dynamic from 'next/dynamic'
 // const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
-import Image from 'next/image'
 import formatPrice from '@/utils/format-price'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { LocalShipping, CreditCard } from '@styled-icons/material-outlined'
-import { Pix } from '@styled-icons/fa-brands'
+import { Button } from '@/components/ui/button'
 import Gallery from '@/components/Gallery'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useGetProdutoQuery, type ProdutoEntity } from '@/graphql/types'
 import WishlistButton from '@/components/WishlistButton'
 import Link from 'next/link'
-import { Share1Icon } from '@radix-ui/react-icons'
 import { useCart } from '@/hooks/use-cart'
-import { useState } from 'react'
 import Loader from '@/components/Loader'
+import { ShareButton } from './_components/shareButton'
+import { PaymentMethods } from './_components/paymentMethods'
 
 export default function Page() {
-  const [selectedColor, setSelectedColor] = useState('Rosa')
   const pathname = usePathname()
 
   const productId = useSearchParams().get('id')
@@ -29,24 +25,6 @@ export default function Page() {
     return isInCart(id) ? removeFromCart(id) : addToCart(id)
   }
 
-  const shareProduct = async (product: any) => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: product.name,
-          text: `Check out this product: ${product.name} - ${formatPrice(Number(product.price))}`,
-          url: window.location.href
-        })
-        console.log('Product shared successfully')
-      } catch (error) {
-        console.error('Error sharing product:', error)
-      }
-    }
-  }
-
-  // const { data, error, loading } = useQuery(GetProdutoDocument, {
-  //   variables: { produtoId: productId }
-  // })
   const { data, loading, error } = useGetProdutoQuery({
     variables: {
       produtoId: productId
@@ -166,28 +144,11 @@ export default function Page() {
                 <WishlistButton id={currentProduct.id} />
                 {/* <CartButton id={currentProduct.id} /> */}
               </div>
-              <button
-                className="mb-2 text-left flex items-center"
-                onClick={() => shareProduct(currentProduct)}
-              >
-                <Share1Icon className="w-4 h-4 mr-2 " />
-                <span>Compartilhar</span>
-              </button>
 
-              <p>Meios de pagamento:</p>
-              <p className="mb-2">Pix, Cartão e Boleto</p>
-              <div className="flex mb-4">
-                <Pix color="#4bb8a9" size={20} className="mr-3" />
-                <CreditCard size={20} className="mr-3" />
-                <Image
-                  className="object-cover"
-                  src="/img/ic-new-boleto.svg"
-                  alt="Boleto"
-                  width={24}
-                  height={16}
-                  loading="lazy"
-                />
-              </div>
+              <ShareButton product={currentProduct} />
+
+              <PaymentMethods />
+
               {/* <Button asChild>
                 <a
                   target="_blank"

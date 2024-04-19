@@ -1,7 +1,15 @@
 'use client'
 
-export function shareButton() {
-  const shareProduct = async (product: any) => {
+import formatPrice from '@/utils/format-price'
+import { Share1Icon } from '@radix-ui/react-icons'
+
+// export type shareButtonProps = {
+//   name: string,
+//   price: number
+// }
+
+export function ShareButton(product: any) {
+  const shareProduct = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
@@ -16,5 +24,13 @@ export function shareButton() {
     }
   }
 
-  return <div>saher</div>
+  return (
+    <button
+      className="mb-2 text-left flex items-center"
+      onClick={() => shareProduct()}
+    >
+      <Share1Icon className="w-4 h-4 mr-2 " />
+      <span>Compartilhar</span>
+    </button>
+  )
 }

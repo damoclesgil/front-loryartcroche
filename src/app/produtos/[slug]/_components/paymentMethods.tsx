@@ -3,7 +3,7 @@
 import { CreditCard, Pix } from '@styled-icons/material-outlined'
 import Image from 'next/image'
 
-export function paymentMethods() {
+export function PaymentMethods() {
   return (
     <div>
       <p>Meios de pagamento:</p>

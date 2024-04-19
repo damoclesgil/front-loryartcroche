@@ -112,6 +112,9 @@ const ProductList = () => {
           <p>total: {data.produtos.meta.pagination.total}</p>
           <p>pageSize: {data.produtos.meta.pagination.pageSize}</p>
         </div>
+        {data.produtos.meta.pagination.total === data.produtos.data.length
+          ? 'show button load more'
+          : "don't show button load more"}
         <div className="flex items-center justify-center">
           <Button onClick={handleShowMore}>Carregar Mais</Button>
         </div>

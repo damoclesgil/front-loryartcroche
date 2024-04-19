@@ -87,6 +87,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
   }
 
   const addToCart = (id: string) => {
+    //
     if (!isInCart(id)) {
       saveCart([...cartItems, id])
     }
@@ -120,6 +121,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
   return (
     <CartContext.Provider
       value={{
+        // @ts-ignore
         items: cartMapper(data?.produtos?.data),
         quantity: cartItems.length,
         total: formatPrice(total || 0),
