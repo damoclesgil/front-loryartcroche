@@ -63,29 +63,13 @@ function makeClient() {
           fields: {
             produtos: {
               keyArgs: false,
-              // read(existing, {
-              //   args {
-              //     page: 1
-              //   }
-              // }),
-              // merge(existing, incoming) {
-              //   let olderData = existing.data ? existing.data : []
-              //   console.log('existing', existing)
-              //   console.log('olderData', olderData)
-              //   console.log('incoming', incoming)
-              //   const data = [...olderData, ...incoming.data]
-              //   return data
-              // }
               // https://stackoverflow.com/questions/65127544/apolloclient-v3-fetchmore-with-nested-query-results
               merge(existing, incoming) {
                 if (!incoming) return existing
                 if (!existing) return incoming
                 const { data, ...rest } = incoming
-                // We only need to merge the nodes array.
-                // The rest of the fields (pagination) should always be overwritten by incoming
                 let result = rest
                 result.data = [...existing.data, ...data]
-                console.log('result', result)
                 return result
               }
             }

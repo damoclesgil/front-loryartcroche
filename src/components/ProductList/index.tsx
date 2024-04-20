@@ -8,9 +8,9 @@ import {
   // useGetProdutosSuspenseQuery
 } from '@/graphql/types'
 import { getImageUrl } from '@/utils/getImageUrl'
-import Loader from '@/components/Loader'
 import Empty from '../Empty'
 import { Button } from '../ui/button'
+import SkeletonEffectProducts from './SkeletonEffectProducts'
 // import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 
 const ProductList = () => {
@@ -24,7 +24,7 @@ const ProductList = () => {
   //   variables: { sort: ['id:ASC'] }
   // })
 
-  const { data, error, loading, fetchMore } = useGetProdutosQuery({
+  const { data, error, loading, fetchMore, refetch } = useGetProdutosQuery({
     variables: {
       // filters: {
       //   id:
@@ -42,6 +42,7 @@ const ProductList = () => {
   const handleShowMore = () => {
     fetchMore({
       variables: {
+        sort: ['id:ASC'],
         pagination: {
           pageSize: data?.produtos?.meta.pagination.pageSize,
           page: data?.produtos?.meta.pagination.page
@@ -70,7 +71,8 @@ const ProductList = () => {
   }
 
   if (loading) {
-    return <Loader />
+    return <SkeletonEffectProducts qtdLoadingItems={4} />
+    // return <Loader />
   }
 
   if (data?.produtos?.data.length === 0) {
@@ -108,16 +110,21 @@ const ProductList = () => {
             />
           ))}
         </div>
-        <div className="flex items-center justify-center">
+        {/* <div className="flex items-center justify-center">
           <p>total: {data.produtos.meta.pagination.total}</p>
-          <p>pageSize: {data.produtos.meta.pagination.pageSize}</p>
-        </div>
-        {data.produtos.meta.pagination.total === data.produtos.data.length
-          ? 'show button load more'
-          : "don't show button load more"}
-        <div className="flex items-center justify-center">
-          <Button onClick={handleShowMore}>Carregar Mais</Button>
-        </div>
+          <p>products Length: {data.produtos.data.length}</p>
+        </div> */}
+        {data.produtos.meta.pagination.total !== data.produtos.data.length && (
+          <div className="flex items-center justify-center">
+            <Button
+              loading={loading}
+              disabled={loading}
+              onClick={handleShowMore}
+            >
+              Carregar Mais
+            </Button>
+          </div>
+        )}
       </>
     )
   }

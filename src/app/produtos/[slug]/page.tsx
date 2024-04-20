@@ -13,6 +13,7 @@ import { useCart } from '@/hooks/use-cart'
 import Loader from '@/components/Loader'
 import { ShareButton } from './_components/shareButton'
 import { PaymentMethods } from './_components/paymentMethods'
+import SkeletonEffectProductPage from './_components/SkeletonEffectProductPage'
 
 export default function Page() {
   const pathname = usePathname()
@@ -35,7 +36,8 @@ export default function Page() {
   let currentProduct = null
 
   if (loading) {
-    return <Loader />
+    return <SkeletonEffectProductPage />
+    // return <Loader />
   }
 
   if (error) {
@@ -163,10 +165,12 @@ export default function Page() {
                 </a>
               </Button> */}
               <Button
+                // @ts-ignore
                 onClick={() => handleClick(currentProduct.id)}
                 className="mt-4 uppercase font-bold"
                 size="lg"
               >
+                {/* @ts-ignore */}
                 {isInCart(currentProduct.id)
                   ? 'Remover do Carrinho'
                   : 'Adicionar ao Carrinho'}

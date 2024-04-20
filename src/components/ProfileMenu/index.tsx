@@ -1,17 +1,17 @@
 'use client'
 
 import { NextRoutes } from '@/utils/constant'
-import { ExitToApp, FormatListBulleted } from '@styled-icons/material-outlined'
+import { FormatListBulleted } from '@styled-icons/material-outlined'
 import { AccountCircle } from '@styled-icons/remix-line'
 import Link from 'next/link'
-import { Button } from '../ui/button'
-import { signOut } from 'next-auth/react'
-import { usePathname, useRouter } from 'next/navigation'
+// import { Button } from '../ui/button'
+// import { signOut } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
 
 const ProfileMenu = () => {
   const pathname = usePathname()
 
-  const { push } = useRouter()
+  // const { push } = useRouter()
 
   const defaultLinkClasses =
     'cursor-pointer decoration-inherit flex items-center px-2 py-3 transition-colors hover:bg-primary block w-full'
@@ -21,7 +21,7 @@ const ProfileMenu = () => {
   const descativeLinkClasses = 'bg-transparent'
 
   return (
-    <nav className="flex lg:border lg:border-primary flex-col lg:items-center lg:max-w-[15rem] lg:max-h-[9.1rem]">
+    <nav className="flex lg:border lg:border-primary flex-col lg:items-center lg:max-w-[15rem] lg:max-h-[6.1rem] mb-3 lg:mb-0">
       <Link
         href={NextRoutes.profile}
         className={`${defaultLinkClasses} ${
@@ -50,8 +50,7 @@ const ProfileMenu = () => {
         <FormatListBulleted size={24} />
         <span>Meus Cartões</span>
       </Link> */}
-
-      <button
+      {/* <button
         className={defaultLinkClasses}
         disabled={true}
         onClick={async () => {
@@ -64,7 +63,7 @@ const ProfileMenu = () => {
       >
         <ExitToApp size={24} title="Sign out" />
         <span className="ml-2">Sign out</span>
-      </button>
+      </button> */}
     </nav>
   )
 }

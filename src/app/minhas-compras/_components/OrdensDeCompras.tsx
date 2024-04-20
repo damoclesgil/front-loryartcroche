@@ -48,27 +48,25 @@ export default function OrdensDeCompras() {
                 </h4>
                 {ordemCompra.produtos?.length &&
                   ordemCompra.produtos.map((produto) => (
-                    <>
-                      <div className="flex items-start mb-2" key={produto.id}>
-                        <Image
-                          className="h-auto"
-                          src={produto.img}
-                          width={150}
-                          height={150}
-                          alt={produto.nome ? produto.nome : ''}
-                        />
-                        <div>
-                          <h2 className="text-lg font-semibold ml-4 capitalize">
-                            {produto.nome}
-                          </h2>
-                          <h2 className="ml-4 mt-2">
-                            <span className="text-md bg-primary font-bold text-white w-auto py-1 px-2 rounded-md">
-                              {produto.preco}
-                            </span>
-                          </h2>
-                        </div>
+                    <div className="flex items-start mb-2" key={produto.id}>
+                      <Image
+                        className="h-auto"
+                        src={produto.img}
+                        width={150}
+                        height={150}
+                        alt={produto.nome ? produto.nome : ''}
+                      />
+                      <div>
+                        <h2 className="text-lg font-semibold ml-4 capitalize">
+                          {produto.nome}
+                        </h2>
+                        <h2 className="ml-4 mt-2">
+                          <span className="text-md bg-primary font-bold text-white w-auto py-1 px-2 rounded-md">
+                            {produto.preco}
+                          </span>
+                        </h2>
                       </div>
-                    </>
+                    </div>
                   ))}
               </div>
 
