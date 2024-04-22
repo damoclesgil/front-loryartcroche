@@ -11,6 +11,7 @@ export type CartItem = {
   img: string
   name: string
   slug: string
+  qty: number
   price?: number
 }
 
@@ -20,8 +21,8 @@ export type CartContextData = {
   total: string
   isInCart: (id: string) => boolean
   addToCart: (id: string) => void // agora vai ter que receber o id e qty eu acho.
-  increment: () => void
-  decrement: () => void
+  incrementQuantity: (id: string) => void
+  decrementQuantity: (id: string) => void
   removeFromCart: (id: string) => void
   clearCart: () => void
   count: number
@@ -34,8 +35,8 @@ export const CartContextDefaultValues = {
   total: 'R$ 0,00',
   isInCart: () => false,
   addToCart: () => null,
-  increment: () => null,
-  decrement: () => null,
+  incrementQuantity: () => null,
+  decrementQuantity: () => null,
   removeFromCart: () => null,
   clearCart: () => null,
   count: 0,
@@ -51,18 +52,9 @@ export type CartProviderProps = {
 }
 
 const CartProvider = ({ children }: CartProviderProps) => {
-  const [cartItems, setCartItems] = useState<string[]>([])
+  const [cartItems, setCartItems] = useState<any[]>([])
   const [count, setCount] = useState(0)
-
-  // let data = []
-  useEffect(() => {
-    const data = getStorageItem(CART_KEY)
-
-    if (data) {
-      setCartItems(data)
-    }
-  }, [])
-  // SE NÃO PASSAR NADA ELE VAI RODAR SÓ UMA VEZ "[]"
+  const [items, setItems] = useState<any[]>([])
 
   const { data, loading } = useGetProdutosQuery({
     skip: !cartItems?.length,
@@ -72,11 +64,24 @@ const CartProvider = ({ children }: CartProviderProps) => {
           in: cartItems
         }
       }
-    }
+    },
+    fetchPolicy: 'no-cache'
   })
 
-  const total = data?.produtos?.data?.reduce((acc, product) => {
-    return acc + (Number(product.attributes?.preco) ?? 0)
+  useEffect(() => {
+    const idsProduct = getStorageItem(CART_KEY)
+    if (data?.produtos?.data) {
+      // @ts-ignore
+      setItems(cartMapper(data?.produtos?.data))
+    }
+    if (idsProduct) {
+      setCartItems(idsProduct)
+    }
+  }, [data])
+  // SE NÃO PASSAR NADA ELE VAI RODAR SÓ UMA VEZ "[]"
+
+  const total = items?.reduce((acc, product) => {
+    return acc + (Number(product?.price) ?? 0)
   }, 0)
 
   const isInCart = (id: string) => (id ? cartItems.includes(id) : false)
@@ -93,20 +98,38 @@ const CartProvider = ({ children }: CartProviderProps) => {
     }
   }
 
-  const increment = () => {
-    setCount(function (prevCount) {
-      return (prevCount += 1)
-    })
-  }
-
-  const decrement = () => {
-    setCount(function (prevCount) {
-      if (prevCount > 0) {
-        return (prevCount -= 1)
+  const incrementQuantity = (id: string) => {
+    const nextCounters = items.map((product) => {
+      if (product.id === id) {
+        return {
+          ...product,
+          qty: product.qty + 1
+        }
       } else {
-        return (prevCount = 0)
+        return {
+          ...product,
+          qty: product.qty
+        }
       }
     })
+    setItems(nextCounters)
+  }
+
+  const decrementQuantity = (id: string) => {
+    const nextCounters = items.map((product) => {
+      if (product.id === id) {
+        return {
+          ...product,
+          qty: product.qty - 1
+        }
+      } else {
+        return {
+          ...product,
+          qty: product.qty
+        }
+      }
+    })
+    setItems(nextCounters)
   }
 
   const removeFromCart = (id: string) => {
@@ -122,12 +145,12 @@ const CartProvider = ({ children }: CartProviderProps) => {
     <CartContext.Provider
       value={{
         // @ts-ignore
-        items: cartMapper(data?.produtos?.data),
+        items: items,
         quantity: cartItems.length,
         total: formatPrice(total || 0),
         isInCart,
-        increment,
-        decrement,
+        incrementQuantity,
+        decrementQuantity,
         addToCart,
         count: count,
         removeFromCart,

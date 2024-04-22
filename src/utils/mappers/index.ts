@@ -17,7 +17,8 @@ export const cartMapper = (produtos: ProdutoEntity[] | undefined) => {
         ),
         name: produto.attributes?.nome,
         slug: produto.attributes?.slug,
-        price: produto.attributes?.preco
+        price: produto.attributes?.preco,
+        qty: 1
       }))
     : []
 }

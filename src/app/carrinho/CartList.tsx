@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import Empty from '@/components/Empty'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -22,8 +22,15 @@ const stripePromise = loadStripe(
 )
 
 const CartList = () => {
-  const { items, total, loading, removeFromCart, increment, decrement, count } =
-    useCart()
+  const {
+    items,
+    total,
+    loading,
+    removeFromCart,
+    incrementQuantity,
+    decrementQuantity,
+    count
+  } = useCart()
 
   if (loading) {
     return (
@@ -44,7 +51,10 @@ const CartList = () => {
           {items.length ? (
             <>
               {items.map((product) => (
-                <div className="flex items-start gap-4" key={product.id}>
+                <div
+                  className="flex items-start gap-4"
+                  key={`cart_${product.id}`}
+                >
                   <div className="flex items-start gap-4">
                     <Image
                       alt={product.name}
@@ -59,11 +69,16 @@ const CartList = () => {
                       </h2>
                       <div className="flex items-center gap-2">
                         <Button
-                          className="w-6 h-6"
+                          className={buttonVariants({
+                            variant: 'ghost',
+                            className: `w-6 h-6 ${product.qty === 0 ? '!cursor-not-allowed pointer-events-auto' : ''}`,
+                            size: 'icon'
+                          })}
                           size="icon"
                           variant="ghost"
                           title="Diminuir Quantidade"
-                          onClick={() => decrement()}
+                          disabled={product.qty === 0}
+                          onClick={() => decrementQuantity(product.id)}
                         >
                           <MinusIcon className="w-4 h-4" />
                           <span className="sr-only">Diminuir Quantidade</span>
@@ -73,14 +88,14 @@ const CartList = () => {
                           min="1"
                           type="number"
                           disabled
-                          value={count}
+                          value={product.qty}
                         />
                         <Button
                           className="w-6 h-6"
                           title="Aumentar Quantidade"
                           size="icon"
                           variant="ghost"
-                          onClick={() => increment()}
+                          onClick={() => incrementQuantity(product.id)}
                         >
                           <PlusIcon className="w-4 h-4" />
                           <span className="sr-only">Aumentar Quantidade</span>
