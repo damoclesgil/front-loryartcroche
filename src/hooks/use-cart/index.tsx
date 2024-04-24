@@ -26,7 +26,7 @@ export type CartContextData = {
   quantity: number
   total: string
   isInCart: (id: string) => boolean
-  addToCart: (id: string, qty: number) => void // agora vai ter que receber o id e qty eu acho.
+  addToCart: (id: string, qty: number) => void
   incrementQuantity: (id: string) => void
   decrementQuantity: (id: string) => void
   removeFromCart: (id: string) => void
@@ -85,22 +85,10 @@ const CartProvider = ({ children }: CartProviderProps) => {
   }, [data])
   // SE NÃO PASSAR NADA ELE VAI RODAR SÓ UMA VEZ "[]"
 
-  // const total = items?.reduce((acc, product) => {
-  //   return acc + (Number(product?.price) ?? 0)
-  // }, 0)
   const totalPrice: number = items.reduce(
     (total, product) => total + product.price * product.qty,
     0
   )
-
-  // products.reduce((total, product) => total + product.price * product.qty, 0);
-  // const total = () => {
-  //   let totalValue = 0
-  //   for (let product of items) {
-  //     totalValue += product.price * product.qty
-  //   }
-  //   return totalValue
-  // }
 
   const isInCart = (id: string) =>
     id ? cartItems.map((cartItem) => cartItem.id).includes(id) : false
@@ -131,8 +119,6 @@ const CartProvider = ({ children }: CartProviderProps) => {
         let cartIndex = cartItems.findIndex((cartItem) => cartItem.id === id)
         cartItems[cartIndex].qty = cartItems[cartIndex].qty + 1
         saveCart([...cartItems])
-        // addToCart(id, product.qty + 1)
-
         return {
           ...product,
           qty: product.qty + 1

@@ -5,8 +5,10 @@ type skeletonEffectProductsProps = {
 const SkeletonEffectProducts = ({
   qtdLoadingItems = 3
 }: skeletonEffectProductsProps) => {
-  // @ts-ignore
-  const loadingItems = Array.from({ length: qtdLoadingItems }, (_, i) => i + 1)
+  const loadingItems = Array.from(
+    { length: Number(qtdLoadingItems) },
+    (_, i) => i + 1
+  )
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center justify-center my-4 mx-2">

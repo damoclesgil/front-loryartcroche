@@ -14,7 +14,9 @@ import {
   StripeCardElementChangeEvent,
   StripeCardElementOptions
 } from '@stripe/stripe-js'
+import { CreditCard, Pix } from '@styled-icons/material-outlined'
 import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -132,15 +134,14 @@ export default function PaymentForm() {
   }
 
   const sendWhatsAppItems = () => {
-    // console.log(items)
-    let products = items.map((item) => {
+    const products = items.map((item) => {
       return `- x${item.qty} ${capitalize(item.name)} ${formatPrice(Number(item.price))}
 `
     })
 
-    let currentDate = setCharAt(formatDate(new Date()), 10, ' ⏰')
+    const currentDate = setCharAt(formatDate(new Date()), 10, ' ⏰')
 
-    let orderTextWhats = `
+    const orderTextWhats = `
 Olá venho do site ${links.websiteUrl}
 🗓 ${currentDate}
 
@@ -175,36 +176,54 @@ Método de Pagamento: *${paymentMethod}*.
     }
   }
 
+  const buttonMethodPaymentClass =
+    'p-4 md:mx-2 my-2 md:my-0 flex flex-col items-center justify-center transition-colors duration-200 text-primary-foreground shadow hover:bg-primary font-bold focus:bg-primary border-2 border-primary rounded-md md:max-w-[185px] w-full text-center'
+
   return (
     <form onSubmit={onSubmit}>
-      <h2 className="mb-6"> Selecione a forma de Pagamento: </h2>
-      <div className="flex">
+      <h2 className="mb-6 text-lg text-center">
+        {' '}
+        Selecione a forma de Pagamento: {paymentMethod}
+      </h2>
+      <div className="flex flex-col md:flex-row justify-center">
         <button
-          className="mx-2"
+          className={`${buttonMethodPaymentClass} ${paymentMethod === 'Cartão de Crédito' ? 'bg-primary' : 'bg-transparent'}`}
           onClick={() => setPaymentMethod('Cartão de Crédito')}
         >
-          Cartão de Crédito
+          <CreditCard size={50} />
+          <span className="mt-2">Cartão de Crédito</span>
         </button>
-        <button className="mx-2" onClick={() => setPaymentMethod('Pix')}>
-          Pix
+        <button
+          className={`${buttonMethodPaymentClass} ${paymentMethod === 'Pix' ? 'bg-primary' : 'bg-transparent'}`}
+          onClick={() => setPaymentMethod('Pix')}
+        >
+          <Pix color="#4bb8a9" size={50} />
+          <span className="mt-2">Pix</span>
         </button>
-        <button className="mx-2" onClick={() => setPaymentMethod('Boleto')}>
-          Boleto
+        <button
+          className={`${buttonMethodPaymentClass} ${paymentMethod === 'Boleto' ? 'bg-primary' : 'bg-transparent'}`}
+          onClick={() => setPaymentMethod('Boleto')}
+        >
+          <Image
+            className="object-cover"
+            src="/img/ic-new-boleto.svg"
+            alt="Boleto"
+            width={50}
+            height={50}
+            loading="lazy"
+          />
+          <span className="mt-2"> Boleto</span>
         </button>
       </div>
-
-      {/* <h3 className="mb-1">Cartão de Crédito</h3> */}
 
       {/* <CardElement options={options} onChange={handleChange} />
       {error && <TextError>{error}</TextError>} */}
 
-      {/* <h3 className="mb-4">Pix</h3> */}
-
-      <div className="mt-4 flex justify-end">
+      <div className="mt-8 flex items-center justify-center">
         <Button className="mr-4" onClick={() => sendWhatsAppItems()}>
           Encomendar
         </Button>
-        {/* 
+        {/*
         <Button
           type="submit"
           disabled={items.length === 0 && (disabled || !!error || loading)}

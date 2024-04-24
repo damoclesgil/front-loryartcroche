@@ -121,11 +121,11 @@ const CartList = () => {
                 </div>
               ))}
 
-              <Card className="mb-8 p-6">
+              <Card className="mb-8 p-6 mt-5">
                 <div className="grid gap-2 mb-6">
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold">Total</span>
-                    <span className="font-semibold">{total}</span>
+                    <span className="font-semibold text-2xl">Total</span>
+                    <span className="font-semibold text-2xl">{total}</span>
                   </div>
                 </div>
 
