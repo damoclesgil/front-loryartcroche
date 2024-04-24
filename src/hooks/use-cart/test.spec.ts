@@ -1,4 +1,4 @@
-import { normalize } from '@/utils/mappers'
+// import { normalize } from '@/utils/mappers'
 import { expect, test } from 'vitest'
 
 const mockedProducts = {
@@ -156,33 +156,7 @@ const mockedProducts = {
   }
 }
 
-// @ts-ignore
-const cartReducer = (state, product) => {
-  // @ts-ignore
-  return state.map((item) =>
-    item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-  )
-}
 test('shoud be normalize return from api strapi.io', () => {
   const data = mockedProducts
-  console.log(data.produtos.data)
-  //   const addQtyOnProducts = data.produtos.map((produto) => {
-  //     return {
-  //       ...produto,
-  //       qty: 1
-  //     }
-  //   })
-  //   console.log(addQtyOnProducts)
-
-  //   const incrementQuantity = (id = '1') => {
-  //     let currentProduct = addQtyOnProducts.filter((p) => p.id === id)
-  //     currentProduct[0].qty + 1
-  //     console.log(currentProduct)
-
-  //   }
-
-  //   incrementQuantity()
-
-  // console.log(data.produtos)
   expect(data).toEqual(data)
 })

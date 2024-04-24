@@ -20,7 +20,7 @@ const Base = ({
     <>
       <Menu />
       <div
-        className={`w-full bg-no-repeat relative h-auto max-w-full ${sizeBg === 'large' && 'min-h-[550px]'} ${sizeBg === 'medium' && 'min-h-[300px]'} ${sizeBg === 'small' && 'min-h-[200px]'}`}
+        className={`w-full bg-no-repeat relative h-auto max-w-full ${sizeBg === 'large' && 'min-h-[350px] lg:min-h-[550px]'} ${sizeBg === 'medium' && 'min-h-[200px] lg:min-h-[300px]'} ${sizeBg === 'small' && 'min-h-[150px] lg:min-h-[200px]'}`}
         style={{
           background: `url(${process.env.NEXT_PUBLIC_APP_URL}/img/backgrounds/${backgroundImg}.jpg)`,
           backgroundPosition: `${sizeBg === 'large' ? 'top center' : 'center center'}`,

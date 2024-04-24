@@ -60,7 +60,7 @@ const Footer = () => {
               <p className="ml-2">Instagram</p>
             </Link>
             <Link
-              href={links.WhatsApp}
+              href={`${links.WhatsApp}?text=Ol%C3%A1%2C+estou+dando+uma+olhada+aqui+no+site`}
               target="_blank"
               className="no-underline text-primary hover:text-primary-darker mt-2 flex items-center"
             >

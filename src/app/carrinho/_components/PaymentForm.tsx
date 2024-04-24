@@ -2,12 +2,15 @@
 
 import { Button } from '@/components/ui/button'
 import { TextError } from '@/components/ui/text-error'
-import { useCart } from '@/hooks/use-cart'
-import { NextRoutes } from '@/utils/constant'
+import { MetodoPagamento, useCart } from '@/hooks/use-cart'
+import { capitalize, formatDate, setCharAt } from '@/utils/common'
+import { links, NextRoutes } from '@/utils/constant'
+import formatPrice from '@/utils/format-price'
 import { createPayment, createPaymentIntent } from '@/utils/stripe/methods'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import {
   PaymentIntent,
+  // PaymentMethod,
   StripeCardElementChangeEvent,
   StripeCardElementOptions
 } from '@stripe/stripe-js'
@@ -16,9 +19,11 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 export default function PaymentForm() {
-  const { items } = useCart()
+  const { items, total } = useCart()
   const { data: session } = useSession()
   const [error, setError] = useState<string | null>(null)
+  const [paymentMethod, setPaymentMethod] =
+    useState<MetodoPagamento>('Não Informado')
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [clientSecret, setClientSecret] = useState('')
@@ -126,6 +131,41 @@ export default function PaymentForm() {
     setError(event.error ? event.error.message : '')
   }
 
+  const sendWhatsAppItems = () => {
+    // console.log(items)
+    let products = items.map((item) => {
+      return `- x${item.qty} ${capitalize(item.name)} ${formatPrice(Number(item.price))}
+`
+    })
+
+    let currentDate = setCharAt(formatDate(new Date()), 10, ' ⏰')
+
+    let orderTextWhats = `
+Olá venho do site ${links.websiteUrl}
+🗓 ${currentDate}
+
+Nome: *${session?.user?.name}*
+
+📝 Pedido
+
+${products.join('')}
+💲Total a pagar: *${total}*
+
+Método de Pagamento: *${paymentMethod}*.
+
+👆 Após enviar o pedido, aguarde que já iremos lhe atender.
+`
+
+    const encodedText = encodeURIComponent(orderTextWhats)
+    const numberWhatsLory = '+5562996725529'
+    // const numberWhats = '+556281165159'
+    const urlApiWhats = `https://api.whatsapp.com/send/?phone=${numberWhatsLory}&text=${encodedText}`
+    const aElement = document.createElement('a')
+    aElement.setAttribute('href', urlApiWhats)
+    aElement.setAttribute('target', '_blank')
+    aElement.click()
+  }
+
   const options: StripeCardElementOptions = {
     hidePostalCode: true,
     style: {
@@ -137,19 +177,41 @@ export default function PaymentForm() {
 
   return (
     <form onSubmit={onSubmit}>
-      <CardElement options={options} onChange={handleChange} />
-      {error && <TextError>{error}</TextError>}
+      <h2 className="mb-6"> Selecione a forma de Pagamento: </h2>
+      <div className="flex">
+        <button
+          className="mx-2"
+          onClick={() => setPaymentMethod('Cartão de Crédito')}
+        >
+          Cartão de Crédito
+        </button>
+        <button className="mx-2" onClick={() => setPaymentMethod('Pix')}>
+          Pix
+        </button>
+        <button className="mx-2" onClick={() => setPaymentMethod('Boleto')}>
+          Boleto
+        </button>
+      </div>
+
+      {/* <h3 className="mb-1">Cartão de Crédito</h3> */}
+
+      {/* <CardElement options={options} onChange={handleChange} />
+      {error && <TextError>{error}</TextError>} */}
 
       {/* <h3 className="mb-4">Pix</h3> */}
 
       <div className="mt-4 flex justify-end">
+        <Button className="mr-4" onClick={() => sendWhatsAppItems()}>
+          Encomendar
+        </Button>
+        {/* 
         <Button
           type="submit"
           disabled={items.length === 0 && (disabled || !!error || loading)}
           loading={loading}
         >
           {loading ? 'Comprando' : 'Comprar'}
-        </Button>
+        </Button> */}
       </div>
     </form>
   )

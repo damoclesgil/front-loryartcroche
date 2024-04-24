@@ -3,23 +3,20 @@
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
   DropdownMenuContent,
   DropdownMenu
 } from '@/components/ui/dropdown-menu'
-import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu'
 import Empty from '@/components/Empty'
-import { Card } from '../ui/card'
 import { Input } from '../ui/input'
 import Image from 'next/image'
-import Loader from '@/components/Loader'
+// import Loader from '@/components/Loader'
 import Link from 'next/link'
 import { NextRoutes } from '@/utils/constant'
 import { useCart } from '@/hooks/use-cart'
 import formatPrice from '@/utils/format-price'
 
 const CartMenu = () => {
-  const { items, total, loading, removeFromCart } = useCart()
+  const { items, total, removeFromCart } = useCart()
 
   return (
     <>
@@ -46,41 +43,35 @@ const CartMenu = () => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-full">
-          {loading ? (
-            <>
-              <Loader />
-            </>
-          ) : (
-            <div>
-              {/* h-[300px] */}
-              <div className="flex flex-col overflow-auto gap-4 p-4 max-h-[350px] scrollbar-thin-horizontal">
-                {items.length ? (
-                  <>
-                    {items.map((product) => (
-                      <div className="flex items-center gap-4" key={product.id}>
-                        <Image
-                          alt={product.name}
-                          className="aspect-square rounded-md object-cover"
-                          height="80"
-                          src={product.img}
-                          width="80"
-                        />
-                        <div>
-                          <div className="text-md font-medium">
-                            {product.name}
-                          </div>
-                          <div className="text-sm text-gray-500 dark:text-gray-400">
-                            {formatPrice(Number(product.price))}
-                          </div>
-                          <Button
-                            size="sm"
-                            variant="link"
-                            onClick={() => removeFromCart(product.id)}
-                          >
-                            <span>Remover</span>
-                          </Button>
+          <div>
+            <div className="flex flex-col overflow-auto gap-4 p-4 max-h-[350px] scrollbar-thin-horizontal">
+              {items.length ? (
+                <>
+                  {items.map((product) => (
+                    <div className="flex items-center gap-4" key={product.id}>
+                      <Image
+                        alt={product.name}
+                        className="aspect-square rounded-md object-cover"
+                        height="80"
+                        src={product.img}
+                        width="80"
+                      />
+                      <div>
+                        <div className="text-md font-medium">
+                          {product.name}
                         </div>
-                        {/* <div className="flex items-center">
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          {formatPrice(Number(product.price))}
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="link"
+                          onClick={() => removeFromCart(product.id)}
+                        >
+                          <span>Remover</span>
+                        </Button>
+                      </div>
+                      {/* <div className="flex items-center">
                           <Button
                             className="w-6 h-6"
                             size="icon"
@@ -101,39 +92,38 @@ const CartMenu = () => {
                             <span className="sr-only">Adicionar um item</span>
                           </Button>
                         </div> */}
-                      </div>
-                    ))}
-                  </>
-                ) : (
-                  <Empty
-                    description="Nenhum produto foi adicionado ao carrinho"
-                    title="Sem produtos aqui 🥲"
-                  />
-                )}
-                <div />
-              </div>
-              {items.length !== 0 && (
-                <div className="flex flex-col gap-2 p-4 border-t">
-                  <div className="flex items-center justify-between">
-                    <div>Total</div>
-                    <div className="font-medium">{total}</div>
-                  </div>
-                  <Button asChild>
-                    <Link
-                      className={buttonVariants({
-                        variant: 'default',
-                        className: 'w-full font-bold',
-                        size: 'default'
-                      })}
-                      href={`${NextRoutes.cart}`}
-                    >
-                      Comprar
-                    </Link>
-                  </Button>
-                </div>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <Empty
+                  description="Nenhum produto foi adicionado ao carrinho"
+                  title="Sem produtos aqui 🥲"
+                />
               )}
+              <div />
             </div>
-          )}
+            {items.length !== 0 && (
+              <div className="flex flex-col gap-2 p-4 border-t">
+                <div className="flex items-center justify-between">
+                  <div>Total</div>
+                  <div className="font-medium">{total}</div>
+                </div>
+                <Button asChild>
+                  <Link
+                    className={buttonVariants({
+                      variant: 'default',
+                      className: 'w-full font-bold',
+                      size: 'default'
+                    })}
+                    href={`${NextRoutes.cart}`}
+                  >
+                    Comprar
+                  </Link>
+                </Button>
+              </div>
+            )}
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

@@ -15,6 +15,12 @@ export type CartItem = {
   price?: number
 }
 
+export type MetodoPagamento =
+  | 'Cartão de Crédito'
+  | 'Boleto'
+  | 'Pix'
+  | 'Não Informado'
+
 export type CartContextData = {
   items: CartItem[]
   quantity: number

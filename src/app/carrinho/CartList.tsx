@@ -120,6 +120,19 @@ const CartList = () => {
                   </div>
                 </div>
               ))}
+
+              <Card className="mb-8 p-6">
+                <div className="grid gap-2 mb-6">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold">Total</span>
+                    <span className="font-semibold">{total}</span>
+                  </div>
+                </div>
+
+                <Elements stripe={stripePromise}>
+                  <PaymentForm />
+                </Elements>
+              </Card>
             </>
           ) : (
             <Empty
@@ -128,21 +141,6 @@ const CartList = () => {
             />
           )}
         </div>
-        <Card className="mb-8 p-6">
-          <div className="grid gap-2 mb-6">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold">Total</span>
-              <span className="font-semibold">{total}</span>
-            </div>
-          </div>
-
-          <h2 className="mb-6"> Selecione a forma de Pagamento: </h2>
-
-          <h3 className="mb-1">Cartão de Crédito</h3>
-          <Elements stripe={stripePromise}>
-            <PaymentForm />
-          </Elements>
-        </Card>
       </div>
     </>
   )
