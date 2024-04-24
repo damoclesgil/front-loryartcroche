@@ -7,8 +7,12 @@ import {
 } from '@/graphql/types'
 import { getImageUrl } from '@/utils/getImageUrl'
 import formatPrice from '../format-price'
+import { getStorageItem } from '../localStorage'
+import { CART_KEY, cartItemsLocalStorageProps } from '@/hooks/use-cart'
 
-export const cartMapper = (produtos: ProdutoEntity[] | undefined) => {
+export const cartMapper = (produtos: ProdutoEntity[]) => {
+  const cartItems = getStorageItem(CART_KEY)
+
   return produtos
     ? produtos.map((produto) => ({
         id: produto.id,
@@ -18,7 +22,10 @@ export const cartMapper = (produtos: ProdutoEntity[] | undefined) => {
         name: produto.attributes?.nome,
         slug: produto.attributes?.slug,
         price: produto.attributes?.preco,
-        qty: 1
+        qty:
+          cartItems.find(
+            (item: cartItemsLocalStorageProps) => item.id === produto.id
+          ).qty || 1
       }))
     : []
 }

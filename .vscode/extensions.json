@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "whizkydee.material-palenight-theme",
+    "ms-vscode.vscode-typescript-next",
+    "xabikos.javascriptsnippets",
+    "visualstudioexptteam.vscodeintellicode",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "visualstudioexptteam.intellicode-api-usage-examples",
+    "ecmel.vscode-html-css",
+    "formulahendry.auto-rename-tag",
+    "vscode-icons-team.vscode-icons",
+    "yzhang.markdown-all-in-one",
+    "tabnine.tabnine-vscode"
+  ]
+}

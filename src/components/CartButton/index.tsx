@@ -13,7 +13,7 @@ const CartButton = ({ id }: CartProps) => {
   const { isInCart, addToCart, removeFromCart } = useCart()
 
   const handleClick = () => {
-    return isInCart(id) ? removeFromCart(id) : addToCart(id)
+    return isInCart(id) ? removeFromCart(id) : addToCart(id, 1)
   }
 
   return (

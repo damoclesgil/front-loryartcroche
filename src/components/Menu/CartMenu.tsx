@@ -53,7 +53,7 @@ const CartMenu = () => {
           ) : (
             <div>
               {/* h-[300px] */}
-              <div className="flex flex-col overflow-auto gap-4 p-4">
+              <div className="flex flex-col overflow-auto gap-4 p-4 max-h-[350px] scrollbar-thin-horizontal">
                 {items.length ? (
                   <>
                     {items.map((product) => (

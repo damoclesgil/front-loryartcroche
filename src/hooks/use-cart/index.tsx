@@ -4,7 +4,7 @@ import { getStorageItem, setStorageItem } from '@/utils/localStorage'
 import { cartMapper } from '@/utils/mappers'
 import { useContext, createContext, useEffect, useState } from 'react'
 
-const CART_KEY = 'cartItems'
+export const CART_KEY = 'cartItems'
 
 export type CartItem = {
   id: string
@@ -20,12 +20,11 @@ export type CartContextData = {
   quantity: number
   total: string
   isInCart: (id: string) => boolean
-  addToCart: (id: string) => void // agora vai ter que receber o id e qty eu acho.
+  addToCart: (id: string, qty: number) => void // agora vai ter que receber o id e qty eu acho.
   incrementQuantity: (id: string) => void
   decrementQuantity: (id: string) => void
   removeFromCart: (id: string) => void
   clearCart: () => void
-  count: number
   loading: boolean
 }
 
@@ -39,7 +38,6 @@ export const CartContextDefaultValues = {
   decrementQuantity: () => null,
   removeFromCart: () => null,
   clearCart: () => null,
-  count: 0,
   loading: false
 }
 
@@ -51,9 +49,10 @@ export type CartProviderProps = {
   children: React.ReactNode
 }
 
+export type cartItemsLocalStorageProps = Pick<CartItem, 'id' | 'qty'>
+
 const CartProvider = ({ children }: CartProviderProps) => {
-  const [cartItems, setCartItems] = useState<any[]>([])
-  const [count, setCount] = useState(0)
+  const [cartItems, setCartItems] = useState<cartItemsLocalStorageProps[]>([])
   const [items, setItems] = useState<any[]>([])
 
   const { data, loading } = useGetProdutosQuery({
@@ -61,7 +60,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
     variables: {
       filters: {
         id: {
-          in: cartItems
+          in: cartItems.map((item) => item.id)
         }
       }
     },
@@ -80,27 +79,54 @@ const CartProvider = ({ children }: CartProviderProps) => {
   }, [data])
   // SE NÃO PASSAR NADA ELE VAI RODAR SÓ UMA VEZ "[]"
 
-  const total = items?.reduce((acc, product) => {
-    return acc + (Number(product?.price) ?? 0)
-  }, 0)
+  // const total = items?.reduce((acc, product) => {
+  //   return acc + (Number(product?.price) ?? 0)
+  // }, 0)
+  const totalPrice: number = items.reduce(
+    (total, product) => total + product.price * product.qty,
+    0
+  )
 
-  const isInCart = (id: string) => (id ? cartItems.includes(id) : false)
+  // products.reduce((total, product) => total + product.price * product.qty, 0);
+  // const total = () => {
+  //   let totalValue = 0
+  //   for (let product of items) {
+  //     totalValue += product.price * product.qty
+  //   }
+  //   return totalValue
+  // }
 
-  const saveCart = (cartItems: string[]) => {
+  const isInCart = (id: string) =>
+    id ? cartItems.map((cartItem) => cartItem.id).includes(id) : false
+
+  const saveCart = (cartItems: cartItemsLocalStorageProps[]) => {
     setCartItems(cartItems)
+    // @ts-ignore
     setStorageItem(CART_KEY, cartItems)
   }
 
-  const addToCart = (id: string) => {
+  const addToCart = (id: string, qty: number) => {
     //
+
     if (!isInCart(id)) {
-      saveCart([...cartItems, id])
+      saveCart([
+        ...cartItems,
+        {
+          id: id,
+          qty: qty
+        }
+      ])
     }
   }
 
   const incrementQuantity = (id: string) => {
     const nextCounters = items.map((product) => {
       if (product.id === id) {
+        let cartIndex = cartItems.findIndex((cartItem) => cartItem.id === id)
+        cartItems[cartIndex].qty = cartItems[cartIndex].qty + 1
+        saveCart([...cartItems])
+        // addToCart(id, product.qty + 1)
+
         return {
           ...product,
           qty: product.qty + 1
@@ -133,8 +159,14 @@ const CartProvider = ({ children }: CartProviderProps) => {
   }
 
   const removeFromCart = (id: string) => {
-    const newCartItems = cartItems.filter((itemId: string) => itemId !== id)
+    const newCartItems = cartItems.filter(
+      (item: cartItemsLocalStorageProps) => item.id !== id
+    )
+    const currentIndex = items.findIndex((item) => item.id === id)
     saveCart(newCartItems)
+    if (currentIndex !== -1) {
+      setItems([...items.filter((item, index) => index !== currentIndex)])
+    }
   }
 
   const clearCart = () => {
@@ -144,15 +176,13 @@ const CartProvider = ({ children }: CartProviderProps) => {
   return (
     <CartContext.Provider
       value={{
-        // @ts-ignore
         items: items,
         quantity: cartItems.length,
-        total: formatPrice(total || 0),
+        total: formatPrice(totalPrice || 0),
         isInCart,
         incrementQuantity,
         decrementQuantity,
         addToCart,
-        count: count,
         removeFromCart,
         clearCart,
         loading

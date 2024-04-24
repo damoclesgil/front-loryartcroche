@@ -9,7 +9,7 @@
   },
   "javascript.updateImportsOnFileMove.enabled": "always",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "editor.fontFamily": "FiraCode Nerd Font",
+  // "editor.fontFamily": "FiraCode Nerd Font",
   "cSpell.language": "pt,pt-BR,en,en-US",
   "cSpell.words": [
     "codegen",
@@ -18,5 +18,6 @@
     "nextjs",
     "strapi",
     "Strapi"
-  ]
+  ],
+  "css.enabledLanguages": ["html", "vue"]
 }

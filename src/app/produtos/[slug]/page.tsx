@@ -23,7 +23,7 @@ export default function Page() {
   const { isInCart, addToCart, removeFromCart } = useCart()
 
   const handleClick = (id: string) => {
-    return isInCart(id) ? removeFromCart(id) : addToCart(id)
+    return isInCart(id) ? removeFromCart(id) : addToCart(id, 1)
   }
 
   const { data, loading, error } = useGetProdutoQuery({

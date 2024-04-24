@@ -28,17 +28,16 @@ const CartList = () => {
     loading,
     removeFromCart,
     incrementQuantity,
-    decrementQuantity,
-    count
+    decrementQuantity
   } = useCart()
 
-  if (loading) {
-    return (
-      <>
-        <Loader />
-      </>
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <>
+  //       <Loader />
+  //     </>
+  //   )
+  // }
 
   return (
     <>
@@ -87,7 +86,7 @@ const CartList = () => {
                           className="w-12 border-0 border-b bg-gray-100/40 appearance-none text-center dark:bg-gray-800/40"
                           min="1"
                           type="number"
-                          disabled
+                          disabled={true}
                           value={product.qty}
                         />
                         <Button
@@ -103,6 +102,7 @@ const CartList = () => {
                       </div>
                       {/* <Button size="default">Salvar para depois</Button> */}
                       <div className="ml-[-1rem]">
+                        {/* disabled={loading} */}
                         <Button
                           size="default"
                           variant={'link'}
