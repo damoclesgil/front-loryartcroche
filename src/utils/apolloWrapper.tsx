@@ -11,9 +11,9 @@ import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
 import { setVerbosity } from 'ts-invariant'
 import { setContext } from '@apollo/client/link/context'
 import { getSession } from 'next-auth/react'
-import { concatPagination } from '@apollo/client/utilities'
-import { removeTypenameFromVariables } from '@apollo/client/link/remove-typename'
-const removeTypenameLink = removeTypenameFromVariables()
+// import { concatPagination } from '@apollo/client/utilities'
+// import { removeTypenameFromVariables } from '@apollo/client/link/remove-typename'
+// const removeTypenameLink = removeTypenameFromVariables()
 
 if (process.env.NODE_ENV === 'development') {
   setVerbosity('debug')
@@ -28,8 +28,6 @@ const httpLink = new HttpLink({
 const authLink = setContext(async (_, { headers }) => {
   let session = await getSession()
 
-  // const token = request.cookies.get('authjs.session-token')
-
   const authorization = session ? `Bearer ${session.jwt}` : ``
   return {
     headers: {
@@ -39,7 +37,8 @@ const authLink = setContext(async (_, { headers }) => {
   }
 })
 
-const theLink = from([removeTypenameLink, authLink.concat(httpLink)])
+// const theLink = from([removeTypenameLink, authLink.concat(httpLink)])
+const theLink = authLink.concat(httpLink)
 
 function makeClient() {
   return new NextSSRApolloClient({
