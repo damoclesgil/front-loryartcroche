@@ -12,6 +12,7 @@ import { Pagination } from '@/graphql/types'
 export type ProductListProps = {
   produtos: any[]
   loading: boolean
+  hasFilters?: boolean
   pagination: Pagination
   loadMore: () => void
   error: any | undefined
@@ -22,6 +23,7 @@ const ProductList = ({
   loading,
   pagination,
   loadMore,
+  hasFilters = false,
   error
 }: ProductListProps) => {
   if (error) {
@@ -35,10 +37,19 @@ const ProductList = ({
   if (produtos.length === 0) {
     return (
       <>
-        <Empty
-          title="Nenhuma Bolsa Registrada"
-          description="Nenhuma de Bolsa foi encontrada"
-        />
+        {hasFilters ? (
+          <Empty
+            title="Nenhuma Bolsa Registrada"
+            description="
+            Nenhuma Bolsa Foi Encontrado com esses parâmetros de busca considere alterar os filtros ou a busca
+            "
+          />
+        ) : (
+          <Empty
+            title="Nenhuma Bolsa Registrada"
+            description="Nenhuma de Bolsa foi encontrada"
+          />
+        )}
       </>
     )
   }

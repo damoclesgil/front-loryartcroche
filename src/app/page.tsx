@@ -38,15 +38,15 @@ export default function Home() {
           <br />
           Perfeito para todas as ocasiões.
         </h2>
-        {data?.produtos && (
-          <ProductList
-            produtos={data?.produtos.data}
-            loading={loading}
-            error={error}
-            loadMore={handleShowMore}
-            pagination={data?.produtos.meta.pagination}
-          />
-        )}
+        <ProductList
+          // @ts-ignore
+          produtos={data?.produtos.data}
+          loading={loading}
+          error={error}
+          loadMore={handleShowMore}
+          // @ts-ignore
+          pagination={data?.produtos.meta.pagination}
+        />
         <InstagramSection />
       </main>
     </Base>

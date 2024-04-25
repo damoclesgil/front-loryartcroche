@@ -1,6 +1,6 @@
 'use client'
 
-import xor from 'lodash.xor'
+// import xor from 'lodash.xor'
 import { ParsedUrlQueryInput } from 'querystring'
 import { useEffect, useState } from 'react'
 import { Label } from '@/components/ui/label'
@@ -38,31 +38,26 @@ const ExploreSidebar = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values])
 
-  const handleRadio = (value: string | boolean) => {
-    // console.log('e', e)
-
+  const handleRadio = () => {
     if (order === 'preco:ASC') {
       setOrder('preco:DESC')
     } else {
       setOrder('preco:ASC')
     }
-    // console.log()
     setValues((s) => ({ ...s, sort: order }))
   }
 
   const handleCheckbox = (name: string, value: string) => {
-    const currentList = (values[name] as []) || []
-    setValues((s) => ({ ...s, [name]: xor(currentList, [value]) }))
-  }
-
-  const handleFilterMenu = () => {
-    setIsOpen(false)
+    // const currentList = (values[name] as []) || []
+    // setValues((s) => ({ ...s, [name]: xor(currentList, [value]) }))
+    // console.log(value)
+    setValues((s) => ({ ...s, [name]: value }))
   }
 
   return (
     <>
       <span>Input Search</span>
-      {JSON.stringify(values)}
+      {/* {JSON.stringify(values)} */}
 
       {items.map((item) => {
         return (
@@ -73,9 +68,7 @@ const ExploreSidebar = ({
                 <div className="space-y-2" key={field.name}>
                   <Checkbox
                     id={field.name}
-                    checked={(values[item.name] as string[])?.includes(
-                      field.name
-                    )}
+                    checked={values[item.name] === field.name}
                     onCheckedChange={() =>
                       handleCheckbox(item.name, field.name)
                     }
@@ -92,7 +85,7 @@ const ExploreSidebar = ({
               // }
               <RadioGroup
                 defaultValue={item.fields[0].name}
-                onValueChange={() => handleRadio(item.fields[0].name)}
+                onValueChange={() => handleRadio()}
               >
                 {item.fields.map((field) => (
                   <div className="flex items-center space-x-2" key={field.name}>
