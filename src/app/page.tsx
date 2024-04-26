@@ -32,23 +32,21 @@ export default function Home() {
 
   return (
     <Base backgroundImg="croche-cofe">
-      <main>
-        <h2 className="text-3xl mb-12 font-semibold text-center">
-          Bolsas lindamente desenhadas feitas com amor.
-          <br />
-          Perfeito para todas as ocasiões.
-        </h2>
-        <ProductList
-          // @ts-ignore
-          produtos={data?.produtos.data}
-          loading={loading}
-          error={error}
-          loadMore={handleShowMore}
-          // @ts-ignore
-          pagination={data?.produtos.meta.pagination}
-        />
-        <InstagramSection />
-      </main>
+      <h2 className="text-3xl mb-12 font-semibold text-center">
+        Bolsas lindamente desenhadas feitas com amor.
+        <br />
+        Perfeito para todas as ocasiões.
+      </h2>
+      <ProductList
+        // @ts-ignore
+        produtos={data?.produtos.data}
+        loading={loading}
+        error={error}
+        loadMore={handleShowMore}
+        // @ts-ignore
+        pagination={data?.produtos.meta.pagination}
+      />
+      <InstagramSection />
     </Base>
   )
 }

@@ -6,15 +6,26 @@ import ProductList from '@/components/ProductList'
 import { ParsedUrlQueryInput } from 'querystring'
 import { useGetProdutosQuery } from '@/graphql/types'
 import { filterItems, OrderPriceEntity } from '@/utils/filter/fields'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Base from '@/templates/Base'
+import useDebounce from '@/utils/common/useDebounce'
+// import { capitalize } from '@/utils/common'
 
 export type filterStrapiType = {
   preco?: number
+  search?: string
   sort?: OrderPriceEntity
 }
 
 export default function Produtos() {
   const [filters, setFilters] = useState<filterStrapiType>({})
+  const debouncedSearch = useDebounce(filters.search, 980)
+
+  useEffect(() => {
+    if (debouncedSearch) {
+      console.log(debouncedSearch)
+    }
+  }, [debouncedSearch])
 
   const handleFilter = (items: ParsedUrlQueryInput) => {
     setFilters(items)
@@ -25,6 +36,10 @@ export default function Produtos() {
     variables: {
       // https://docs.strapi.io/dev-docs/api/rest/filters-locale-publication#filtering
       filters: {
+        nome: {
+          // contains: debouncedSearch
+          containsi: debouncedSearch
+        },
         preco: {
           lt: filters.preco
         }
@@ -54,12 +69,12 @@ export default function Produtos() {
   }
 
   return (
-    <main>
+    <Base backgroundImg="accessorios-croche">
       <ExploreSidebar
         // @ts-ignore
         items={filterItems}
         // @ts-ignore
-        initialValues={{ sort: 'preco:DESC', preco: 1200 }}
+        initialValues={{ sort: 'preco:DESC', preco: 5000, search: '' }}
         onFilter={handleFilter}
       />
       {/* {JSON.stringify(filters)} */}
@@ -77,6 +92,6 @@ export default function Produtos() {
         pagination={data?.produtos.meta.pagination}
       />
       <InstagramSection />
-    </main>
+    </Base>
   )
 }

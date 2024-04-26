@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 import { Field, OrderPriceEntity } from '@/utils/filter/fields'
+import SearchInput from '../SearchInput'
+import { filterStrapiType } from '@/app/produtos/page'
 
 export type ItemProps = {
   title: string
@@ -28,13 +30,11 @@ const ExploreSidebar = ({
   initialValues = {}
 }: ExploreSidebarProps) => {
   const [values, setValues] = useState(initialValues)
-  const [isOpen, setIsOpen] = useState(false)
   const [order, setOrder] = useState<OrderPriceEntity>('preco:ASC')
+  const [search, setSearch] = useState<string>('')
 
   useEffect(() => {
     onFilter(values)
-    // this method comes from another template
-    // that we don't have access
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values])
 
@@ -48,56 +48,65 @@ const ExploreSidebar = ({
   }
 
   const handleCheckbox = (name: string, value: string) => {
-    // const currentList = (values[name] as []) || []
-    // setValues((s) => ({ ...s, [name]: xor(currentList, [value]) }))
-    // console.log(value)
     setValues((s) => ({ ...s, [name]: value }))
+  }
+
+  const onChangeInputSearch = (query: string) => {
+    setSearch(query)
+    setValues((s) => ({ ...s, search: query }))
   }
 
   return (
     <>
-      <span>Input Search</span>
-      {/* {JSON.stringify(values)} */}
+      <div className="mx-4">
+        <SearchInput
+          inputValue={search}
+          isHandling={false}
+          setInputValue={onChangeInputSearch}
+        />
+        {/* {JSON.stringify(values)} */}
 
-      {items.map((item) => {
-        return (
-          <div key={item.name}>
-            <h3 className="text-lg font-semibold mb-1 mt-2">{item.title}</h3>
-            {item.type === 'checkbox' &&
-              item.fields.map((field) => (
-                <div className="space-y-2" key={field.name}>
-                  <Checkbox
-                    id={field.name}
-                    checked={values[item.name] === field.name}
-                    onCheckedChange={() =>
-                      handleCheckbox(item.name, field.name)
-                    }
-                  />
-                  <Label htmlFor={field.name} className="ml-2 cursor-pointer">
-                    {field.label}
-                  </Label>
-                </div>
-              ))}
-
-            {item.type === 'radio' && (
-              // onValueChange={() =>
-              //   handleRadio(item.name, item.fields[0].name)
-              // }
-              <RadioGroup
-                defaultValue={item.fields[0].name}
-                onValueChange={() => handleRadio()}
-              >
-                {item.fields.map((field) => (
-                  <div className="flex items-center space-x-2" key={field.name}>
-                    <RadioGroupItem value={field.name} id={field.name} />
-                    <Label htmlFor={field.name}>{field.label}</Label>
+        {items.map((item) => {
+          return (
+            <div key={item.name}>
+              <h3 className="text-lg font-semibold mb-1 mt-2">{item.title}</h3>
+              {item.type === 'checkbox' &&
+                item.fields.map((field) => (
+                  <div className="space-y-2" key={field.name}>
+                    <Checkbox
+                      id={field.name}
+                      aria-checked={values[item.name] === field.name}
+                      checked={values[item.name] === field.name}
+                      onCheckedChange={() =>
+                        handleCheckbox(item.name, field.name)
+                      }
+                    />
+                    <Label htmlFor={field.name} className="ml-2 cursor-pointer">
+                      {field.label}
+                    </Label>
                   </div>
                 ))}
-              </RadioGroup>
-            )}
-          </div>
-        )
-      })}
+
+              {item.type === 'radio' && (
+                <RadioGroup
+                  defaultValue={item.fields[0].name}
+                  onValueChange={() => handleRadio()}
+                >
+                  {item.fields.map((field) => (
+                    <div
+                      className="flex items-center space-x-2"
+                      key={field.name}
+                    >
+                      <RadioGroupItem value={field.name} id={field.name} />
+                      <Label htmlFor={field.name}>{field.label}</Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              )}
+            </div>
+          )
+        })}
+      </div>
     </>
   )
 }

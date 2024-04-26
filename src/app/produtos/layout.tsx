@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Base from '@/templates/Base'
 
 export const metadata: Metadata = {
   title: 'Lory Art Crochê - Produtos',
@@ -11,5 +10,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <Base>{children}</Base>
+  return <>{children}</>
 }
