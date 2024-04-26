@@ -59,12 +59,6 @@ const ProductList = ({
       <>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center justify-center my-4 mx-2">
           {produtos.map((produto, index: number) => (
-            // <div key={index}>
-            //   {JSON.stringify(
-            //     produto.attributes?.imagem_destaque?.data?.attributes?.formats
-            //       .thumbnail.url
-            //   )}
-            // </div>
             <ProductCard
               id={produto?.id ? produto.id : ''}
               key={index}
@@ -79,10 +73,20 @@ const ProductList = ({
               price={
                 produto.attributes?.preco ? Number(produto.attributes.preco) : 0
               }
-              img={getImageUrl(
-                produto.attributes?.imagem_destaque?.data?.attributes?.formats
-                  .small.url
-              )}
+              img={{
+                src: getImageUrl(
+                  produto.attributes?.imagem_destaque?.data?.attributes?.formats
+                    .small.url
+                ),
+                width:
+                  produto.attributes?.imagem_destaque?.data?.attributes?.formats
+                    .small.width,
+                height:
+                  produto.attributes?.imagem_destaque?.data?.attributes?.formats
+                    .small.height,
+                alt: produto.attributes?.imagem_destaque?.data?.attributes
+                  ?.caption
+              }}
             />
           ))}
         </div>

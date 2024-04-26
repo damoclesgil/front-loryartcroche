@@ -2,8 +2,9 @@ import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
 import { Button } from '../ui/button'
 import { idProduto, useWishlist } from '@/hooks/use-wishlist'
 // import { ProdutoEntity } from '@/graphql/types'
+export type theIdProduto = { id: string }
 
-const WishlistButton = ({ id }: idProduto) => {
+const WishlistButton = ({ id }: theIdProduto) => {
   const {
     isInWishlist,
     addToWishlist,
@@ -11,7 +12,9 @@ const WishlistButton = ({ id }: idProduto) => {
     loading: loadingApollo
   } = useWishlist()
 
-  const handleClick = () => {
+  const handleClick = (e: any) => {
+    e.preventDefault()
+    e.stopPropagation()
     return isInWishlist(id) ? removeFromWishlist(id) : addToWishlist(id)
   }
 

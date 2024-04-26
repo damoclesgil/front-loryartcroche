@@ -59,6 +59,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <Loader4
               className={cn(
                 `animate-spin ${size === 'icon' ? 'h-6 w-6' : 'h-4 w-4'}`,
+                // @ts-ignore
                 children && 'mr-2'
               )}
             />

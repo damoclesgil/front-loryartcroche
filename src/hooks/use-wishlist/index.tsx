@@ -17,7 +17,8 @@ import { ProdutoEntity } from '@/graphql/types'
 //     }
 //   }
 // }
-export type idProduto = Pick<ProdutoEntity, 'id'>
+// export type idProduto = Pick<ProdutoEntity, 'id'>
+export type idProduto = string
 
 export type WishlistContextData = {
   items: ProdutoEntity[]
@@ -92,6 +93,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
   const { data, loading: loadingQuery } = useQueryFavoritos(options)
 
   useEffect(() => {
+    // @ts-ignore
     setWishlistItems(data?.favoritos?.data[0]?.attributes.produtos?.data ?? [])
     setWishlistId(data?.favoritos?.data[0]?.id ?? null)
   }, [data])
@@ -223,6 +225,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
         data: {
           user: session?.user?.id,
           produtos: [
+            // @ts-ignore
             ...wishlistIds.filter((produtoId: idProduto) => produtoId !== id)
           ]
         }

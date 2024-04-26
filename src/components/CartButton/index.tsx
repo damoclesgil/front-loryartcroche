@@ -4,6 +4,7 @@ import {
 } from '@styled-icons/material-outlined'
 import { Button } from '../ui/button'
 import { useCart } from '@/hooks/use-cart'
+import { toast } from '@/components/ui/use-toast'
 
 type CartProps = {
   id: string
@@ -12,7 +13,18 @@ type CartProps = {
 const CartButton = ({ id }: CartProps) => {
   const { isInCart, addToCart, removeFromCart } = useCart()
 
-  const handleClick = () => {
+  const handleClick = (e: any) => {
+    e.preventDefault()
+    e.stopPropagation()
+    toast({
+      variant: 'default',
+      title: isInCart(id)
+        ? 'Removido do carrinho com sucesso!'
+        : 'Adicionado ao carrinho com sucesso!',
+      description: isInCart(id)
+        ? 'Este produto foi removido do carrinho.'
+        : 'Este produto foi adicionado ao carrinho.'
+    })
     return isInCart(id) ? removeFromCart(id) : addToCart(id, 1)
   }
 
