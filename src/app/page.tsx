@@ -1,5 +1,6 @@
 'use client'
 
+import Heading from '@/components/Heading'
 import InstagramSection from '@/components/InstagramSection'
 import ProductList from '@/components/ProductList'
 import { useGetProdutosQuery } from '@/graphql/types'
@@ -32,11 +33,11 @@ export default function Home() {
 
   return (
     <Base backgroundImg="croche-cofe">
-      <h2 className="text-3xl mb-12 font-semibold text-center">
+      <Heading className="mb-12 text-center">
         Bolsas lindamente desenhadas feitas com amor.
         <br />
         Perfeito para todas as ocasiões.
-      </h2>
+      </Heading>
       <ProductList
         // @ts-ignore
         produtos={data?.produtos.data}

@@ -1,24 +1,27 @@
 'use client'
 
-// import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic'
 // const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
+const ProductTabs = dynamic(() => import('./_components/ProductTabs'), {
+  ssr: false
+})
+// import ProductTabs from './_components/ProductTabs'
 import formatPrice from '@/utils/format-price'
 import { Button } from '@/components/ui/button'
 import Gallery from '@/components/Gallery'
-import { usePathname, useSearchParams } from 'next/navigation'
-import { useGetProdutoQuery, type ProdutoEntity } from '@/graphql/types'
+import { useSearchParams } from 'next/navigation'
+import { useGetProdutoQuery } from '@/graphql/types'
 import WishlistButton from '@/components/WishlistButton'
-import Link from 'next/link'
 import { useCart } from '@/hooks/use-cart'
-import Loader from '@/components/Loader'
-import { ShareButton } from './_components/shareButton'
-import { PaymentMethods } from './_components/paymentMethods'
+import { ShareButton } from './_components/ShareButton'
+import { PaymentMethods } from './_components/PaymentMethods'
+import ColorOptions from './_components/ColorOptions'
 import SkeletonEffectProductPage from './_components/SkeletonEffectProductPage'
 import Base from '@/templates/Base'
+import Heading from '@/components/Heading'
+import ProductDetails from './_components/ProductDetails'
 
 export default function Page() {
-  const pathname = usePathname()
-
   const productId = useSearchParams().get('id')
 
   const { isInCart, addToCart, removeFromCart } = useCart()
@@ -42,7 +45,6 @@ export default function Page() {
   }
 
   if (error) {
-    console.log(error)
     throw error
   }
 
@@ -75,97 +77,27 @@ export default function Page() {
                 <Gallery items={currentProduct.gallery} key="-1" />
               </div>
               <div className="flex flex-col mt-4 md:mt-0">
-                <h1 className="font-semibold text-[3rem] mb-2">
+                <Heading size="huge" className="mb-2">
                   {currentProduct.name}
-                </h1>
+                </Heading>
+
                 <p className="font-bold text-lg mb-2">
                   {formatPrice(Number(currentProduct.price))}
                 </p>
-                <div
-                  // @ts-ignore
-                  dangerouslySetInnerHTML={{ __html: currentProduct.detalhes }}
-                />
-                {/* <div className="text-md">{currentProduct.detalhes}</div> */}
-                {/* <p className="text-md">Feito sob encomenda</p> */}
-                {/* <p className="mb-4">12 Dias para produção.</p> */}
-                {/* <div className="flex mt-2 items-center mb-2 text-primary">
-                <LocalShipping size={30} />
-                <div className="ml-4 text-sm">
-                  <p>Frete grátis para Goiânia e regiões próximas</p>
-                  <p>Verificar disponibilidade</p>
-                </div>
-              </div> */}
 
-                {currentProduct.nomeCor && (
-                  <p className="mb-2 text-md">
-                    Cor: <strong>{currentProduct.nomeCor}</strong>
-                  </p>
-                )}
+                <ProductDetails htmlContent={currentProduct.detalhes} />
 
-                <div className="flex items-center">
-                  {currentProduct?.cor && (
-                    <Link
-                      style={{
-                        backgroundColor: currentProduct?.cor
-                          ? currentProduct?.cor
-                          : '#fff'
-                      }}
-                      className={`w-8 h-8 rounded-full border-gray-600 border-[3px] focus:border-2 mr-1.5 ${
-                        pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
-                          ? 'border-2 '
-                          : 'border'
-                      }`}
-                      href={{
-                        pathname: currentProduct.slug,
-                        query: { id: currentProduct.id }
-                      }}
-                    ></Link>
-                  )}
-
-                  {currentProduct.produtoReferentes &&
-                    currentProduct.produtoReferentes.map((product, iColor) => (
-                      <Link
-                        key={`color_${iColor}`}
-                        style={{
-                          backgroundColor: product.attributes?.cor
-                            ? product.attributes?.cor
-                            : '#fff'
-                        }}
-                        className={`w-8 h-8 rounded-full border-gray-600 focus:border-2 mr-1.5 ${
-                          pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
-                            ? 'border-2 '
-                            : 'border'
-                        }`}
-                        href={{
-                          pathname: product.attributes?.slug,
-                          query: { id: product.id }
-                        }}
-                      ></Link>
-                    ))}
-                </div>
+                <ColorOptions product={currentProduct} />
 
                 <div className="flex items-center mb-2 ml-[-0.35rem]">
+                  {/* @ts-ignore */}
                   <WishlistButton id={currentProduct.id} />
-                  {/* <CartButton id={currentProduct.id} /> */}
                 </div>
 
                 <ShareButton product={currentProduct} />
 
                 <PaymentMethods />
 
-                {/* <Button asChild>
-                <a
-                  target="_blank"
-                  className={buttonVariants({
-                    variant: 'default',
-                    className: 'w-full',
-                    size: 'lg'
-                  })}
-                  href={`${links.WhatsApp}`}
-                >
-                  Encomendar
-                </a>
-              </Button> */}
                 <Button
                   // @ts-ignore
                   onClick={() => handleClick(currentProduct.id)}
@@ -179,16 +111,8 @@ export default function Page() {
                 </Button>
               </div>
             </div>
-            {/* <div>
-            <Tabs
-              contentFirstTab={
-                <div
-                  dangerouslySetInnerHTML={{ __html: currentProduct.detalhes }}
-                ></div>
-              }
-              contentSecondTab={<p>Muito bom mesmo, está de parabéns</p>}
-            />
-          </div> */}
+
+            <ProductTabs htmlContent={currentProduct.detalhes} />
           </>
         )}
       </div>

@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import Base from '@/templates/Base'
 import useDebounce from '@/utils/common/useDebounce'
 import SearchInput from '@/components/SearchInput'
+import Heading from '@/components/Heading'
 
 export type filterStrapiType = {
   preco?: number
@@ -44,8 +45,8 @@ export default function Produtos() {
           lt: filters.preco
         }
       },
-      // sort: filters?.sort ? [filters?.sort] : [],
-      sort: filters?.sort ? ['id:ASC'] : [],
+      sort: filters?.sort ? [filters?.sort] : [],
+      // sort: filters?.sort ? ['id:ASC'] : [],
       pagination: {
         pageSize: 10,
         page: 1
@@ -83,9 +84,9 @@ export default function Produtos() {
 
   return (
     <Base backgroundImg="croche-pink" sizeBg="medium">
-      <h1 className="text-xl lg:text-2xl mb-5 lg:mb-12 font-bold text-center">
+      <Heading size="huge" className="mb-5 text-center">
         Confira nossas bolsas de crochê 🧶
-      </h1>
+      </Heading>
       <div className="flex flex-col lg:flex-row w-full">
         <div className="w-full max-w-[14rem]">
           <ExploreSidebar
