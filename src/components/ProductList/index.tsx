@@ -5,7 +5,7 @@ import { getImageUrl } from '@/utils/getImageUrl'
 import Empty from '../Empty'
 import { Button } from '../ui/button'
 import SkeletonEffectProducts from './SkeletonEffectProducts'
-import { Pagination } from '@/graphql/types'
+import { Pagination, ProdutoEntity } from '@/graphql/types'
 // import { ApolloErrorOptions } from '@apollo/client/errors'
 // import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 
@@ -59,6 +59,12 @@ const ProductList = ({
       <>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center justify-center my-4 mx-2">
           {produtos.map((produto, index: number) => (
+            // <div key={index}>
+            //   {JSON.stringify(
+            //     produto.attributes?.imagem_destaque?.data?.attributes?.formats
+            //       .thumbnail.url
+            //   )}
+            // </div>
             <ProductCard
               id={produto?.id ? produto.id : ''}
               key={index}
@@ -74,7 +80,8 @@ const ProductList = ({
                 produto.attributes?.preco ? Number(produto.attributes.preco) : 0
               }
               img={getImageUrl(
-                produto.attributes?.imagem_destaque?.data?.attributes!.url
+                produto.attributes?.imagem_destaque?.data?.attributes?.formats
+                  .small.url
               )}
             />
           ))}

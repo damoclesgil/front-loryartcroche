@@ -19,9 +19,9 @@ export default function OrdensDeCompras() {
 
   if (loading) {
     return (
-      <>
+      <div className="mt-10 lg:mt-0">
         <Loader />
-      </>
+      </div>
     )
   }
 
@@ -34,21 +34,26 @@ export default function OrdensDeCompras() {
     // console.log(mappedOrdensDeCompras)
     return (
       <>
-        <h3 className="text-2xl text-center font-bold">Histórico de Compras</h3>
+        <h3 className="text-2xl mt-5 lg:mt-0 text-center font-bold">
+          Histórico de Compras
+        </h3>
 
         {mappedOrdensDeCompras?.length ? (
           mappedOrdensDeCompras.map((ordemCompra) => (
             <div
-              className="border-b-2 border-gray-600 flex items-end justify-between w-full mb-2 pb-2"
+              className="border-b-2 border-gray-600 flex flex-col lg:flex-row lg:items-end justify-between w-full mb-2 pb-2"
               key={ordemCompra.id}
             >
               <div>
-                <h4 className="font-semibold text-left mb-2">
+                <h4 className="font-semibold text-center lg:text-left mb-2">
                   Produtos Comprados:
                 </h4>
                 {ordemCompra.produtos?.length &&
                   ordemCompra.produtos.map((produto) => (
-                    <div className="flex items-start mb-2" key={produto.id}>
+                    <div
+                      className="flex flex-col lg:flex-row items-center justify-center lg:items-start mb-2"
+                      key={produto.id}
+                    >
                       <Image
                         className="h-auto"
                         src={produto.img}
@@ -73,7 +78,7 @@ export default function OrdensDeCompras() {
               <div>
                 {ordemCompra.img && (
                   <>
-                    <div className="flex">
+                    <div className="flex mt-4 lg:mt-0 mb-2 lg:mb-1">
                       <p className="mr-2">Cartão de Crédito: </p>
                       <Image
                         src={ordemCompra.img}

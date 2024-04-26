@@ -14,6 +14,7 @@ import Loader from '@/components/Loader'
 import { ShareButton } from './_components/shareButton'
 import { PaymentMethods } from './_components/paymentMethods'
 import SkeletonEffectProductPage from './_components/SkeletonEffectProductPage'
+import Base from '@/templates/Base'
 
 export default function Page() {
   const pathname = usePathname()
@@ -64,29 +65,30 @@ export default function Page() {
   }
 
   return (
-    <div className="mb-1">
-      {currentProduct && (
-        <>
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr] justify-between">
-            <div className="flex flex-col">
-              {/*  @ts-ignore */}
-              <Gallery items={currentProduct.gallery} key="-1" />
-            </div>
-            <div className="flex flex-col mt-4 md:mt-0">
-              <h1 className="font-semibold text-[3rem] mb-2">
-                {currentProduct.name}
-              </h1>
-              <p className="font-bold text-lg mb-2">
-                {formatPrice(Number(currentProduct.price))}
-              </p>
-              <div
-                // @ts-ignore
-                dangerouslySetInnerHTML={{ __html: currentProduct.detalhes }}
-              />
-              {/* <div className="text-md">{currentProduct.detalhes}</div> */}
-              {/* <p className="text-md">Feito sob encomenda</p> */}
-              {/* <p className="mb-4">12 Dias para produção.</p> */}
-              {/* <div className="flex mt-2 items-center mb-2 text-primary">
+    <Base backgroundImg="croche-pink" sizeBg="medium">
+      <div className="mb-1">
+        {currentProduct && (
+          <>
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr] justify-between">
+              <div className="flex flex-col">
+                {/*  @ts-ignore */}
+                <Gallery items={currentProduct.gallery} key="-1" />
+              </div>
+              <div className="flex flex-col mt-4 md:mt-0">
+                <h1 className="font-semibold text-[3rem] mb-2">
+                  {currentProduct.name}
+                </h1>
+                <p className="font-bold text-lg mb-2">
+                  {formatPrice(Number(currentProduct.price))}
+                </p>
+                <div
+                  // @ts-ignore
+                  dangerouslySetInnerHTML={{ __html: currentProduct.detalhes }}
+                />
+                {/* <div className="text-md">{currentProduct.detalhes}</div> */}
+                {/* <p className="text-md">Feito sob encomenda</p> */}
+                {/* <p className="mb-4">12 Dias para produção.</p> */}
+                {/* <div className="flex mt-2 items-center mb-2 text-primary">
                 <LocalShipping size={30} />
                 <div className="ml-4 text-sm">
                   <p>Frete grátis para Goiânia e regiões próximas</p>
@@ -94,64 +96,64 @@ export default function Page() {
                 </div>
               </div> */}
 
-              {currentProduct.nomeCor && (
-                <p className="mb-2 text-md">
-                  Cor: <strong>{currentProduct.nomeCor}</strong>
-                </p>
-              )}
-
-              <div className="flex items-center">
-                {currentProduct?.cor && (
-                  <Link
-                    style={{
-                      backgroundColor: currentProduct?.cor
-                        ? currentProduct?.cor
-                        : '#fff'
-                    }}
-                    className={`w-8 h-8 rounded-full border-gray-600 border-[3px] focus:border-2 mr-1.5 ${
-                      pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
-                        ? 'border-2 '
-                        : 'border'
-                    }`}
-                    href={{
-                      pathname: currentProduct.slug,
-                      query: { id: currentProduct.id }
-                    }}
-                  ></Link>
+                {currentProduct.nomeCor && (
+                  <p className="mb-2 text-md">
+                    Cor: <strong>{currentProduct.nomeCor}</strong>
+                  </p>
                 )}
 
-                {currentProduct.produtoReferentes &&
-                  currentProduct.produtoReferentes.map((product, iColor) => (
+                <div className="flex items-center">
+                  {currentProduct?.cor && (
                     <Link
-                      key={`color_${iColor}`}
                       style={{
-                        backgroundColor: product.attributes?.cor
-                          ? product.attributes?.cor
+                        backgroundColor: currentProduct?.cor
+                          ? currentProduct?.cor
                           : '#fff'
                       }}
-                      className={`w-8 h-8 rounded-full border-gray-600 focus:border-2 mr-1.5 ${
+                      className={`w-8 h-8 rounded-full border-gray-600 border-[3px] focus:border-2 mr-1.5 ${
                         pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
                           ? 'border-2 '
                           : 'border'
                       }`}
                       href={{
-                        pathname: product.attributes?.slug,
-                        query: { id: product.id }
+                        pathname: currentProduct.slug,
+                        query: { id: currentProduct.id }
                       }}
                     ></Link>
-                  ))}
-              </div>
+                  )}
 
-              <div className="flex items-center mb-2 ml-[-0.35rem]">
-                <WishlistButton id={currentProduct.id} />
-                {/* <CartButton id={currentProduct.id} /> */}
-              </div>
+                  {currentProduct.produtoReferentes &&
+                    currentProduct.produtoReferentes.map((product, iColor) => (
+                      <Link
+                        key={`color_${iColor}`}
+                        style={{
+                          backgroundColor: product.attributes?.cor
+                            ? product.attributes?.cor
+                            : '#fff'
+                        }}
+                        className={`w-8 h-8 rounded-full border-gray-600 focus:border-2 mr-1.5 ${
+                          pathname === '/produtos/bolsa-de-croche-cor-de-rosa'
+                            ? 'border-2 '
+                            : 'border'
+                        }`}
+                        href={{
+                          pathname: product.attributes?.slug,
+                          query: { id: product.id }
+                        }}
+                      ></Link>
+                    ))}
+                </div>
 
-              <ShareButton product={currentProduct} />
+                <div className="flex items-center mb-2 ml-[-0.35rem]">
+                  <WishlistButton id={currentProduct.id} />
+                  {/* <CartButton id={currentProduct.id} /> */}
+                </div>
 
-              <PaymentMethods />
+                <ShareButton product={currentProduct} />
 
-              {/* <Button asChild>
+                <PaymentMethods />
+
+                {/* <Button asChild>
                 <a
                   target="_blank"
                   className={buttonVariants({
@@ -164,20 +166,20 @@ export default function Page() {
                   Encomendar
                 </a>
               </Button> */}
-              <Button
-                // @ts-ignore
-                onClick={() => handleClick(currentProduct.id)}
-                className="mt-4 uppercase font-bold"
-                size="lg"
-              >
-                {/* @ts-ignore */}
-                {isInCart(currentProduct.id)
-                  ? 'Remover do Carrinho'
-                  : 'Adicionar ao Carrinho'}
-              </Button>
+                <Button
+                  // @ts-ignore
+                  onClick={() => handleClick(currentProduct.id)}
+                  className="mt-4 uppercase font-bold"
+                  size="lg"
+                >
+                  {/* @ts-ignore */}
+                  {isInCart(currentProduct.id)
+                    ? 'Remover do Carrinho'
+                    : 'Adicionar ao Carrinho'}
+                </Button>
+              </div>
             </div>
-          </div>
-          {/* <div>
+            {/* <div>
             <Tabs
               contentFirstTab={
                 <div
@@ -187,8 +189,9 @@ export default function Page() {
               contentSecondTab={<p>Muito bom mesmo, está de parabéns</p>}
             />
           </div> */}
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </Base>
   )
 }

@@ -9,23 +9,24 @@ import { filterItems, OrderPriceEntity } from '@/utils/filter/fields'
 import { useEffect, useState } from 'react'
 import Base from '@/templates/Base'
 import useDebounce from '@/utils/common/useDebounce'
-// import { capitalize } from '@/utils/common'
+import SearchInput from '@/components/SearchInput'
 
 export type filterStrapiType = {
   preco?: number
-  search?: string
+  // search?: string
   sort?: OrderPriceEntity
 }
 
 export default function Produtos() {
   const [filters, setFilters] = useState<filterStrapiType>({})
-  const debouncedSearch = useDebounce(filters.search, 980)
+  const [search, setSearch] = useState<string>('')
+  const debouncedSearch = useDebounce(search, 980)
 
-  useEffect(() => {
-    if (debouncedSearch) {
-      console.log(debouncedSearch)
-    }
-  }, [debouncedSearch])
+  // useEffect(() => {
+  //   if (debouncedSearch) {
+  //     console.log(debouncedSearch)
+  //   }
+  // }, [debouncedSearch])
 
   const handleFilter = (items: ParsedUrlQueryInput) => {
     setFilters(items)
@@ -37,14 +38,14 @@ export default function Produtos() {
       // https://docs.strapi.io/dev-docs/api/rest/filters-locale-publication#filtering
       filters: {
         nome: {
-          // contains: debouncedSearch
           containsi: debouncedSearch
         },
         preco: {
           lt: filters.preco
         }
       },
-      sort: filters?.sort ? [filters?.sort] : [],
+      // sort: filters?.sort ? [filters?.sort] : [],
+      sort: filters?.sort ? ['id:ASC'] : [],
       pagination: {
         pageSize: 10,
         page: 1
@@ -57,7 +58,15 @@ export default function Produtos() {
   const handleShowMore = () => {
     fetchMore({
       variables: {
-        sort: ['id:ASC'],
+        filters: {
+          nome: {
+            containsi: debouncedSearch
+          },
+          preco: {
+            lt: filters.preco
+          }
+        },
+        sort: filters?.sort ? [filters?.sort] : [],
         pagination: {
           pageSize: data?.produtos?.meta.pagination.pageSize,
           page: data?.produtos?.meta.pagination.page
@@ -68,29 +77,47 @@ export default function Produtos() {
     })
   }
 
+  const onChangeInputSearch = (query: string) => {
+    setSearch(query)
+  }
+
   return (
-    <Base backgroundImg="accessorios-croche">
-      <ExploreSidebar
-        // @ts-ignore
-        items={filterItems}
-        // @ts-ignore
-        initialValues={{ sort: 'preco:DESC', preco: 5000, search: '' }}
-        onFilter={handleFilter}
-      />
-      {/* {JSON.stringify(filters)} */}
-      <h1 className="text-2xl font-bold text-center">
+    <Base backgroundImg="croche-pink" sizeBg="medium">
+      <h1 className="text-xl lg:text-2xl mb-5 lg:mb-12 font-bold text-center">
         Confira nossas bolsas de crochê 🧶
       </h1>
-      <ProductList
-        // @ts-ignore
-        produtos={data?.produtos.data}
-        loading={loading}
-        hasFilters={true}
-        error={error}
-        loadMore={handleShowMore}
-        // @ts-ignore
-        pagination={data?.produtos.meta.pagination}
-      />
+      <div className="flex flex-col lg:flex-row w-full">
+        <div className="w-full max-w-[14rem]">
+          <ExploreSidebar
+            // @ts-ignore
+            items={filterItems}
+            // @ts-ignore
+            initialValues={{ sort: 'preco:DESC', preco: 5000 }}
+            onFilter={handleFilter}
+          />
+        </div>
+        <div className="w-full">
+          <div className="flex items-center flex-col lg:flex-row justify-center mt-4 lg:mt-0 w-full">
+            <SearchInput
+              inputValue={search}
+              loading={false}
+              setInputValue={onChangeInputSearch}
+            />
+            {/* <div>oi</div> */}
+          </div>
+          <ProductList
+            // @ts-ignore
+            produtos={data?.produtos.data}
+            loading={loading}
+            hasFilters={true}
+            error={error}
+            loadMore={handleShowMore}
+            // @ts-ignore
+            pagination={data?.produtos.meta.pagination}
+          />
+        </div>
+      </div>
+
       <InstagramSection />
     </Base>
   )

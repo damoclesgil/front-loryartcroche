@@ -5,5 +5,5 @@ export const getImageUrl = (url: string | undefined) => {
   if (url) {
     return url
   }
-  return 'img/products/placeholder.svg'
+  return 'img/placeholder.svg'
 }

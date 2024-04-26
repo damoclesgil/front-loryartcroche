@@ -9,6 +9,7 @@ import { getImageUrl } from '@/utils/getImageUrl'
 import formatPrice from '../format-price'
 import { getStorageItem } from '../localStorage'
 import { CART_KEY, cartItemsLocalStorageProps } from '@/hooks/use-cart'
+import { formatDateLong } from '../common/formatDate'
 
 export const cartMapper = (produtos: ProdutoEntity[]) => {
   const cartItems = getStorageItem(CART_KEY)
@@ -47,14 +48,7 @@ export const ordensComprasMapper = (
             : 'Produto Gratuito',
           itencaoPagamentoId: ordem.attributes?.payment_intent_id,
           totalEmCentavos: ordem.attributes?.total_in_cents,
-          dataCompra: `Comprado em ${new Intl.DateTimeFormat('pt-BR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric'
-          }).format(new Date(ordem.attributes?.createdAt))}`,
+          dataCompra: `Comprado em ${formatDateLong(ordem.attributes?.createdAt)}`,
           produtos: ordem.attributes?.produtos?.data.map((produto) => ({
             id: produto.id,
             nome: produto.attributes?.nome,

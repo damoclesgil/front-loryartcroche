@@ -40,7 +40,6 @@ const UserMenu = () => {
                 className="rounded-full"
                 height={32}
                 width={32}
-                src="img/products/placeholder.svg"
                 style={{
                   aspectRatio: '32/32',
                   objectFit: 'cover'

@@ -10,6 +10,9 @@ export const ProdutoFragment = gql`
       data {
         attributes {
           url
+          alternativeText
+          caption
+          formats
         }
       }
     }

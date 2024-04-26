@@ -1,5 +1,6 @@
 export type OrderPriceEntity = 'preco:ASC' | 'preco:DESC'
 
+// 'id:ASC' 'nome:ASC'
 export type Field = {
   label: string
   name: string

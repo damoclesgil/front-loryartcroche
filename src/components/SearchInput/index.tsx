@@ -11,13 +11,13 @@ import Spinner from '../Icons/Spinner'
 interface SearchInputProps {
   inputValue: string
   setInputValue: (value: string) => void
-  isHandling?: boolean
+  loading?: boolean
 }
 
 const SearchInput = ({
   inputValue,
   setInputValue,
-  isHandling
+  loading
 }: SearchInputProps) => {
   // const [inputValue, setValue] = useState(defaultValue)
 
@@ -50,9 +50,9 @@ const SearchInput = ({
         type="text"
         id="search-navbar"
         className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="Buscar..."
+        placeholder="O que você procura?"
       />
-      {isHandling && (
+      {loading && (
         <div className="absolute top-[0.3rem] right-[0.7rem]">
           <Spinner />
         </div>

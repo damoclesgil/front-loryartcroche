@@ -147,10 +147,10 @@ Olá venho do site ${links.websiteUrl}
 
 Nome: *${session?.user?.name}*
 
-📝 Pedido
+📝 Gostaria de encomendar os seguintes produtos:
 
 ${products.join('')}
-💲Total a pagar: *${total}*
+💰Total a pagar: *${total}*
 
 Método de Pagamento: *${paymentMethod}*.
 
@@ -158,9 +158,9 @@ Método de Pagamento: *${paymentMethod}*.
 `
 
     const encodedText = encodeURIComponent(orderTextWhats)
-    const numberWhatsLory = '+5562996725529'
-    // const numberWhats = '+556281165159'
-    const urlApiWhats = `https://api.whatsapp.com/send/?phone=${numberWhatsLory}&text=${encodedText}`
+    // const numberWhatsLory = '+5562996725529'
+    const numberWhats = '+556281165159'
+    const urlApiWhats = `https://api.whatsapp.com/send/?phone=${numberWhats}&text=${encodedText}`
     const aElement = document.createElement('a')
     aElement.setAttribute('href', urlApiWhats)
     aElement.setAttribute('target', '_blank')
@@ -177,7 +177,7 @@ Método de Pagamento: *${paymentMethod}*.
   }
 
   const buttonMethodPaymentClass =
-    'p-4 md:mx-2 my-2 md:my-0 flex flex-col items-center justify-center transition-colors duration-200 text-primary-foreground shadow hover:bg-primary font-bold focus:bg-primary border-2 border-primary rounded-md md:max-w-[185px] w-full text-center'
+    'p-4 md:mx-2 my-2 md:my-0 flex flex-col items-center justify-center transition-colors duration-200 text-primary-foreground shadow hover:bg-primary font-bold focus:bg-primary border-2 border-primary rounded-md md:max-w-[185px] w-full text-center text-black hover:text-white'
 
   return (
     <form onSubmit={onSubmit}>
@@ -191,7 +191,7 @@ Método de Pagamento: *${paymentMethod}*.
           onClick={() => setPaymentMethod('Cartão de Crédito')}
         >
           <CreditCard size={50} />
-          <span className="mt-2">Cartão de Crédito</span>
+          <span className="mt-2 ">Cartão de Crédito</span>
         </button>
         <button
           className={`${buttonMethodPaymentClass} ${paymentMethod === 'Pix' ? 'bg-primary' : 'bg-transparent'}`}

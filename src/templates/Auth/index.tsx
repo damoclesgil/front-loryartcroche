@@ -36,7 +36,6 @@ const Auth = ({
             filter: `${backgroundImg === 'bolas-de-la-verde-e-espaco' ? 'brightness(40%)' : 'brightness(70%)'}`
           }}
         />
-        {/* src="img/products/placeholder.svg" */}
         <div className="absolute top-[1.5rem] right-0 mr-5 z-20 flex items-center text-lg font-medium">
           <Link href={NextRoutes.home}>
             <Logo size="normal" />
