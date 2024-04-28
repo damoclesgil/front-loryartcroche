@@ -2,63 +2,20 @@
 
 import ProductCard from '@/components/ProductCard'
 import { getImageUrl } from '@/utils/getImageUrl'
-import Empty from '../Empty'
-import { Button } from '../ui/button'
-import SkeletonEffectProducts from './SkeletonEffectProducts'
-import { Pagination, Produto } from '@/graphql/types'
-// import { ApolloErrorOptions } from '@apollo/client/errors'
-// import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
+import { Produto } from '@/graphql/types'
+import { Button } from '@/components/ui/button'
 
 export type ProductListProps = {
-  produtos: any[]
-  loading: boolean
-  hasFilters?: boolean
-  pagination: Pagination
+  produtos: Produto[]
   loadMore: () => void
-  error: any | undefined
 }
 
-const ProductList = ({
-  produtos,
-  loading,
-  pagination,
-  loadMore,
-  hasFilters = false,
-  error
-}: ProductListProps) => {
-  if (error) {
-    throw error
-  }
-
-  if (loading) {
-    return <SkeletonEffectProducts qtdLoadingItems={4} />
-  }
-
-  if (produtos.length === 0) {
-    return (
-      <>
-        {hasFilters ? (
-          <Empty
-            title="Nenhuma Bolsa Registrada"
-            description="
-            Nenhuma Bolsa Foi Encontrado com esses parâmetros de busca considere alterar os filtros ou a busca
-            "
-          />
-        ) : (
-          <Empty
-            title="Nenhuma Bolsa Registrada"
-            description="Nenhuma de Bolsa foi encontrada"
-          />
-        )}
-      </>
-    )
-  }
-
+const ProductList = ({ produtos, loadMore }: ProductListProps) => {
   if (produtos.length) {
     return (
       <>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center justify-center my-4 mx-2">
-          {produtos.map((produto: Produto, index: number) => (
+          {produtos.map((produto, index: number) => (
             <ProductCard
               id={produto?.documentId ? produto.documentId : ''}
               key={index}
@@ -74,14 +31,12 @@ const ProductList = ({
             />
           ))}
         </div>
-        {/* 
-        {pagination.total !== produtos.length && (
+
+        {produtos.length && (
           <div className="flex items-center justify-center">
-            <Button loading={loading} disabled={loading} onClick={loadMore}>
-              Carregar Mais
-            </Button>
+            <Button onClick={loadMore}>Carregar Mais</Button>
           </div>
-        )} */}
+        )}
       </>
     )
   }

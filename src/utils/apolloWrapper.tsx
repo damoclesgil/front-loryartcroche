@@ -43,11 +43,16 @@ const theLink = authLink.concat(httpLink)
 function makeClient() {
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache({
-      addTypename: false,
+      addTypename: true,
       typePolicies: {
         Query: {
           fields: {
-            produtos: concatPagination()
+            produtos: {
+              merge(existing = [], incoming: any[]) {
+                return [...existing, ...incoming]
+              }
+            }
+            // produtos: concatPagination()
             // produtos: {
             //   keyArgs: false,
             //   // // https://stackoverflow.com/questions/65127544/apolloclient-v3-fetchmore-with-nested-query-results
