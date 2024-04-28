@@ -11,7 +11,7 @@ import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
 import { setVerbosity } from 'ts-invariant'
 import { setContext } from '@apollo/client/link/context'
 import { getSession } from 'next-auth/react'
-// import { concatPagination } from '@apollo/client/utilities'
+import { concatPagination } from '@apollo/client/utilities'
 // import { removeTypenameFromVariables } from '@apollo/client/link/remove-typename'
 // const removeTypenameLink = removeTypenameFromVariables()
 
@@ -42,36 +42,24 @@ const theLink = authLink.concat(httpLink)
 
 function makeClient() {
   return new NextSSRApolloClient({
-    /** 
-     {
-      addTypename: false
-       typePolicies: {
-         Query: {
-           fields: {
-             produtos: concatPagination()
-           }
-         }
-       }
-    } 
-     */
-    // cache: new InMemoryCache({
     cache: new NextSSRInMemoryCache({
-      addTypename: true,
+      addTypename: false,
       typePolicies: {
         Query: {
           fields: {
-            produtos: {
-              keyArgs: false,
-              // https://stackoverflow.com/questions/65127544/apolloclient-v3-fetchmore-with-nested-query-results
-              merge(existing, incoming) {
-                if (!incoming) return existing
-                if (!existing) return incoming
-                const { data, ...rest } = incoming
-                let result = rest
-                result.data = [...existing.data, ...data]
-                return result
-              }
-            }
+            produtos: concatPagination()
+            // produtos: {
+            //   keyArgs: false,
+            //   // // https://stackoverflow.com/questions/65127544/apolloclient-v3-fetchmore-with-nested-query-results
+            //   // merge(existing, incoming) {
+            //   //   if (!incoming) return existing
+            //   //   if (!existing) return incoming
+            //   //   const { data, ...rest } = incoming
+            //   //   let result = rest
+            //   //   result.data = [...existing.data, ...data]
+            //   //   return result
+            //   // }
+            // }
           }
         }
       }

@@ -40,7 +40,7 @@ const WishList = () => {
       </>
     )
   }
-  if (data?.favoritos?.data[0].attributes?.produtos?.data.length === 0) {
+  if (data?.favoritos[0]?.produtos.length === 0) {
     return (
       <>
         <Empty title="Nenhum Produto Adicionado as Favoritos" description="" />
@@ -55,23 +55,24 @@ const WishList = () => {
       </>
     )
   }
-  if (data?.favoritos?.data[0].attributes?.produtos?.data.length) {
+  if (data?.favoritos[0]?.produtos?.length) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center justify-center my-4 mx-2">
-        {data?.favoritos?.data[0].attributes?.produtos?.data.map(
-          (produto: any, index: number) => (
-            <ProductCard
-              key={produto?.id ?? index}
-              id={produto?.id ?? ''}
-              slug={produto?.attributes?.slug ?? 'bolsa'}
-              name={produto?.attributes?.nome ?? 'Sem Nome por Enquanto'}
-              price={Number(produto?.attributes?.preco) ?? 0}
-              img={getImageUrl(
-                produto.attributes?.imagem_destaque?.data?.attributes!.url
-              )}
-            />
-          )
-        )}
+        {data?.favoritos[0]?.produtos?.map((produto, index: number) => (
+          <ProductCard
+            key={produto?.documentId ?? index}
+            id={produto?.documentId ?? ''}
+            slug={produto?.slug ?? 'bolsa'}
+            name={produto?.nome ?? 'Sem Nome por Enquanto'}
+            price={Number(produto?.preco) ?? 0}
+            img={{
+              src: getImageUrl(produto?.imagem_destaque?.url),
+              width: 250,
+              height: 250,
+              alt: produto?.imagem_destaque?.caption || ''
+            }}
+          />
+        ))}
       </div>
     )
   }

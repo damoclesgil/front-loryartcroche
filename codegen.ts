@@ -1,6 +1,6 @@
 import type { CodegenConfig } from '@graphql-codegen/cli'
 
-let graphqlURL = 'http://127.0.0.1:1337/graphql'
+let graphqlURL = 'http://127.0.0.1:1339/graphql'
 
 const config: CodegenConfig = {
   overwrite: true,
@@ -23,6 +23,8 @@ const config: CodegenConfig = {
         reactApolloVersion: 3,
         withHooks: '@/hooks',
         skipTypename: true,
+        // dedupeOperationSuffix: true,
+        // omitOperationSuffix: true,
         nonOptionalTypename: false
       }
     },

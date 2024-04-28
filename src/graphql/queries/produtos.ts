@@ -2,16 +2,12 @@ import { gql } from '@apollo/client'
 import { ProdutoFragment } from '../fragments/produto'
 
 export const QUERY_PRODUTO = gql`
-  query getProduto($produtoId: ID) {
-    produto(id: $produtoId) {
-      data {
-        id
-        attributes {
-          ...ProdutoFragment
-        }
-      }
+  query getProduto($documentId: ID!) {
+    produto(documentId: $documentId) {
+      ...ProdutoFragment
     }
   }
+
   ${ProdutoFragment}
 `
 // "sort": ["preco"]
@@ -20,23 +16,17 @@ export const QUERY_PRODUTOS = gql`
     $filters: ProdutoFiltersInput
     $pagination: PaginationArg
     $sort: [String]
+    $status: PublicationStatus
   ) {
-    produtos(filters: $filters, pagination: $pagination, sort: $sort) {
-      data {
-        id
-        attributes {
-          ...ProdutoFragment
-        }
-      }
-      meta {
-        pagination {
-          total
-          pageSize
-          pageCount
-          page
-        }
-      }
+    produtos(
+      filters: $filters
+      pagination: $pagination
+      sort: $sort
+      status: $status
+    ) {
+      ...ProdutoFragment
     }
   }
+
   ${ProdutoFragment}
 `

@@ -5,7 +5,7 @@ import { getImageUrl } from '@/utils/getImageUrl'
 import Empty from '../Empty'
 import { Button } from '../ui/button'
 import SkeletonEffectProducts from './SkeletonEffectProducts'
-import { Pagination, ProdutoEntity } from '@/graphql/types'
+import { Pagination, Produto } from '@/graphql/types'
 // import { ApolloErrorOptions } from '@apollo/client/errors'
 // import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 
@@ -58,46 +58,30 @@ const ProductList = ({
     return (
       <>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center justify-center my-4 mx-2">
-          {produtos.map((produto, index: number) => (
+          {produtos.map((produto: Produto, index: number) => (
             <ProductCard
-              id={produto?.id ? produto.id : ''}
+              id={produto?.documentId ? produto.documentId : ''}
               key={index}
-              slug={
-                produto.attributes?.slug ? produto.attributes.slug : 'bolsa'
-              }
-              name={
-                produto.attributes?.nome
-                  ? produto.attributes.nome
-                  : 'Sem Nome por Enquanto'
-              }
-              price={
-                produto.attributes?.preco ? Number(produto.attributes.preco) : 0
-              }
+              slug={produto?.slug ? produto.slug : 'bolsa'}
+              name={produto?.nome ? produto.nome : 'Sem Nome por Enquanto'}
+              price={produto?.preco ? Number(produto.preco) : 0}
               img={{
-                src: getImageUrl(
-                  produto.attributes?.imagem_destaque?.data?.attributes?.formats
-                    .small.url
-                ),
-                width:
-                  produto.attributes?.imagem_destaque?.data?.attributes?.formats
-                    .small.width,
-                height:
-                  produto.attributes?.imagem_destaque?.data?.attributes?.formats
-                    .small.height,
-                alt: produto.attributes?.imagem_destaque?.data?.attributes
-                  ?.caption
+                src: getImageUrl(produto?.imagem_destaque?.formats.small.url),
+                width: produto.imagem_destaque?.formats.small.width,
+                height: produto.imagem_destaque?.formats.small.height,
+                alt: produto.imagem_destaque?.caption || ''
               }}
             />
           ))}
         </div>
-
+        {/* 
         {pagination.total !== produtos.length && (
           <div className="flex items-center justify-center">
             <Button loading={loading} disabled={loading} onClick={loadMore}>
               Carregar Mais
             </Button>
           </div>
-        )}
+        )} */}
       </>
     )
   }

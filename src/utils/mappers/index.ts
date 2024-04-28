@@ -1,31 +1,23 @@
-import {
-  Ordem,
-  OrdemEntity,
-  OrdensDePagamentosQuery,
-  ProdutoEntity,
-  ProdutoEntityResponse
-} from '@/graphql/types'
+import { OrdensDePagamentosQuery, Produto } from '@/graphql/types'
 import { getImageUrl } from '@/utils/getImageUrl'
 import formatPrice from '../format-price'
 import { getStorageItem } from '../localStorage'
 import { CART_KEY, cartItemsLocalStorageProps } from '@/hooks/use-cart'
 import { formatDateLong } from '../common/formatDate'
 
-export const cartMapper = (produtos: ProdutoEntity[]) => {
+export const cartMapper = (produtos: Produto[]) => {
   const cartItems = getStorageItem(CART_KEY)
 
   return produtos
-    ? produtos.map((produto) => ({
-        id: produto.id,
-        img: getImageUrl(
-          produto.attributes?.imagem_destaque?.data?.attributes?.url
-        ),
-        name: produto.attributes?.nome,
-        slug: produto.attributes?.slug,
-        price: produto.attributes?.preco,
+    ? produtos.map((produto: Produto) => ({
+        id: produto.documentId,
+        img: getImageUrl(produto.imagem_destaque?.url),
+        name: produto?.nome,
+        slug: produto?.slug,
+        price: produto?.preco,
         qty:
           cartItems.find(
-            (item: cartItemsLocalStorageProps) => item.id === produto.id
+            (item: cartItemsLocalStorageProps) => item.id === produto.documentId
           ).qty || 1
       }))
     : []
@@ -35,25 +27,23 @@ export const cartMapper = (produtos: ProdutoEntity[]) => {
 export const ordensComprasMapper = (
   dataOrdensPagamento: OrdensDePagamentosQuery
 ) => {
-  return dataOrdensPagamento.ordens?.data.map
-    ? dataOrdensPagamento.ordens?.data.map((ordem) => {
+  return dataOrdensPagamento.ordens.map
+    ? dataOrdensPagamento.ordens?.map((ordem) => {
         return {
-          id: ordem.id,
-          bandeiraCartaoCredito: ordem.attributes?.card_brand,
-          img: ordem.attributes?.card_brand
-            ? `/img/cards/${ordem.attributes?.card_brand}.png`
-            : null,
-          ultimoDigitosCartaoCredito: ordem.attributes?.card_last4
-            ? `**** **** **** ${ordem.attributes?.card_last4}`
+          id: ordem?.documentId,
+          bandeiraCartaoCredito: ordem?.card_brand,
+          img: ordem?.card_brand ? `/img/cards/${ordem?.card_brand}.png` : null,
+          ultimoDigitosCartaoCredito: ordem?.card_last4
+            ? `**** **** **** ${ordem?.card_last4}`
             : 'Produto Gratuito',
-          itencaoPagamentoId: ordem.attributes?.payment_intent_id,
-          totalEmCentavos: ordem.attributes?.total_in_cents,
-          dataCompra: `Comprado em ${formatDateLong(ordem.attributes?.createdAt)}`,
-          produtos: ordem.attributes?.produtos?.data.map((produto) => ({
-            id: produto.id,
-            nome: produto.attributes?.nome,
-            img: `${getImageUrl(produto.attributes?.imagem_destaque?.data?.attributes?.url)}`,
-            preco: `${formatPrice(Number(produto.attributes?.preco))}`
+          itencaoPagamentoId: ordem?.payment_intent_id,
+          totalEmCentavos: ordem?.total_in_cents,
+          dataCompra: `Comprado em ${formatDateLong(ordem?.createdAt)}`,
+          produtos: ordem?.produtos?.map((produto) => ({
+            id: produto?.documentId,
+            nome: produto?.nome,
+            img: `${getImageUrl(produto?.imagem_destaque?.formats?.small.url)}`,
+            preco: `${formatPrice(Number(produto?.preco))}`
           }))
         }
       })

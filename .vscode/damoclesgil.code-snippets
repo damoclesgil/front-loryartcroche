@@ -14,10 +14,17 @@
     "body": ["https://damoclesgil.com.br"],
     "description": "Website meu",
   },
+
   "Typescript ignore": {
     "scope": "typescript, typescriptreact",
     "prefix": "tsignore",
     "body": "// @ts-ignore",
     "description": "Ignorar erro da linha seguinte."
+  },
+  "id": {
+    "scope": "typescript, typescriptreact",
+    "prefix": "id",
+    "body": "documentId",
+    "description": "Nova maneira de pegar o id strapi."
   },
 }
