@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic'
 const ProductTabs = dynamic(() => import('./_components/ProductTabs'), {
   ssr: false
 })
-// import ProductTabs from './_components/ProductTabs'
 import formatPrice from '@/utils/format-price'
 import { Button } from '@/components/ui/button'
 import Gallery from '@/components/Gallery'
@@ -32,7 +31,7 @@ export default function Page() {
 
   const { data, loading, error } = useGetProdutoQuery({
     variables: {
-      produtoId: productId
+      documentId: productId || ''
     },
     fetchPolicy: 'no-cache'
   })
@@ -49,20 +48,7 @@ export default function Page() {
   }
 
   if (data) {
-    currentProduct = {
-      id: data?.produto?.data?.id,
-      name: data?.produto?.data?.attributes?.nome,
-      price: data?.produto?.data?.attributes?.preco,
-      img: data?.produto?.data?.attributes?.imagem_destaque?.data?.attributes
-        ?.url,
-      gallery: data?.produto?.data?.attributes?.galeria?.data,
-      detalhes: data?.produto?.data?.attributes?.descricao,
-      cor: data?.produto?.data?.attributes?.cor,
-      slug: data?.produto?.data?.attributes?.slug,
-      nomeCor: data?.produto?.data?.attributes?.nomeCor,
-      produtoReferentes:
-        data?.produto?.data?.attributes?.produtosReferentes?.data
-    }
+    currentProduct = data?.produto
     // console.log(data)
   }
 
@@ -73,46 +59,45 @@ export default function Page() {
           <>
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr] justify-between">
               <div className="flex flex-col">
-                {/*  @ts-ignore */}
-                <Gallery items={currentProduct.gallery} key="-1" />
+                {/* @ts-ignore */}
+                <Gallery galeria={currentProduct.galeria} key="-1" />
               </div>
               <div className="flex flex-col mt-4 md:mt-0">
                 <Heading size="huge" className="mb-2">
-                  {currentProduct.name}
+                  {currentProduct.nome}
                 </Heading>
 
                 <p className="font-bold text-lg mb-2">
-                  {formatPrice(Number(currentProduct.price))}
+                  {formatPrice(Number(currentProduct.preco))}
                 </p>
 
-                <ProductDetails htmlContent={currentProduct.detalhes} />
+                <ProductDetails htmlContent={currentProduct.descricao} />
 
+                {/* @ts-ignore */}
                 <ColorOptions product={currentProduct} />
 
                 <div className="flex items-center mb-2 ml-[-0.35rem]">
-                  {/* @ts-ignore */}
-                  <WishlistButton id={currentProduct.id} />
+                  <WishlistButton id={currentProduct.documentId} />
                 </div>
 
+                {/* @ts-ignore */}
                 <ShareButton product={currentProduct} />
 
                 <PaymentMethods />
 
                 <Button
-                  // @ts-ignore
-                  onClick={() => handleClick(currentProduct.id)}
+                  onClick={() => handleClick(currentProduct.documentId)}
                   className="mt-4 uppercase font-bold"
                   size="lg"
                 >
-                  {/* @ts-ignore */}
-                  {isInCart(currentProduct.id)
+                  {isInCart(currentProduct.documentId)
                     ? 'Remover do Carrinho'
                     : 'Adicionar ao Carrinho'}
                 </Button>
               </div>
             </div>
 
-            <ProductTabs htmlContent={currentProduct.detalhes} />
+            <ProductTabs htmlContent={currentProduct.descricao} />
           </>
         )}
       </div>

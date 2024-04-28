@@ -1,10 +1,11 @@
 'use client'
 
+import { Maybe, Produto } from '@/graphql/types'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 export type colorOptionsProps = {
-  product: any
+  product: Maybe<Produto>
 }
 
 const ColorOptions = ({ product }: colorOptionsProps) => {
@@ -12,7 +13,7 @@ const ColorOptions = ({ product }: colorOptionsProps) => {
 
   return (
     <>
-      {product.nomeCor && (
+      {product?.nome && (
         <p className="mb-2 text-md">
           Cor: <strong>{product.nomeCor}</strong>
         </p>
@@ -28,28 +29,26 @@ const ColorOptions = ({ product }: colorOptionsProps) => {
             }`}
             href={{
               pathname: product.slug,
-              query: { id: product.id }
+              query: { id: product.documentId }
             }}
           ></Link>
         )}
 
-        {product.produtoReferentes &&
-          product.produtoReferentes.map((product: any, iColor: any) => (
+        {product?.produtosReferentes &&
+          product.produtosReferentes.map((product, iColor) => (
             <Link
               key={`color_${iColor}`}
               style={{
-                backgroundColor: product.attributes?.cor
-                  ? product.attributes?.cor
-                  : '#fff'
+                backgroundColor: product?.cor ? product?.cor : '#fff'
               }}
               className={`w-8 h-8 rounded-full border-gray-600 focus:border-2 mr-1.5 ${
-                pathname === `/produtos/${product.slug}`
+                pathname === `/produtos/${product?.slug}`
                   ? 'border-2 '
                   : 'border'
               }`}
               href={{
-                pathname: product.attributes?.slug,
-                query: { id: product.id }
+                pathname: product?.slug,
+                query: { id: product?.documentId }
               }}
             ></Link>
           ))}

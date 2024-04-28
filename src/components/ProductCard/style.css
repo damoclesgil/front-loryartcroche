@@ -24,10 +24,10 @@
 .product-card:hover .img-below {
   transform: scale(1.09);
   -webkit-transform: scale(1.09);
-  opacity: 0;
+  /* opacity: 0; */
 }
 .product-card:hover .img-above {
   transform: scale(1.09);
   -webkit-transform: scale(1.09);
-  opacity: 1 !important;
+  /* opacity: 1 !important; */
 }

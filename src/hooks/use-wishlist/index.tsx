@@ -16,16 +16,7 @@ import { useSession } from 'next-auth/react'
 
 import { Produto } from '@/graphql/types'
 
-// export type UserType = {
-//   data: {
-//     id: string
-//     attributes: {
-//       username: string
-//     }
-//   }
-// }
-// export type idProduto = Pick<ProdutoEntity, 'id'>
-export type idProduto = string
+export type idProduto = Produto['documentId']
 
 export type WishlistContextData = {
   items: Produto[]

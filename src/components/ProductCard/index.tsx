@@ -46,19 +46,19 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => {
           {/* https://demo-kalles-4-3.myshopify.com/collections/jewelry */}
           <AspectRatio ratio={12 / 12} className="bg-muted z-0">
             <Image
-              className="object-cover object-center m-auto rounded-t-md img-below opacity-100"
+              className="object-cover object-center m-auto rounded-t-md img-below opacity-100 duration-150 transition-all"
               src={img.src}
               alt={img.alt ? img.alt : name}
               loading="lazy"
               fill
             />
-            <Image
+            {/* <Image
               className="object-cover object-center m-auto rounded-t-md img-above opacity-0"
               src="img/placeholder.svg"
               alt={img.alt ? img.alt : name}
               loading="lazy"
               fill
-            />
+            /> */}
           </AspectRatio>
         </div>
 

@@ -8,6 +8,7 @@
     "start": "next start",
     "test": "vitest",
     "lint": "next lint",
+    "format": "prettier --write src/",
     "prepare": "husky install",
     "codegen": "graphql-codegen --config codegen.ts"
   },
