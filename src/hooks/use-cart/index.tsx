@@ -1,4 +1,4 @@
-import { useGetProdutosQuery } from '@/graphql/types'
+import { Produto, useGetProdutosQuery } from '@/graphql/types'
 import formatPrice from '@/utils/format-price'
 import { getStorageItem, setStorageItem } from '@/utils/localStorage'
 import { cartMapper } from '@/utils/mappers'
@@ -59,13 +59,13 @@ export type cartItemsLocalStorageProps = Pick<CartItem, 'id' | 'qty'>
 
 const CartProvider = ({ children }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState<cartItemsLocalStorageProps[]>([])
-  const [items, setItems] = useState<any[]>([])
+  const [items, setItems] = useState<CartItem[]>([])
 
   const { data, loading } = useGetProdutosQuery({
     skip: !cartItems?.length,
     variables: {
       filters: {
-        id: {
+        documentId: {
           in: cartItems.map((item) => item.id)
         }
       }
@@ -75,9 +75,9 @@ const CartProvider = ({ children }: CartProviderProps) => {
 
   useEffect(() => {
     const idsProduct = getStorageItem(CART_KEY)
-    if (data?.produtos?.data) {
+    if (data?.produtos) {
       // @ts-ignore
-      setItems(cartMapper(data?.produtos?.data))
+      setItems(cartMapper(data?.produtos))
     }
     if (idsProduct) {
       setCartItems(idsProduct)
@@ -86,7 +86,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
   // SE NÃO PASSAR NADA ELE VAI RODAR SÓ UMA VEZ "[]"
 
   const totalPrice: number = items.reduce(
-    (total, product) => total + product.price * product.qty,
+    (total, product) => total + Number(product.price) * product.qty,
     0
   )
 

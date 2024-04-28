@@ -67,13 +67,13 @@ export default function Produtos() {
             lt: filters.preco
           }
         },
-        sort: filters?.sort ? [filters?.sort] : [],
-        pagination: {
-          pageSize: data?.produtos?.meta.pagination.pageSize,
-          page: data?.produtos?.meta.pagination.page
-            ? data?.produtos?.meta.pagination.page + 1
-            : 1
-        }
+        sort: filters?.sort ? [filters?.sort] : []
+        // pagination: {
+        //   pageSize: data?.produtos?.meta.pagination.pageSize,
+        //   page: data?.produtos?.meta.pagination.page
+        //     ? data?.produtos?.meta.pagination.page + 1
+        //     : 1
+        // }
       }
     })
   }
@@ -106,16 +106,17 @@ export default function Produtos() {
             />
             {/* <div>oi</div> */}
           </div>
+          {/* @ts-ignore */}
           <ProductList
             // @ts-ignore
-            produtos={data?.produtos.data}
+            produtos={data?.produtos}
             loading={loading}
             hasFilters={true}
             error={error}
             loadMore={handleShowMore}
             // @ts-ignore
-            pagination={data?.produtos.meta.pagination}
           />
+          {/* pagination={data?.produtos.meta.pagination} */}
         </div>
       </div>
 

@@ -2,42 +2,32 @@ import { gql } from '@apollo/client'
 
 export const ProdutoFragment = gql`
   fragment ProdutoFragment on Produto {
+    documentId
     nome
+    cor
+    preco
+    nomeCor
     slug
     descricao
-    preco
     imagem_destaque {
-      data {
-        attributes {
-          url
-          alternativeText
-          caption
-          formats
-        }
-      }
+      url
+      caption
+      alternativeText
+      formats
     }
     galeria {
-      data {
-        id
-        attributes {
-          url
-          name
-          width
-          height
-        }
-      }
+      alternativeText
+      url
+      name
+      width
+      height
+      formats
     }
-    cor
-    nomeCor
     produtosReferentes {
-      data {
-        id
-        attributes {
-          cor
-          nomeCor
-          slug
-        }
-      }
+      documentId
+      cor
+      nomeCor
+      slug
     }
   }
 `

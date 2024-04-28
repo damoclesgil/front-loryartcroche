@@ -1,13 +1,20 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { GET_FAVORITOS, useQueryFavoritos } from '@/graphql/queries/favoritos'
 import { useApolloClient, useMutation } from '@apollo/client'
-import { GetFavoritosQuery, ProdutoFragmentFragmentDoc } from '@/graphql/types'
-import { useSession } from 'next-auth/react'
 import {
-  MUTATION_CREATE_FAVORITO,
-  MUTATION_UPDATE_FAVORITO
-} from '@/graphql/mutations/favoritos'
-import { ProdutoEntity } from '@/graphql/types'
+  Favorito,
+  GetFavoritosQuery,
+  Maybe,
+  MutationCreateFavoritoMutation,
+  MutationCreateFavoritoMutationResult,
+  ProdutoFragmentFragment,
+  ProdutoFragmentFragmentDoc,
+  useMutationCreateFavoritoMutation,
+  useUpdateFavoritoMutation
+} from '@/graphql/types'
+import { useSession } from 'next-auth/react'
+
+import { Produto } from '@/graphql/types'
 
 // export type UserType = {
 //   data: {
@@ -21,7 +28,7 @@ import { ProdutoEntity } from '@/graphql/types'
 export type idProduto = string
 
 export type WishlistContextData = {
-  items: ProdutoEntity[]
+  items: Produto[]
   isInWishlist: (id: idProduto) => boolean
   addToWishlist: (id: idProduto) => void
   removeFromWishlist: (id: idProduto) => void
@@ -48,33 +55,50 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
   const { data: session } = useSession()
 
   const [wishlistId, setWishlistId] = useState<string | null>()
-  const [wishlistItems, setWishlistItems] = useState<ProdutoEntity[]>([])
+  const [wishlistItems, setWishlistItems] = useState<Array<Maybe<Produto>>>([])
   const apolloClient = useApolloClient()
 
-  const [createList, { loading: loadingCreate }] = useMutation(
-    MUTATION_CREATE_FAVORITO,
-    {
-      onCompleted: (data) => {
-        setWishlistItems(
-          data?.createFavorito?.data?.attributes?.produtos?.data || []
-        )
-        setWishlistId(data?.createFavorito?.data?.id)
-      }
-    }
-  )
+  // wishlistItems[0].createFavorito?.produtos
 
-  const [updateList, { loading: loadingUpdateList }] = useMutation(
-    MUTATION_UPDATE_FAVORITO,
-    {
+  const [createList, { loading: loadingCreate }] =
+    useMutationCreateFavoritoMutation({
+      onCompleted: (resultCreateFavorito) => {
+        // @ts-ignore
+        setWishlistItems(resultCreateFavorito.createFavorito.produtos || [])
+        setWishlistId(resultCreateFavorito?.createFavorito?.documentId)
+      }
+    })
+
+  const [updateList, { loading: loadingUpdateList }] =
+    useUpdateFavoritoMutation({
       onCompleted: (data) => {
         if (data) {
-          setWishlistItems(
-            data.updateFavorito?.data?.attributes?.produtos?.data || []
-          )
+          // @ts-ignore
+          setWishlistItems(data.updateFavorito?.produtos || [])
         }
       }
-    }
-  )
+    })
+
+  // const [createList, { loading: loadingCreate }] = useMutation(
+  //   MUTATION_CREATE_FAVORITO,
+  //   {
+  //     onCompleted: (data) => {
+  //       setWishlistItems(data?.createFavorito?.produtos || [])
+  //       setWishlistId(data?.createFavorito?.documentId)
+  //     }
+  //   }
+  // )
+
+  // const [updateList, { loading: loadingUpdateList }] = useMutation(
+  //   MUTATION_UPDATE_FAVORITO,
+  //   {
+  //     onCompleted: (data) => {
+  //       if (data) {
+  //         setWishlistItems(data.updateFavorito?.produtos?.data || [])
+  //       }
+  //     }
+  //   }
+  // )
 
   const options = {
     skip: !session?.user?.email,
@@ -94,17 +118,17 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
 
   useEffect(() => {
     // @ts-ignore
-    setWishlistItems(data?.favoritos?.data[0]?.attributes.produtos?.data ?? [])
-    setWishlistId(data?.favoritos?.data[0]?.id ?? null)
+    setWishlistItems(data?.favoritos[0]?.produtos ?? [])
+    setWishlistId(data?.favoritos[0]?.documentId ?? null)
   }, [data])
 
   const wishlistIds = useMemo(
-    () => wishlistItems.map((produto) => produto.id),
+    () => wishlistItems.map((produto) => produto?.documentId),
     [wishlistItems]
   )
 
   const isInWishlist = (id: idProduto) =>
-    wishlistItems.some((produto) => produto.id === id)
+    wishlistItems.some((produto) => produto?.documentId === id)
 
   const optimisticGameResponse = (id: idProduto) => {
     const produto = apolloClient.readFragment({
@@ -164,8 +188,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
         //   }
         // },
         update: (cache, payload) => {
-          const newWishlist =
-            payload.data?.createFavorito?.data?.attributes?.produtos?.data
+          const newWishlist = payload.data?.createFavorito?.produtos
 
           const existingWishlist = cache.readQuery<GetFavoritosQuery>({
             query: GET_FAVORITOS,
@@ -199,6 +222,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
         id: wishlistId, // Tem que ser o id do favorito
         data: {
           user: session?.user?.id,
+          // @ts-ignore
           produtos: [...wishlistIds, id]
         }
       }
@@ -221,14 +245,13 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
     console.log('removeFromWishlist')
     return updateList({
       variables: {
-        id: wishlistId || '',
-        data: {
-          user: session?.user?.id,
-          produtos: [
-            // @ts-ignore
-            ...wishlistIds.filter((produtoId: idProduto) => produtoId !== id)
-          ]
-        }
+        documentId: wishlistId || '',
+        // @ts-ignore
+        user: session?.user?.id,
+        produtos: [
+          // @ts-ignore
+          ...wishlistIds.filter((produtoId: idProduto) => produtoId !== id)
+        ]
       }
       // optimisticResponse: {
       //   updateFavorito: {
@@ -248,6 +271,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
   return (
     <WishlistContext.Provider
       value={{
+        // @ts-ignore
         items: wishlistItems,
         isInWishlist,
         addToWishlist,

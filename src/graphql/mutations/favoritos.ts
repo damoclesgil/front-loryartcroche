@@ -2,29 +2,18 @@ import { gql } from '@apollo/client'
 import { ProdutoFragment } from '../fragments/produto'
 
 export const MUTATION_UPDATE_FAVORITO = gql`
-  mutation mutationUpdateFavorito($id: ID!, $data: FavoritoInput!) {
-    updateFavorito(id: $id, data: $data) {
-      data {
-        id
-        attributes {
-          produtos {
-            data {
-              id
-              attributes {
-                ...ProdutoFragment
-              }
-            }
-          }
-          user {
-            data {
-              id
-            }
-          }
-        }
+  mutation UpdateFavorito($documentId: ID!, $data: FavoritoInput!) {
+    updateFavorito(documentId: $documentId, data: $data) {
+      documentId
+      produtos {
+        documentId
+      }
+      user {
+        documentId
+        username
       }
     }
   }
-  ${ProdutoFragment}
 `
 /**
 {
@@ -35,25 +24,14 @@ export const MUTATION_UPDATE_FAVORITO = gql`
 }
 */
 export const MUTATION_CREATE_FAVORITO = gql`
-  mutation mutationCreateFavorito($data: FavoritoInput!) {
+  mutation MutationCreateFavorito($data: FavoritoInput!) {
     createFavorito(data: $data) {
-      data {
-        id
-        attributes {
-          produtos {
-            data {
-              id
-              attributes {
-                ...ProdutoFragment
-              }
-            }
-          }
-          user {
-            data {
-              id
-            }
-          }
-        }
+      documentId
+      produtos {
+        ...ProdutoFragment
+      }
+      user {
+        documentId
       }
     }
   }

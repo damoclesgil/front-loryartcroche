@@ -3,25 +3,20 @@ import { ProdutoFragment } from '../fragments/produto'
 import { GetFavoritosQuery, GetFavoritosQueryVariables } from '@/graphql/types'
 
 export const GET_FAVORITOS = gql`
-  query getFavoritos($filters: FavoritoFiltersInput) {
-    favoritos(filters: $filters) {
-      data {
-        id
-        attributes {
-          produtos {
-            data {
-              id
-              attributes {
-                ...ProdutoFragment
-              }
-            }
-          }
-        }
+  query getFavoritos(
+    $filters: FavoritoFiltersInput
+    $pagination: PaginationArg
+    $sort: [String]
+  ) {
+    favoritos(filters: $filters, pagination: $pagination, sort: $sort) {
+      createdAt
+      documentId
+      produtos {
+        ...ProdutoFragment
       }
-      meta {
-        pagination {
-          total
-        }
+      user {
+        documentId
+        email
       }
     }
   }

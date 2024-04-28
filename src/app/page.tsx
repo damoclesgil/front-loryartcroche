@@ -9,7 +9,7 @@ import Base from '@/templates/Base'
 export default function Home() {
   const { data, error, loading, fetchMore } = useGetProdutosQuery({
     variables: {
-      sort: ['id:ASC'],
+      sort: ['documentId:ASC'],
       pagination: {
         pageSize: 10,
         page: 1
@@ -20,13 +20,13 @@ export default function Home() {
   const handleShowMore = () => {
     fetchMore({
       variables: {
-        sort: ['id:ASC'],
-        pagination: {
-          pageSize: data?.produtos?.meta.pagination.pageSize,
-          page: data?.produtos?.meta.pagination.page
-            ? data?.produtos?.meta.pagination.page + 1
-            : 1
-        }
+        sort: ['id:ASC']
+        // pagination: {
+        //   pageSize: data?.produtos?.meta.pagination.pageSize,
+        //   page: data?.produtos?.meta.pagination.page
+        //     ? data?.produtos?.meta.pagination.page + 1
+        //     : 1
+        // }
       }
     })
   }
@@ -40,13 +40,13 @@ export default function Home() {
       </Heading>
       <ProductList
         // @ts-ignore
-        produtos={data?.produtos.data}
+        produtos={data?.produtos}
         loading={loading}
         error={error}
         loadMore={handleShowMore}
         // @ts-ignore
-        pagination={data?.produtos.meta.pagination}
       />
+      {/* pagination={data?.produtos.meta.pagination} */}
       <InstagramSection />
     </Base>
   )
