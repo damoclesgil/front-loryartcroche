@@ -5,9 +5,6 @@ import {
   Favorito,
   GetFavoritosQuery,
   Maybe,
-  MutationCreateFavoritoMutation,
-  MutationCreateFavoritoMutationResult,
-  ProdutoFragmentFragment,
   ProdutoFragmentFragmentDoc,
   useMutationCreateFavoritoMutation,
   useUpdateFavoritoMutation
@@ -69,27 +66,6 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
         }
       }
     })
-
-  // const [createList, { loading: loadingCreate }] = useMutation(
-  //   MUTATION_CREATE_FAVORITO,
-  //   {
-  //     onCompleted: (data) => {
-  //       setWishlistItems(data?.createFavorito?.produtos || [])
-  //       setWishlistId(data?.createFavorito?.documentId)
-  //     }
-  //   }
-  // )
-
-  // const [updateList, { loading: loadingUpdateList }] = useMutation(
-  //   MUTATION_UPDATE_FAVORITO,
-  //   {
-  //     onCompleted: (data) => {
-  //       if (data) {
-  //         setWishlistItems(data.updateFavorito?.produtos?.data || [])
-  //       }
-  //     }
-  //   }
-  // )
 
   const options = {
     skip: !session?.user?.email,
@@ -190,14 +166,8 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
             cache.writeQuery({
               query: GET_FAVORITOS,
               data: {
-                favorito: {
-                  data: {
-                    attributes: {
-                      produtos: {
-                        data: [...newWishlist]
-                      }
-                    }
-                  }
+                favoritos: {
+                  produtos: [...newWishlist]
                 }
               },
               ...options

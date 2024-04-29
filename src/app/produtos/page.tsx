@@ -14,7 +14,6 @@ import Heading from '@/components/Heading'
 
 export type filterStrapiType = {
   preco?: number
-  // search?: string
   sort?: OrderPriceEntity
 }
 
@@ -22,12 +21,7 @@ export default function Produtos() {
   const [filters, setFilters] = useState<filterStrapiType>({})
   const [search, setSearch] = useState<string>('')
   const debouncedSearch = useDebounce(search, 980)
-
-  // useEffect(() => {
-  //   if (debouncedSearch) {
-  //     console.log(debouncedSearch)
-  //   }
-  // }, [debouncedSearch])
+  const initialValues = { sort: 'preco:DESC', preco: 5000 }
 
   const handleFilter = (items: ParsedUrlQueryInput) => {
     setFilters(items)
@@ -68,12 +62,6 @@ export default function Produtos() {
           }
         },
         sort: filters?.sort ? [filters?.sort] : []
-        // pagination: {
-        //   pageSize: data?.produtos?.meta.pagination.pageSize,
-        //   page: data?.produtos?.meta.pagination.page
-        //     ? data?.produtos?.meta.pagination.page + 1
-        //     : 1
-        // }
       }
     })
   }
@@ -92,8 +80,7 @@ export default function Produtos() {
           <ExploreSidebar
             // @ts-ignore
             items={filterItems}
-            // @ts-ignore
-            initialValues={{ sort: 'preco:DESC', preco: 5000 }}
+            initialValues={initialValues}
             onFilter={handleFilter}
           />
         </div>
@@ -104,9 +91,7 @@ export default function Produtos() {
               loading={false}
               setInputValue={onChangeInputSearch}
             />
-            {/* <div>oi</div> */}
           </div>
-          {/* @ts-ignore */}
           <ProductList
             // @ts-ignore
             produtos={data?.produtos}
