@@ -99,8 +99,8 @@ const ProductList = ({
                     .small.url
                 ),
                 overImgSrc: getImageUrl(
-                  produto.attributes?.galeria?.data[0].attributes?.formats.small
-                    .url
+                  produto.attributes?.galeria?.data[1]?.attributes?.formats
+                    .small.url
                 ),
                 width:
                   produto.attributes?.imagem_destaque?.data?.attributes?.formats
