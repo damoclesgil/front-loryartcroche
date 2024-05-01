@@ -72,11 +72,11 @@ const ProductList = ({
           ))}
         </div>
 
-        {produtos.length && (
+        {/* {produtos.length && (
           <div className="flex items-center justify-center">
             <Button onClick={loadMore}>Carregar Mais</Button>
           </div>
-        )}
+        )} */}
       </>
     )
   }

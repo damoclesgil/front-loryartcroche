@@ -12,7 +12,7 @@ import { useState } from 'react'
 export default function Home() {
   const hasFilters = true
   const [page, setPage] = useState(1)
-  const [pageSise, setPageSise] = useState(1)
+  const [pageSise, setPageSise] = useState(10)
 
   const { data, error, loading, fetchMore } = useGetProdutosQuery({
     variables: {
