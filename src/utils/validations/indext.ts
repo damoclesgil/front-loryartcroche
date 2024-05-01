@@ -10,10 +10,12 @@ export const fieldsValidations = z.object({
   password: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres'),
   confirm_password: z
     .string()
+    // @ts-ignore
     .refine((value) => value === password.value /* HTMLInputElement */, {
       message: 'As senhas precisam ser iguais'
       // path: 'confirm_password'
-    })
+    }),
+  numberField: z.number().min(1).max(999)
 })
 
 // export const signInValidate = fieldsValidations.omit({ email: true })
@@ -36,6 +38,9 @@ export const resetPasswordValidate = fieldsValidations.pick({
 export const profileValidate = fieldsValidations.pick({
   username: true,
   email: true
+})
+export const numberValidate = fieldsValidations.pick({
+  numberField: true
 })
 
 // export const resetPasswordValidate = z.object({

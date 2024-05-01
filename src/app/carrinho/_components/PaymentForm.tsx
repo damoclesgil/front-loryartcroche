@@ -15,6 +15,7 @@ import {
   StripeCardElementOptions
 } from '@stripe/stripe-js'
 import { CreditCard, Pix } from '@styled-icons/material-outlined'
+import { Whatsapp } from '@styled-icons/remix-line'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -34,32 +35,6 @@ export default function PaymentForm() {
   const [freeProducts, setFreeProducts] = useState(false)
 
   const { push } = useRouter()
-
-  // useEffect(() => {
-  //   async function setPaymentMode() {
-  //     if (items.length) {
-  //       const data = await createPaymentIntent({
-  //         items,
-  //         token: session?.jwt as string
-  //       })
-
-  //       if (data.freeProducts) {
-  //         setFreeProducts(true)
-  //         return
-  //       }
-
-  //       if (data.error) {
-  //         setError(data.error)
-  //       } else {
-  //         // senão o paymentIntent foi válido
-  //         setFreeProducts(false)
-  //         setClientSecret(data.client_secret)
-  //       }
-  //     }
-  //   }
-
-  //   setPaymentMode()
-  // }, [items])
 
   const saveOrder = async (paymentIntent?: PaymentIntent) => {
     const data = await createPayment({
@@ -221,6 +196,7 @@ Método de Pagamento: *${paymentMethod}*.
 
       <div className="mt-8 flex items-center justify-center">
         <Button className="mr-4" onClick={() => sendWhatsAppItems()}>
+          <Whatsapp size={20} className="mr-2" />
           Encomendar
         </Button>
         {/*

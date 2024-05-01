@@ -29,6 +29,7 @@ export type CartContextData = {
   addToCart: (id: string, qty: number) => void
   incrementQuantity: (id: string) => void
   decrementQuantity: (id: string) => void
+  incrementQuantityInputField: (id: string, qty: number) => void
   removeFromCart: (id: string) => void
   clearCart: () => void
   loading: boolean
@@ -40,6 +41,7 @@ export const CartContextDefaultValues = {
   total: 'R$ 0,00',
   isInCart: () => false,
   addToCart: () => null,
+  incrementQuantityInputField: () => null,
   incrementQuantity: () => null,
   decrementQuantity: () => null,
   removeFromCart: () => null,
@@ -133,6 +135,26 @@ const CartProvider = ({ children }: CartProviderProps) => {
     setItems(nextCounters)
   }
 
+  const incrementQuantityInputField = (id: string, qty: number) => {
+    const nextCounters = items.map((product) => {
+      if (product.id === id) {
+        let cartIndex = cartItems.findIndex((cartItem) => cartItem.id === id)
+        cartItems[cartIndex].qty = qty
+        saveCart([...cartItems])
+        return {
+          ...product,
+          qty: qty
+        }
+      } else {
+        return {
+          ...product,
+          qty: product.qty
+        }
+      }
+    })
+    setItems(nextCounters)
+  }
+
   const decrementQuantity = (id: string) => {
     const nextCounters = items.map((product) => {
       if (product.id === id) {
@@ -174,6 +196,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
         isInCart,
         incrementQuantity,
         decrementQuantity,
+        incrementQuantityInputField,
         addToCart,
         removeFromCart,
         clearCart,

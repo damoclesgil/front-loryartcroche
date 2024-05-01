@@ -7,12 +7,11 @@ import { Input } from '@/components/ui/input'
 import Image from 'next/image'
 import { useCart } from '@/hooks/use-cart'
 import formatPrice from '@/utils/format-price'
-import Loader from '@/components/Loader'
 import React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import PaymentForm from './_components/PaymentForm'
-import { Trash, Trash2 } from '@styled-icons/feather'
+import { Trash2 } from '@styled-icons/feather'
 
 const stripePromise = loadStripe(
   `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
@@ -28,16 +27,24 @@ const CartList = () => {
     loading,
     removeFromCart,
     incrementQuantity,
-    decrementQuantity
+    decrementQuantity,
+    incrementQuantityInputField
   } = useCart()
 
-  // if (loading) {
-  //   return (
-  //     <>
-  //       <Loader />
-  //     </>
-  //   )
-  // }
+  // setQuantity
+  const maxQtyIncrement = 30
+
+  const handleInputIncrement = (
+    e: React.FormEvent<HTMLInputElement>,
+    id: string
+  ) => {
+    // @ts-ignore
+    const value = parseInt(e.target?.value)
+    // console.log(value)
+    if (value > 0 && value <= maxQtyIncrement) {
+      incrementQuantityInputField(id, value)
+    }
+  }
 
   return (
     <>
@@ -83,10 +90,12 @@ const CartList = () => {
                           <span className="sr-only">Diminuir Quantidade</span>
                         </Button>
                         <Input
-                          className="w-12 border-0 border-b bg-gray-100/40 appearance-none text-center dark:bg-gray-800/40"
-                          min="1"
+                          className="w-12 border-0 bg-transparent appearance-none text-center dark:bg-gray-800/40"
                           type="number"
-                          disabled={true}
+                          pattern="[0-9]{0,5}"
+                          onChange={(event) =>
+                            handleInputIncrement(event, product.id)
+                          }
                           value={product.qty}
                         />
                         <Button
