@@ -45,7 +45,11 @@ const ExploreSidebar = ({
   }
 
   const handleCheckbox = (name: string, value: string) => {
-    setValues((s) => ({ ...s, [name]: value }))
+    if (values[name] === value) {
+      setValues((s) => ({ ...s, [name]: null }))
+    } else {
+      setValues((s) => ({ ...s, [name]: value }))
+    }
   }
 
   return (

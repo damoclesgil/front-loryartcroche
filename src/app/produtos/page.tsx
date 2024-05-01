@@ -22,12 +22,11 @@ export default function Produtos() {
   const [filters, setFilters] = useState<filterStrapiType>({})
   const [search, setSearch] = useState<string>('')
   const debouncedSearch = useDebounce(search, 980)
-
-  // useEffect(() => {
-  //   if (debouncedSearch) {
-  //     console.log(debouncedSearch)
-  //   }
-  // }, [debouncedSearch])
+  const defaultPriceFilter = 99999
+  const initialValues = {
+    sort: 'preco:DESC',
+    preco: defaultPriceFilter
+  } as filterStrapiType
 
   const handleFilter = (items: ParsedUrlQueryInput) => {
     setFilters(items)
@@ -42,18 +41,17 @@ export default function Produtos() {
           containsi: debouncedSearch
         },
         preco: {
-          lt: filters.preco
+          lt: filters?.preco ? filters.preco : defaultPriceFilter
         }
       },
       sort: filters?.sort ? [filters?.sort] : [],
-      // sort: filters?.sort ? ['id:ASC'] : [],
       pagination: {
         pageSize: 10,
         page: 1
       }
     },
-    fetchPolicy: 'no-cache',
-    nextFetchPolicy: 'cache-first'
+    fetchPolicy: 'no-cache'
+    // nextFetchPolicy: 'cache-first'
   })
 
   const handleShowMore = () => {
@@ -64,7 +62,7 @@ export default function Produtos() {
             containsi: debouncedSearch
           },
           preco: {
-            lt: filters.preco
+            lt: filters?.preco ? filters.preco : defaultPriceFilter
           }
         },
         sort: filters?.sort ? [filters?.sort] : [],
@@ -88,12 +86,13 @@ export default function Produtos() {
         Confira nossas bolsas de crochê 🧶
       </Heading>
       <div className="flex flex-col lg:flex-row w-full">
+        {/* {JSON.stringify(filterItems)} */}
         <div className="w-full max-w-[14rem]">
           <ExploreSidebar
             // @ts-ignore
             items={filterItems}
             // @ts-ignore
-            initialValues={{ sort: 'preco:DESC', preco: 5000 }}
+            initialValues={initialValues}
             onFilter={handleFilter}
           />
         </div>
@@ -110,7 +109,7 @@ export default function Produtos() {
             // @ts-ignore
             produtos={data?.produtos.data}
             loading={loading}
-            hasFilters={true}
+            page="produtos"
             error={error}
             loadMore={handleShowMore}
             // @ts-ignore

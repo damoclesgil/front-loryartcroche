@@ -14,7 +14,8 @@ export default function Home() {
         pageSize: 10,
         page: 1
       }
-    }
+    },
+    fetchPolicy: 'no-cache'
   })
 
   const handleShowMore = () => {
@@ -43,6 +44,7 @@ export default function Home() {
         produtos={data?.produtos.data}
         loading={loading}
         error={error}
+        page="inicio"
         loadMore={handleShowMore}
         // @ts-ignore
         pagination={data?.produtos.meta.pagination}

@@ -12,7 +12,7 @@ const WishlistButton = ({ id }: theIdProduto) => {
     loading: loadingApollo
   } = useWishlist()
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
     e.stopPropagation()
     return isInWishlist(id) ? removeFromWishlist(id) : addToWishlist(id)

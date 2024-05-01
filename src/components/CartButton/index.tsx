@@ -13,7 +13,7 @@ type CartProps = {
 const CartButton = ({ id }: CartProps) => {
   const { isInCart, addToCart, removeFromCart } = useCart()
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
     e.stopPropagation()
     toast({

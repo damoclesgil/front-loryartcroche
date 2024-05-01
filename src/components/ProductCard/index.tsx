@@ -16,6 +16,7 @@ export type ProductCardProps = {
   name: string
   img: {
     src: string
+    overImgSrc?: string
     width: number
     height: number
     alt: string
@@ -44,21 +45,23 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => {
         <div className="w-full h-auto">
           {/* width={img.width} height={img.height} {16 / 9}  */}
           {/* https://demo-kalles-4-3.myshopify.com/collections/jewelry */}
-          <AspectRatio ratio={12 / 12} className="bg-muted z-0">
+          <AspectRatio ratio={12 / 12} className="z-0">
             <Image
-              className="object-cover object-center m-auto rounded-t-md img-below opacity-100"
+              className="object-cover object-center m-auto rounded-t-md duration-150 transition-all opacity-100 img-below"
               src={img.src}
               alt={img.alt ? img.alt : name}
               loading="lazy"
               fill
             />
-            <Image
-              className="object-cover object-center m-auto rounded-t-md img-above opacity-0"
-              src="img/placeholder.svg"
-              alt={img.alt ? img.alt : name}
-              loading="lazy"
-              fill
-            />
+            {img.overImgSrc && (
+              <Image
+                className="object-cover object-center m-auto rounded-t-md duration-150 transition-all opacity-0 img-above"
+                src={img.overImgSrc}
+                alt={img.alt ? img.alt : name}
+                loading="lazy"
+                fill
+              />
+            )}
           </AspectRatio>
         </div>
 

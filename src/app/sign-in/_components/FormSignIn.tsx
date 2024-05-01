@@ -104,9 +104,9 @@ export function FormSignIn() {
           <Button className="w-full" type="submit" loading={isSubmitting}>
             Entrar
           </Button>
-          <Button className="w-full" variant="outline">
+          {/* <Button className="w-full" variant="outline">
             Entrar com Google
-          </Button>
+          </Button> */}
         </form>
         <div className="mt-4 text-center text-sm">
           Não possui uma conta?

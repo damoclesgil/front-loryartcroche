@@ -24,6 +24,7 @@ export const ProdutoFragment = gql`
           name
           width
           height
+          formats
         }
       }
     }

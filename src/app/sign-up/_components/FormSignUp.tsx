@@ -7,9 +7,8 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 import { useForm } from 'react-hook-form'
-import { useMutation } from '@apollo/client'
 import {
-  MutationRegisterDocument,
+  useMutationRegisterMutation,
   UsersPermissionsRegisterInput
 } from '@/graphql/types'
 import { signIn } from 'next-auth/react'
@@ -31,23 +30,59 @@ export function FormSignUp() {
     resolver: zodResolver(signUpValidate)
   })
   // const { push } = useRouter()
-  const [mutate] = useMutation(MutationRegisterDocument, {
-    onCompleted(data) {
-      if (data) {
-        let formValues = getValues()
-        signIn('credentials', {
-          identifier: formValues.username,
-          password: formValues.password,
-          redirect: true,
-          callbackUrl: NextRoutes.home
-        })
-      }
-    }
-  })
+
+  const [mutationRegisterMutation, { data, loading, error }] =
+    useMutationRegisterMutation({
+      onCompleted(data) {
+        console.log('data', data)
+        if (data) {
+          let formValues = getValues()
+          toast({
+            variant: 'default',
+            title: 'Conta Criada com sucesso!',
+            description: 'Estamos redirecionado você para a nossa loja 😊'
+          })
+          signIn('credentials', {
+            identifier: formValues.username,
+            password: formValues.password
+            // redirect: true,
+            // callbackUrl: NextRoutes.home
+          })
+        }
+      },
+      onError(error) {
+        if (
+          error.graphQLErrors[0].message ===
+          'Email or Username are already taken'
+        ) {
+          setError('root', {
+            type: 'manual',
+            message: `Já existe um usuário com o nome: ${getValues().username}, por favor tente cadastrar com outro nome`
+          })
+          toast({
+            variant: 'destructive',
+            title: 'Já existe um usuário com esse nome!',
+            description: 'Por favor tente cadastrar um usuário com outro nome.',
+            duration: 6000
+          })
+        } else {
+          setError('root', {
+            type: 'manual',
+            message: 'Nome de usuário, senha ou e-mail é inválido!'
+          })
+          toast({
+            variant: 'destructive',
+            title: 'OOps 😮!',
+            description: 'Algo de errado, tente novamente em alguns minutos.'
+          })
+        }
+      },
+      errorPolicy: 'all'
+    })
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      await mutate({
+      await mutationRegisterMutation({
         variables: {
           input: {
             email: values.email,
@@ -56,22 +91,17 @@ export function FormSignUp() {
           }
         }
       })
-      toast({
-        variant: 'default',
-        title: 'Conta Criada com sucesso!',
-        description: 'Estamos redirecionado você para a nossa loja 😊'
-      })
+      if (loading) {
+        console.log('loading', loading)
+      }
+      if (data) {
+        console.log('data', data)
+      }
+      if (error) {
+        console.log('error', error)
+      }
     } catch (error) {
       console.log(error)
-      setError('root', {
-        type: 'manual',
-        message: 'Nome de usuário, senha ou e-mail é inválido!'
-      })
-      toast({
-        variant: 'destructive',
-        title: 'OOps 😮!',
-        description: 'Algo de errado, tente novamente em alguns minutos.'
-      })
     }
   })
 
@@ -85,6 +115,7 @@ export function FormSignUp() {
           Insira suas informações para criar uma conta
         </CardDescription>
       </CardHeader>
+
       {errors.root && (
         <TextError className="text-left mb-2">
           <ErrorOutline className="mr-1 w-4 h-4" />

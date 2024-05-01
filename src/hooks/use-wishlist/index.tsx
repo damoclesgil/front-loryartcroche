@@ -1,12 +1,13 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { GET_FAVORITOS, useQueryFavoritos } from '@/graphql/queries/favoritos'
 import { useApolloClient, useMutation } from '@apollo/client'
-import { GetFavoritosQuery, ProdutoFragmentFragmentDoc } from '@/graphql/types'
-import { useSession } from 'next-auth/react'
 import {
-  MUTATION_CREATE_FAVORITO,
-  MUTATION_UPDATE_FAVORITO
-} from '@/graphql/mutations/favoritos'
+  GetFavoritosQuery,
+  ProdutoFragmentFragmentDoc,
+  useMutationCreateFavoritoMutation,
+  useMutationUpdateFavoritoMutation
+} from '@/graphql/types'
+import { useSession } from 'next-auth/react'
 import { ProdutoEntity } from '@/graphql/types'
 
 // export type UserType = {
@@ -51,30 +52,28 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
   const [wishlistItems, setWishlistItems] = useState<ProdutoEntity[]>([])
   const apolloClient = useApolloClient()
 
-  const [createList, { loading: loadingCreate }] = useMutation(
-    MUTATION_CREATE_FAVORITO,
-    {
+  const [createList, { loading: loadingCreate }] =
+    useMutationCreateFavoritoMutation({
       onCompleted: (data) => {
         setWishlistItems(
+          // @ts-ignore
           data?.createFavorito?.data?.attributes?.produtos?.data || []
         )
         setWishlistId(data?.createFavorito?.data?.id)
       }
-    }
-  )
+    })
 
-  const [updateList, { loading: loadingUpdateList }] = useMutation(
-    MUTATION_UPDATE_FAVORITO,
-    {
+  const [updateList, { loading: loadingUpdateList }] =
+    useMutationUpdateFavoritoMutation({
       onCompleted: (data) => {
         if (data) {
           setWishlistItems(
+            // @ts-ignore
             data.updateFavorito?.data?.attributes?.produtos?.data || []
           )
         }
       }
-    }
-  )
+    })
 
   const options = {
     skip: !session?.user?.email,
@@ -145,7 +144,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
     // se não existir wishlist - cria
     if (!wishlistId) {
       return createList({
-        variables: { data: { produtos: [id] } },
+        variables: { data: { produtos: [id], user: session?.user?.id } },
         // optimisticResponse: {
         //   createFavorito: {
         //     data: {
@@ -198,7 +197,9 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
       variables: {
         id: wishlistId, // Tem que ser o id do favorito
         data: {
+          // user: ['2'],
           user: session?.user?.id,
+          // @ts-ignore
           produtos: [...wishlistIds, id]
         }
       }
@@ -218,12 +219,12 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
   }
 
   const removeFromWishlist = (id: idProduto) => {
-    console.log('removeFromWishlist')
     return updateList({
       variables: {
         id: wishlistId || '',
         data: {
           user: session?.user?.id,
+          // @ts-ignore
           produtos: [
             // @ts-ignore
             ...wishlistIds.filter((produtoId: idProduto) => produtoId !== id)

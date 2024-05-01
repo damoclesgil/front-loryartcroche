@@ -6,13 +6,15 @@ import Empty from '../Empty'
 import { Button } from '../ui/button'
 import SkeletonEffectProducts from './SkeletonEffectProducts'
 import { Pagination, ProdutoEntity } from '@/graphql/types'
+import Link from 'next/link'
+import { NextRoutes } from '@/utils/constant'
 // import { ApolloErrorOptions } from '@apollo/client/errors'
 // import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 
 export type ProductListProps = {
   produtos: any[]
   loading: boolean
-  hasFilters?: boolean
+  page: 'inicio' | 'favoritos' | 'produtos'
   pagination: Pagination
   loadMore: () => void
   error: any | undefined
@@ -23,7 +25,7 @@ const ProductList = ({
   loading,
   pagination,
   loadMore,
-  hasFilters = false,
+  page = 'inicio',
   error
 }: ProductListProps) => {
   if (error) {
@@ -37,18 +39,36 @@ const ProductList = ({
   if (produtos.length === 0) {
     return (
       <>
-        {hasFilters ? (
+        {page === 'produtos' && (
           <Empty
             title="Nenhuma Bolsa Registrada"
             description="
             Nenhuma Bolsa Foi Encontrado com esses parâmetros de busca considere alterar os filtros ou a busca
             "
           />
-        ) : (
+        )}
+        {page === 'inicio' && (
           <Empty
             title="Nenhuma Bolsa Registrada"
             description="Nenhuma de Bolsa foi encontrada"
           />
+        )}
+        {page === 'favoritos' && (
+          <>
+            <Empty
+              title="Nenhum Produto Adicionado as Favoritos"
+              description=""
+            />
+            <p className="text-center">
+              Visite nossa página de
+              <Link href={NextRoutes.products} className="text-primary">
+                {' '}
+                produtos{' '}
+              </Link>
+              e adicione <br /> aos favoritos os produtos que você mais gostou
+              😊
+            </p>
+          </>
         )}
       </>
     )
@@ -58,7 +78,7 @@ const ProductList = ({
     return (
       <>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center justify-center my-4 mx-2">
-          {produtos.map((produto, index: number) => (
+          {produtos.map((produto: ProdutoEntity, index: number) => (
             <ProductCard
               id={produto?.id ? produto.id : ''}
               key={index}
@@ -78,14 +98,19 @@ const ProductList = ({
                   produto.attributes?.imagem_destaque?.data?.attributes?.formats
                     .small.url
                 ),
+                overImgSrc: getImageUrl(
+                  produto.attributes?.galeria?.data[0].attributes?.formats.small
+                    .url
+                ),
                 width:
                   produto.attributes?.imagem_destaque?.data?.attributes?.formats
                     .small.width,
                 height:
                   produto.attributes?.imagem_destaque?.data?.attributes?.formats
                     .small.height,
-                alt: produto.attributes?.imagem_destaque?.data?.attributes
-                  ?.caption
+                alt:
+                  produto.attributes?.imagem_destaque?.data?.attributes
+                    ?.caption || ''
               }}
             />
           ))}

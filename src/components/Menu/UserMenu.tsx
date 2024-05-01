@@ -20,7 +20,7 @@ const UserMenu = () => {
   const { data: session, status } = useSession()
 
   const desLogar = async () => {
-    await signOut({ callbackUrl: NextRoutes.signIn, redirect: false })
+    await signOut({ callbackUrl: NextRoutes.signIn, redirect: true })
   }
 
   return (

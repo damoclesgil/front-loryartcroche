@@ -4,6 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import Google from '@auth/core/providers/google'
 import type { NextAuthConfig } from 'next-auth'
 import { NextRoutes } from '@/utils/constant'
+import { Session } from 'inspector'
 
 declare module 'next-auth' {
   interface User {
@@ -75,6 +76,8 @@ export const config = {
     async session({ session, token }: { session: any; token: any }) {
       session.address = token.sub
       session.user.name = token.name
+      session.user.id = token.id
+      session.id = token.id
       session.jwt = token.jwt
       return Promise.resolve(session)
     },

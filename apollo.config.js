@@ -1,10 +1,20 @@
 module.exports = {
   client: {
     service: {
-      // name: 'strapi',
+      name: 'strapi-schema@current',
       url: 'http://localhost:1337/graphql'
     },
-    includes: ['./src/graphql/*.ts'],
-    excludes: ['node_modules/**/*']
+    tagName: 'gql',
+    addTypename: false,
+    excludes: [
+      './src/graphql/types.ts',
+      '**/__tests__/**/*',
+      '**/node_modules'
+    ],
+    includes: [
+      './src/graphql/queries/**/*.ts',
+      './src/graphql/fragments/**/*.ts',
+      './src/graphql/mutations/**/*.ts'
+    ]
   }
 }
