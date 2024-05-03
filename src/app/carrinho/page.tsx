@@ -1,9 +1,10 @@
 import { Metadata } from 'next'
 import CartList from './CartList'
 import Base from '@/templates/Base'
+import { defaultMetadata } from '@/utils/constant'
 
 export const metadata: Metadata = {
-  title: 'Lory Art Crochê | Carrinho'
+  title: `${defaultMetadata.title} - Carrinho`
 }
 
 export default function CartPage() {

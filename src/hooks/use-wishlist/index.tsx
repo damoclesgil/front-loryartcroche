@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { GET_FAVORITOS, useQueryFavoritos } from '@/graphql/queries/favoritos'
 import { useApolloClient, useMutation } from '@apollo/client'

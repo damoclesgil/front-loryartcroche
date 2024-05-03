@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getUrl } from './lib/get-url'
+import { getUrl } from './utils/get-url'
 import { NextRoutes, privateRoutes } from './utils/constant'
 
 export function middleware(request: NextRequest) {

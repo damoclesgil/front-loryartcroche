@@ -1,8 +1,8 @@
+import { defaultMetadata } from '@/utils/constant'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Lory Art Crochê - Produtos',
-  description: 'Lorilei, bolsas em crochê modernas e de Luxo'
+  title: `${defaultMetadata.title} - Produtos`
 }
 
 export default function RootLayout({

@@ -3,7 +3,7 @@ import { Montserrat, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import Providers from './providers'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { ApolloWrapper } from '@/utils/apolloWrapper'
+import { ApolloWrapper } from '@/utils/apollo/apolloWrapper'
 import { SessionProvider } from 'next-auth/react'
 import { Toaster } from '@/components/ui/toaster'
 

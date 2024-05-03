@@ -20,6 +20,20 @@ import SkeletonEffectProductPage from './_components/SkeletonEffectProductPage'
 import Base from '@/templates/Base'
 import Heading from '@/components/Heading'
 import ProductDetails from './_components/ProductDetails'
+// import { Metadata } from 'next'
+// import { defaultMetadata } from '@/utils/constant'
+
+// type PropsProduto = {
+//   params: {
+//     productId: string
+//   }
+// }
+
+// export const generateMetadata = ({ params }: PropsProduto): Metadata => {
+//   return {
+//     title: `${defaultMetadata.title} - Produto ${params.productId}`
+//   }
+// }
 
 export default function Page() {
   const productId = useSearchParams().get('id')
@@ -38,11 +52,6 @@ export default function Page() {
   })
 
   let currentProduct = null
-
-  if (loading) {
-    return <SkeletonEffectProductPage />
-    // return <Loader />
-  }
 
   if (error) {
     throw error
@@ -68,13 +77,15 @@ export default function Page() {
 
   return (
     <Base backgroundImg="croche-pink" sizeBg="medium">
+      {loading && <SkeletonEffectProductPage />}
+
       <div className="mb-1">
         {currentProduct && (
           <>
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr] justify-between">
               <div className="flex flex-col">
                 {/*  @ts-ignore */}
-                <Gallery items={currentProduct.gallery} key="-1" />
+                <Gallery items={currentProduct?.gallery} key="-1" />
               </div>
               <div className="flex flex-col mt-4 md:mt-0">
                 <Heading size="huge" className="mb-2">

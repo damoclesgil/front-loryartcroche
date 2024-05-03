@@ -1,3 +1,5 @@
+'use client'
+
 import { useGetProdutosQuery } from '@/graphql/types'
 import formatPrice from '@/utils/format-price'
 import { getStorageItem, setStorageItem } from '@/utils/localStorage'

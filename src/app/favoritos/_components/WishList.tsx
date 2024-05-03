@@ -28,7 +28,7 @@ const WishList = () => {
     <>
       <ProductList
         // @ts-ignore
-        produtos={data?.favoritos?.data[0].attributes?.produtos?.data}
+        produtos={data?.favoritos?.data[0]?.attributes?.produtos?.data}
         loading={loadingFavoritos}
         page="favoritos"
         error={error}

@@ -1,6 +1,6 @@
-import { getClient } from '@/utils/apollo'
+import { getClient } from '@/utils/apollo/apollo'
 import { AllProducts } from './AllProducts'
-import { ApolloWrapper } from '@/utils/apolloWrapper'
+import { ApolloWrapper } from '@/utils/apollo/apolloWrapper'
 import { GetProdutosDocument } from '@/graphql/types'
 
 export const dynamic = 'force-dynamic'

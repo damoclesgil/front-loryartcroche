@@ -1,3 +1,5 @@
+import { Metadata } from 'next'
+
 export const links = {
   WhatsApp: 'https://wa.me/+5562996725529',
   Instagram: 'https://www.instagram.com/loryartcroche/',
@@ -27,4 +29,9 @@ export const privateRoutes = {
 export const NextRoutes = {
   ...publicRoutes,
   ...privateRoutes
+}
+
+export const defaultMetadata: Metadata = {
+  title: 'Lory Art Crochê',
+  description: 'Lorilei, bolsas em crochê modernas e de Luxo'
 }

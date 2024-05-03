@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { Toaster } from '@/components/ui/toaster'
-import { ApolloWrapper } from '@/utils/apolloWrapper'
+import Base from '@/templates/Base'
 
+import { ApolloWrapper } from '@/utils/apollo/apolloWrapper'
 export const metadata: Metadata = {
-  title: 'Lory Art Crochê - Registrar',
+  title: 'Lory Art Crochê - Client Side',
   description: 'Lorilei, bolsas em crochê modernas e de Luxo'
 }
 
@@ -13,11 +13,8 @@ export default async function Layout({
   children: React.ReactNode
 }) {
   return (
-    <>
-      <ApolloWrapper>
-        {children}
-        <Toaster />
-      </ApolloWrapper>
-    </>
+    <ApolloWrapper>
+      <Base>{children}</Base>
+    </ApolloWrapper>
   )
 }
