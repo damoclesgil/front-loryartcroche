@@ -6,6 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ApolloWrapper } from '@/utils/apollo/apolloWrapper'
 import { SessionProvider } from 'next-auth/react'
 import { Toaster } from '@/components/ui/toaster'
+import { defaultMetadata } from '@/utils/constant'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -19,8 +20,12 @@ const playfair_display = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Lory Art Crochê',
-  description: 'Lorilei, bolsas em crochê modernas e de Luxo'
+  title: {
+    absolute: '',
+    default: defaultMetadata.title || '',
+    template: `%s | ${defaultMetadata.title}`
+  },
+  description: defaultMetadata.description
 }
 
 /* RUN IN A SERVER SIDE */

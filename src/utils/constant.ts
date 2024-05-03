@@ -31,7 +31,7 @@ export const NextRoutes = {
   ...privateRoutes
 }
 
-export const defaultMetadata: Metadata = {
+export const defaultMetadata = {
   title: 'Lory Art Crochê',
   description: 'Lorilei, bolsas em crochê modernas e de Luxo'
 }

@@ -4,7 +4,6 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import Google from '@auth/core/providers/google'
 import type { NextAuthConfig } from 'next-auth'
 import { NextRoutes } from '@/utils/constant'
-import { Session } from 'inspector'
 
 declare module 'next-auth' {
   interface User {

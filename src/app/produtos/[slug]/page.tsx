@@ -1,10 +1,10 @@
 'use client'
 
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 // const Tabs = dynamic(() => import('@/components/Tabs'), { ssr: false })
-const ProductTabs = dynamic(() => import('./_components/ProductTabs'), {
-  ssr: false
-})
+// const ProductTabs = dynamic(() => import('./_components/ProductTabs'), {
+//   ssr: false
+// })
 // import ProductTabs from './_components/ProductTabs'
 import formatPrice from '@/utils/format-price'
 import { Button } from '@/components/ui/button'
@@ -31,7 +31,7 @@ import ProductDetails from './_components/ProductDetails'
 
 // export const generateMetadata = ({ params }: PropsProduto): Metadata => {
 //   return {
-//     title: `${defaultMetadata.title} - Produto ${params.productId}`
+//     title: `Produto ${params.productId}`
 //   }
 // }
 
@@ -123,7 +123,7 @@ export default function Page() {
               </div>
             </div>
 
-            <ProductTabs htmlContent={currentProduct.detalhes} />
+            {/* <ProductTabs htmlContent={currentProduct.detalhes} /> */}
           </>
         )}
       </div>
