@@ -1,3 +1,5 @@
+'use client'
+
 import { CreditCard, Favorite, Pix } from '@styled-icons/material-outlined'
 
 const SkeletonEffectProductPage = () => {

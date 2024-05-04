@@ -13,8 +13,8 @@ export default async function Layout({
   children: React.ReactNode
 }) {
   return (
-    <ApolloWrapper>
-      <Base>{children}</Base>
-    </ApolloWrapper>
+    <>
+      <>{children}</>
+    </>
   )
 }

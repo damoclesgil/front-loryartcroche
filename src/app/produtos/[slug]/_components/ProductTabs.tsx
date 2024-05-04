@@ -1,4 +1,3 @@
-'use client'
 import Tabs from '@/components/Tabs'
 
 export type ProductTabsProps = {

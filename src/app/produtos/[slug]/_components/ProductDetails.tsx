@@ -1,5 +1,3 @@
-'use client'
-
 export type ProductDetailsProps = {
   htmlContent: any
 }

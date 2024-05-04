@@ -1,5 +1,3 @@
-'use client'
-
 import formatPrice from '@/utils/format-price'
 import { Share1Icon } from '@radix-ui/react-icons'
 

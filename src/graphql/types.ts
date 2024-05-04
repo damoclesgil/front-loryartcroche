@@ -46,6 +46,40 @@ export type BooleanFilterInput = {
   startsWith?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type Comentario = {
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  texto?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type ComentarioEntity = {
+  attributes?: Maybe<Comentario>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ComentarioEntityResponse = {
+  data?: Maybe<ComentarioEntity>;
+};
+
+export type ComentarioEntityResponseCollection = {
+  data: Array<ComentarioEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ComentarioFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComentarioFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<ComentarioFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComentarioFiltersInput>>>;
+  texto?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ComentarioInput = {
+  texto?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type DateTimeFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
@@ -210,7 +244,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = EmailDesignerEmailTemplate | Favorito | I18NLocale | Ordem | Produto | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Comentario | EmailDesignerEmailTemplate | Favorito | I18NLocale | Ordem | Produto | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   code?: Maybe<Scalars['String']['output']>;
@@ -347,6 +381,7 @@ export type LongFilterInput = {
 export type Mutation = {
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
+  createComentario?: Maybe<ComentarioEntityResponse>;
   createEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   createFavorito?: Maybe<FavoritoEntityResponse>;
   createOrdem?: Maybe<OrdemEntityResponse>;
@@ -357,6 +392,7 @@ export type Mutation = {
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteComentario?: Maybe<ComentarioEntityResponse>;
   deleteEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   deleteFavorito?: Maybe<FavoritoEntityResponse>;
   deleteOrdem?: Maybe<OrdemEntityResponse>;
@@ -378,6 +414,7 @@ export type Mutation = {
   removeFile?: Maybe<UploadFileEntityResponse>;
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
+  updateComentario?: Maybe<ComentarioEntityResponse>;
   updateEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   updateFavorito?: Maybe<FavoritoEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
@@ -397,6 +434,11 @@ export type MutationChangePasswordArgs = {
   currentPassword: Scalars['String']['input'];
   password: Scalars['String']['input'];
   passwordConfirmation: Scalars['String']['input'];
+};
+
+
+export type MutationCreateComentarioArgs = {
+  data: ComentarioInput;
 };
 
 
@@ -437,6 +479,11 @@ export type MutationCreateUsersPermissionsRoleArgs = {
 
 export type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
+};
+
+
+export type MutationDeleteComentarioArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -517,6 +564,12 @@ export type MutationResetPasswordArgs = {
   code: Scalars['String']['input'];
   password: Scalars['String']['input'];
   passwordConfirmation: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateComentarioArgs = {
+  data: ComentarioInput;
+  id: Scalars['ID']['input'];
 };
 
 
@@ -727,6 +780,8 @@ export type ProdutoRelationResponseCollection = {
 };
 
 export type Query = {
+  comentario?: Maybe<ComentarioEntityResponse>;
+  comentarios?: Maybe<ComentarioEntityResponseCollection>;
   emailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   emailDesignerEmailTemplates?: Maybe<EmailDesignerEmailTemplateEntityResponseCollection>;
   favorito?: Maybe<FavoritoEntityResponse>;
@@ -746,6 +801,18 @@ export type Query = {
   usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>;
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
   usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>;
+};
+
+
+export type QueryComentarioArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryComentariosArgs = {
+  filters?: InputMaybe<ComentarioFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 

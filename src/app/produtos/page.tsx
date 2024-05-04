@@ -1,5 +1,11 @@
 'use client'
 
+// import type { Metadata } from 'next'
+
+// export const metadata: Metadata = {
+//   title: 'Produtos'
+// }
+
 import ExploreSidebar from '@/components/ExploreSidebar'
 import InstagramSection from '@/components/InstagramSection'
 import ProductList from '@/components/ProductList'
