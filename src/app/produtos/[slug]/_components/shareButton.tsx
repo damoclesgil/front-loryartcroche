@@ -1,18 +1,18 @@
 import formatPrice from '@/utils/format-price'
 import { Share1Icon } from '@radix-ui/react-icons'
+import { Produto } from '@/utils/types/Produto.type'
 
-// export type shareButtonProps = {
-//   name: string,
-//   price: number
-// }
+type shareButtonProps = {
+  product: Produto
+}
 
-export function ShareButton(product: any) {
+export function ShareButton({ product }: shareButtonProps) {
   const shareProduct = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: product.name,
-          text: `Check out this product: ${product.name} - ${formatPrice(Number(product.price))}`,
+          title: product.nome,
+          text: `Check out this product: ${product.nome} - ${formatPrice(Number(product.preco))}`,
           url: window.location.href
         })
         console.log('Product shared successfully')

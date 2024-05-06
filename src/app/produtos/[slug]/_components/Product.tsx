@@ -16,9 +16,10 @@ import { PaymentMethods } from './PaymentMethods'
 import ColorOptions from './ColorOptions'
 import Heading from '@/components/Heading'
 import ProductDetails from './ProductDetails'
+import { Produto } from '@/utils/types/Produto.type'
 
 type productProps = {
-  currentProduct: any
+  currentProduct: Produto
 }
 // export const dynamic = 'force-dynamic'
 
@@ -37,25 +38,23 @@ const Product = ({ currentProduct }: productProps) => {
           <>
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.5fr_1fr] justify-between">
               <div className="flex flex-col">
-                {/*  @ts-ignore */}
-                <Gallery items={currentProduct?.gallery} key="-1" />
+                <Gallery galeria={currentProduct?.galeria} key="-1" />
               </div>
               <div className="flex flex-col mt-4 md:mt-0">
                 <Heading size="huge" className="mb-2">
-                  {currentProduct.name}
+                  {currentProduct.nome}
                 </Heading>
 
                 <p className="font-bold text-lg mb-2">
-                  {formatPrice(Number(currentProduct.price))}
+                  {formatPrice(Number(currentProduct.preco))}
                 </p>
 
-                <ProductDetails htmlContent={currentProduct.detalhes} />
+                <ProductDetails htmlContent={currentProduct.descricao} />
 
                 <ColorOptions product={currentProduct} />
 
                 <div className="flex items-center mb-2 ml-[-0.35rem]">
-                  {/* @ts-ignore */}
-                  <WishlistButton id={currentProduct.id} />
+                  <WishlistButton id={currentProduct.documentId} />
                 </div>
 
                 <ShareButton product={currentProduct} />
@@ -63,13 +62,11 @@ const Product = ({ currentProduct }: productProps) => {
                 <PaymentMethods />
 
                 <Button
-                  // @ts-ignore
-                  onClick={() => handleClick(currentProduct.id)}
+                  onClick={() => handleClick(currentProduct.documentId)}
                   className="mt-4 uppercase font-bold"
                   size="lg"
                 >
-                  {/* @ts-ignore */}
-                  {isInCart(currentProduct.id)
+                  {isInCart(currentProduct.documentId)
                     ? 'Remover do Carrinho'
                     : 'Adicionar ao Carrinho'}
                 </Button>

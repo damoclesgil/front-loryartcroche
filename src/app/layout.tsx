@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     template: `%s | ${defaultMetadata.title}`
   },
   description: defaultMetadata.description
+  // openGraph: {
+  //   images: ['/some-specific-page-image.jpg'],
+  // },
 }
 
 /* RUN IN A SERVER SIDE */

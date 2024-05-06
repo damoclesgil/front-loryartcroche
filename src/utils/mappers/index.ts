@@ -70,7 +70,7 @@ export const normalize = (data: any) => {
     if (!data.attributes) return data
 
     return {
-      id: data.id,
+      documentId: data.id,
       ...data.attributes
     }
   }

@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { Produto } from '@/utils/types/Produto.type'
 
 export type colorOptionsProps = {
-  product: any
+  product: Produto
 }
 
 const ColorOptions = ({ product }: colorOptionsProps) => {
@@ -26,19 +27,17 @@ const ColorOptions = ({ product }: colorOptionsProps) => {
             }`}
             href={{
               pathname: product.slug,
-              query: { id: product.id }
+              query: { id: product.documentId }
             }}
           ></Link>
         )}
 
-        {product.produtoReferentes &&
-          product.produtoReferentes.map((product: any, iColor: any) => (
+        {product?.produtosReferentes &&
+          product?.produtosReferentes.map((product, iColor) => (
             <Link
               key={`color_${iColor}`}
               style={{
-                backgroundColor: product.attributes?.cor
-                  ? product.attributes?.cor
-                  : '#fff'
+                backgroundColor: product?.cor ? product?.cor : '#fff'
               }}
               className={`w-8 h-8 rounded-full border-gray-600 focus:border-2 mr-1.5 ${
                 pathname === `/produtos/${product.slug}`
@@ -46,8 +45,8 @@ const ColorOptions = ({ product }: colorOptionsProps) => {
                   : 'border'
               }`}
               href={{
-                pathname: product.attributes?.slug,
-                query: { id: product.id }
+                pathname: product?.slug,
+                query: { id: product.documentId }
               }}
             ></Link>
           ))}

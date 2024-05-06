@@ -31,10 +31,7 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => {
     <Link
       className="product-card w-full h-auto px-0 block m-auto relative rounded-md"
       href={{
-        pathname: `${NextRoutes.products}/${id}`,
-        // params : {
-        //   id: '4',
-        // },
+        pathname: `${NextRoutes.products}/${slug}`,
         query: { id: id }
       }}
     >
