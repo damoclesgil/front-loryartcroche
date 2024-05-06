@@ -12,29 +12,31 @@ export const dynamic = 'force-dynamic'
 
 type PropsProduto = {
   params?: {
-    id: string
     slug: string
   }
-  searchParams?: {
+  searchParams: {
     id: string
   }
 }
 
-async function getProduct({ searchParams }: PropsProduto) {
-  // console.log('sera que ta fazendo duas vezes a query?')
+// let produto = null as Produto | null
+
+async function getProduct(id: string) {
   const { data, error } = await getClient().query({
     query: GetProdutoDocument,
     // context: {
     //   headers: session ? `Bearer ${session.jwt}` : ``
     // },
     variables: {
-      produtoId: searchParams?.id
+      produtoId: id
     },
     fetchPolicy: 'no-cache'
   })
 
+  const produto = normalize(data?.produto) as Produto | null
+
   return {
-    data,
+    produto,
     error
   }
 }
@@ -42,11 +44,10 @@ async function getProduct({ searchParams }: PropsProduto) {
 export async function generateMetadata({
   searchParams
 }: PropsProduto): Promise<Metadata> {
-  const { data } = await getProduct({ searchParams })
-  let product = normalize(data.produto) as Produto
+  const { produto } = await getProduct(searchParams.id)
 
   return {
-    title: `${product.nome}`
+    title: `${produto?.nome}`
   }
 }
 
@@ -68,17 +69,7 @@ export async function generateMetadata({
 // }
 
 export default async function ProductPage({ searchParams }: PropsProduto) {
-  const { data, error } = await getProduct({ searchParams })
-
-  let produto = null
-  if (error) {
-    throw error
-  }
-
-  if (data) {
-    produto = normalize(data?.produto) as Produto
-    // console.log(produto)
-  }
+  const { produto } = await getProduct(searchParams.id)
 
   return (
     <Base backgroundImg="croche-pink" sizeBg="medium">
@@ -86,10 +77,6 @@ export default async function ProductPage({ searchParams }: PropsProduto) {
         <Suspense fallback={<SkeletonEffectProductPage />}>
           {/* {loading && <SkeletonEffectProductPage />} */}
 
-          {/* {JSON.stringify(loading)} */}
-          {/* {JSON.stringify(params)} */}
-          {/* {JSON.stringify(data)} */}
-          {/* {JSON.stringify(currentProduct)} */}
           {produto && <Product currentProduct={produto} />}
         </Suspense>
       </>

@@ -6,7 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ApolloWrapper } from '@/utils/apollo/apolloWrapper'
 import { SessionProvider } from 'next-auth/react'
 import { Toaster } from '@/components/ui/toaster'
-import { defaultMetadata } from '@/utils/constant'
+import { defaultMetadata, links } from '@/utils/constant'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -25,10 +25,28 @@ export const metadata: Metadata = {
     default: defaultMetadata.title || '',
     template: `%s | ${defaultMetadata.title}`
   },
-  description: defaultMetadata.description
-  // openGraph: {
-  //   images: ['/some-specific-page-image.jpg'],
-  // },
+  keywords: ['Lory Art', 'Bolsas', 'Crochê'],
+  authors: [
+    { name: 'damoclesgil' },
+    { name: 'loryartcroche', url: links.websiteUrl }
+  ],
+  publisher: 'Dâmocles Gil Marçal',
+  creator: 'Dâmocles Gil Marçal',
+  description: defaultMetadata.description,
+  openGraph: {
+    title: defaultMetadata.title || '',
+    url: links.websiteUrl,
+    description: defaultMetadata.description,
+    images: [
+      {
+        url: '/og-image-lory-art-croche.jpg',
+        width: 1200,
+        height: 630
+      }
+    ],
+    locale: 'pt_BR',
+    type: 'website'
+  }
 }
 
 /* RUN IN A SERVER SIDE */
