@@ -1,11 +1,15 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
-import { useQueryFavoritos } from '@/graphql/queries/favoritos'
 import ProductList from '@/components/ProductList'
+// import { useFavoritosAction } from '../actions'
+// import { Suspense } from 'react'
+import { useQueryFavoritos } from '@/graphql/queries/favoritos'
 
 const WishList = () => {
   const { data: session } = useSession()
+
+  // const { data, loading, error } = await useFavoritosAction()
 
   const {
     data,
@@ -36,6 +40,17 @@ const WishList = () => {
         // @ts-ignore
         pagination={data?.favoritos?.meta?.pagination}
       />
+      {/* <Suspense>
+        <p>{JSON.stringify(data.favoritos)}</p>
+        <ProductList
+          produtos={data.favoritos?.[0]?.produtos}
+          loading={loading}
+          page="favoritos"
+          error={error}
+          loadMore={() => {}}
+          pagination={data.favoritos?.meta?.pagination}
+        />
+      </Suspense> */}
     </>
   )
 }
