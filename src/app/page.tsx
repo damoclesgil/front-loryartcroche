@@ -1,13 +1,18 @@
-'use client'
-
 import Heading from '@/components/Heading'
 import InstagramSection from '@/components/InstagramSection'
 import ProductList from '@/components/ProductList'
-import { useGetProdutosQuery } from '@/graphql/types'
+import { GetProdutosDocument, useGetProdutosQuery } from '@/graphql/types'
 import Base from '@/templates/Base'
+import { getClient } from '@/utils/apollo/apollo'
+import { normalize } from '@/utils/mappers'
 
-export default function Home() {
-  const { data, error, loading, fetchMore } = useGetProdutosQuery({
+async function getProdutos() {
+  const {
+    data: dataProdutos,
+    error,
+    loading
+  } = await getClient().query({
+    query: GetProdutosDocument,
     variables: {
       sort: ['id:ASC'],
       pagination: {
@@ -18,18 +23,47 @@ export default function Home() {
     fetchPolicy: 'no-cache'
   })
 
-  const handleShowMore = () => {
-    fetchMore({
-      variables: {
-        sort: ['id:ASC'],
-        pagination: {
-          pageSize: data?.produtos?.meta.pagination.pageSize,
-          page: data?.produtos?.meta.pagination.page
-            ? data?.produtos?.meta.pagination.page + 1
-            : 1
-        }
-      }
-    })
+  const pagination = dataProdutos.produtos.meta.pagination
+
+  const data = normalize(dataProdutos)
+
+  return {
+    data,
+    pagination,
+    error,
+    loading
+  }
+}
+
+export default async function Home() {
+  const { data, pagination, error, loading } = await getProdutos()
+
+  // const { data, error, loading, fetchMore } = useGetProdutosQuery({
+  //   variables: {
+  //     sort: ['id:ASC'],
+  //     pagination: {
+  //       pageSize: 10,
+  //       page: 1
+  //     }
+  //   },
+  //   fetchPolicy: 'no-cache'
+  // })
+
+  const handleShowMore = async () => {
+    'use server'
+    console.log('asd')
+    return null
+    // fetchMore({
+    //   variables: {
+    //     sort: ['id:ASC'],
+    //     pagination: {
+    //       pageSize: data?.produtos?.meta.pagination.pageSize,
+    //       page: data?.produtos?.meta.pagination.page
+    //         ? data?.produtos?.meta.pagination.page + 1
+    //         : 1
+    //     }
+    //   }
+    // })
   }
 
   return (
@@ -39,15 +73,14 @@ export default function Home() {
         <br />
         Perfeito para todas as ocasiões.
       </Heading>
+      {/* {JSON.stringify(pagination)} */}
       <ProductList
-        // @ts-ignore
-        produtos={data?.produtos.data}
+        produtos={data.produtos}
         loading={loading}
         error={error}
-        page="inicio"
         loadMore={handleShowMore}
-        // @ts-ignore
-        pagination={data?.produtos.meta.pagination}
+        page="inicio"
+        pagination={pagination}
       />
       <InstagramSection />
     </Base>

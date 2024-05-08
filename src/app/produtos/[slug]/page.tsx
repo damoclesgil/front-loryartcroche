@@ -8,7 +8,7 @@ import { GetProdutoDocument } from '@/graphql/types'
 import { normalize } from '@/utils/mappers'
 import { Produto } from '@/utils/types/Produto.type'
 
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
 
 type PropsProduto = {
   params?: {

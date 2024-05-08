@@ -1,5 +1,6 @@
 import Menu from '@/components/Menu'
 import Footer from '@/components/Footer'
+import { auth } from '@/services/auth'
 
 export type baseProps = {
   backgroundImg?:
@@ -11,13 +12,16 @@ export type baseProps = {
   sizeBg?: 'small' | 'medium' | 'large'
 }
 
-const Base = ({
+const Base = async ({
   children,
   backgroundImg = 'accessorios-croche',
   sizeBg = 'large'
 }: baseProps) => {
+  // const session = await auth()
+
   return (
     <>
+      {/* user={session?.user} */}
       <Menu />
       <div
         className={`w-full bg-no-repeat relative h-auto max-w-full ${sizeBg === 'large' && 'min-h-[350px] lg:min-h-[540px]'} ${sizeBg === 'medium' && 'min-h-[200px] lg:min-h-[300px]'} ${sizeBg === 'small' && 'min-h-[150px] lg:min-h-[200px]'}`}

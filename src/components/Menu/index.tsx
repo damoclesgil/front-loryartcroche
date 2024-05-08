@@ -10,9 +10,14 @@ import CartMenu from './CartMenu'
 import { FavoriteBorder } from '@styled-icons/material-outlined'
 import { Button, buttonVariants } from '../ui/button'
 import NavList from './NavList'
+import { Session } from 'next-auth'
 // import SearchProducts from './SearchProducts'
+// type MenuProps = {
+//   user: Session['user']
+// }
 
 const Menu = () => {
+  // console.log(user)
   const [isOpen, setIsOpen] = useState(false)
 
   return (
