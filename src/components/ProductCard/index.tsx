@@ -1,19 +1,19 @@
-'use client'
+// 'use client'
 
 import Link from 'next/link'
 import Image from 'next/image'
 import formatPrice from '@/utils/format-price'
-import { links, NextRoutes } from '@/utils/constant'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { NextRoutes } from '@/utils/constant'
+// import { Button, buttonVariants } from '@/components/ui/button'
 import WishlistButton from '@/components/WishlistButton'
 import CartButton from '@/components/CartButton'
 import { useSession } from 'next-auth/react'
 import './style.css'
-import { ProdutoFragmentFragment } from '@/graphql/types'
+// import { ProdutoFragmentFragment } from '@/graphql/types'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 
 export type ProductCardProps = {
-  id: string
+  documentId: string
   slug: string
   name: string
   img: {
@@ -26,7 +26,13 @@ export type ProductCardProps = {
   price: number
 }
 
-const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => {
+const ProductCard = ({
+  documentId,
+  slug,
+  name,
+  img,
+  price
+}: ProductCardProps) => {
   const { status } = useSession()
 
   return (
@@ -34,13 +40,13 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => {
       className="product-card w-full h-auto px-0 block m-auto relative rounded-md"
       href={{
         pathname: `${NextRoutes.products}/${slug}`,
-        query: { id: id }
+        query: { id: documentId }
       }}
     >
       <div className="flex flex-col relative">
         {status === 'authenticated' && (
           <div className="absolute right-0 wishlist-btn opacity-100 transition-opacity duration-150 z-10">
-            <WishlistButton id={id} />
+            <WishlistButton id={documentId} />
           </div>
         )}
 
@@ -69,7 +75,7 @@ const ProductCard = ({ id, slug, name, img, price }: ProductCardProps) => {
         </div>
 
         <div className="absolute bottom-14 right-0 opacity-0 cart-btn transition-opacity duration-150">
-          <CartButton id={id} />
+          <CartButton id={documentId} />
         </div>
 
         <div className="flex flex-col justify-start items-start m-2">

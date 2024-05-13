@@ -91,11 +91,54 @@ export const normalize = (data: any) => {
     }
 
     for (const key in data) {
-      data[key] = normalize(data[key])
+      // console.log(data[key])
+      if (data[key] !== undefined && data[key] !== 'ext') {
+        data[key] = normalize(data[key])
+      }
     }
 
     return data
   }
 
   return data
+}
+
+function flattenArray(obj: any) {
+  return obj.map((e: any) => flatten(e))
+}
+
+// @ts-ignore
+function flattenData(obj: any) {
+  return flatten(obj.data)
+}
+
+function flattenAttrs(obj: any) {
+  let attrs = {}
+  for (var key in obj.attributes) {
+    // @ts-ignore
+    attrs[key] = flatten(obj.attributes[key])
+  }
+  return {
+    id: obj.id,
+    ...attrs
+  }
+}
+
+// @ts-ignore
+export function flatten(obj: any) {
+  if (Array.isArray(obj)) {
+    return flattenArray(obj)
+  }
+  if (obj && obj.data) {
+    return flattenData(obj)
+  }
+  if (obj && obj.attributes) {
+    return flattenAttrs(obj)
+  }
+  for (var k in obj) {
+    if (typeof obj[k] == 'object') {
+      obj[k] = flatten(obj[k])
+    }
+  }
+  return obj
 }

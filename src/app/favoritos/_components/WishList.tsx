@@ -5,6 +5,7 @@ import ProductList from '@/components/ProductList'
 // import { useFavoritosAction } from '../actions'
 // import { Suspense } from 'react'
 import { useQueryFavoritos } from '@/graphql/queries/favoritos'
+import { flatten, normalize } from '@/utils/mappers'
 
 const WishList = () => {
   const { data: session } = useSession()
@@ -28,31 +29,41 @@ const WishList = () => {
     }
   })
 
-  return (
-    <>
-      <ProductList
-        // @ts-ignore
-        produtos={data?.favoritos?.data[0]?.attributes?.produtos?.data}
-        loading={loadingFavoritos}
-        page="favoritos"
-        error={error}
-        loadMore={() => {}}
-        // @ts-ignore
-        pagination={data?.favoritos?.meta?.pagination}
-      />
-      {/* <Suspense>
-        <p>{JSON.stringify(data.favoritos)}</p>
+  if (data) {
+    let produtos = data?.favoritos?.data[0]?.attributes?.produtos?.data.map(
+      (produto) => {
+        return {
+          documentId: produto?.id,
+          cor: produto.attributes?.cor,
+          nome: produto.attributes?.nome,
+          descricao: produto.attributes?.descricao,
+          nomeCor: produto.attributes?.nomeCor,
+          preco: produto.attributes?.preco,
+          slug: produto.attributes?.slug,
+          produtosReferentes: normalize(produto.attributes?.produtosReferentes),
+          galeria: produto.attributes?.galeria,
+          imagem_destaque: produto.attributes?.imagem_destaque?.data?.attributes
+        }
+      }
+    )
+
+    let pagination = data?.favoritos?.meta?.pagination
+
+    return (
+      <>
         <ProductList
-          produtos={data.favoritos?.[0]?.produtos}
-          loading={loading}
+          // @ts-ignore
+          produtos={produtos}
+          loading={loadingFavoritos}
           page="favoritos"
           error={error}
           loadMore={() => {}}
-          pagination={data.favoritos?.meta?.pagination}
+          // @ts-ignore
+          pagination={pagination}
         />
-      </Suspense> */}
-    </>
-  )
+      </>
+    )
+  }
 }
 
 export default WishList

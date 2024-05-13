@@ -5,6 +5,7 @@ import InstagramSection from '@/components/InstagramSection'
 import ProductList from '@/components/ProductList'
 import { useGetProdutosQuery } from '@/graphql/types'
 import Base from '@/templates/Base'
+import { normalize } from '@/utils/mappers'
 
 export default function Home() {
   const { data, error, loading, fetchMore } = useGetProdutosQuery({
@@ -32,6 +33,9 @@ export default function Home() {
     })
   }
 
+  let produtosData = normalize(data?.produtos)
+  let pagination = data?.produtos?.meta
+
   return (
     <Base backgroundImg="croche-cofe">
       <Heading className="mb-12 text-center">
@@ -41,13 +45,13 @@ export default function Home() {
       </Heading>
       <ProductList
         // @ts-ignore
-        produtos={data?.produtos.data}
+        produtos={produtosData}
         loading={loading}
         error={error}
         page="inicio"
         loadMore={handleShowMore}
         // @ts-ignore
-        pagination={data?.produtos.meta.pagination}
+        pagination={pagination}
       />
       <InstagramSection />
     </Base>
