@@ -34,9 +34,11 @@ export default async function ServerSidePage() {
         rondando o projeto
       </p>
       <p>
-        Se eu quiser usar um server component dentro de um cliet component e so
-        usar o `children` do react
+        Se eu quiser usar um server component dentro de um client component e so
+        usar o `children` esse children suporta o cliente `server side`
+        tranquilo do react
       </p>
+      {/* <p>existe o metodos revalidatePath('/produtos') caso queira atualizar os dados da tela </p> */}
       {/* <ApolloWrapper> */}
       {result}
       {/* <AllProducts products={data.data.produtos?.data} /> */}
