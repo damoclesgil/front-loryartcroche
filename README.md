@@ -12,12 +12,11 @@ This project uses lot of stuff as:
 
 - [TypeScript](https://www.typescriptlang.org/)
 - [NextJS](https://nextjs.org/)
-- [Styled Components](https://styled-components.com/)
 - [Eslint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 - [Husky](https://github.com/typicode/husky)
 
-## aa
+## **aa**
 
 Update Libs
 
@@ -39,3 +38,18 @@ ncu -i
 - [] colocar uma opção de gerar o rgb talvez?
 - [] configurar o CKEditor rich text.
 - [] configurar color picker
+
+Para simular se está carregando localmente colocar um e ver se o loading state is work fine.
+
+```js
+await new Promise((resolve) => setTimeout(resolve, 3000));
+```
+
+O suspense vai ser bom quando quero setar o estado componente especifico sem trocar a pagina toda. https://youtu.be/5QP0mvrJkiY?t=4957
+
+```javascriptreact
+
+<Suspense fallback="Loading...">
+  <Product />
+</Suspense>
+```

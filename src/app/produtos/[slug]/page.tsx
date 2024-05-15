@@ -19,8 +19,6 @@ type PropsProduto = {
   }
 }
 
-// let produto = null as Produto | null
-
 async function getProduct(id: string) {
   const { data, error } = await getClient().query({
     query: GetProdutoDocument,
@@ -51,32 +49,16 @@ export async function generateMetadata({
   }
 }
 
-// export async function generateStaticParams() {
-//   const { data, error } = await getClient().query({
-//     query: GetProdutosDocument,
-//     fetchPolicy: 'no-cache'
-//   })
-
-//   const paths = data.produtos.data.map((produto: ProdutoEntity) => {
-//     return {
-//       params: { slug: produto?.attributes?.slug || '', id: produto.id }
-//     }
-//   })
-//   // as GetProdutosQuery
-//   console.log('generateStaticParams', paths)
-//   return paths
-
-// }
-
 export default async function ProductPage({ searchParams }: PropsProduto) {
+  // TODO: Simular o loading, lembar de remove quando for para prod
+  await new Promise((resolve) => setTimeout(resolve, 3000))
   const { produto } = await getProduct(searchParams.id)
 
+  // Seria assim que simula o loading do lado server side utilziando o suspense
   return (
     <Base backgroundImg="croche-pink" sizeBg="medium">
       <>
         <Suspense fallback={<SkeletonEffectProductPage />}>
-          {/* {loading && <SkeletonEffectProductPage />} */}
-
           {produto && <Product currentProduct={produto} />}
         </Suspense>
       </>
