@@ -53,3 +53,9 @@ O suspense vai ser bom quando quero setar o estado componente especifico sem tro
   <Product />
 </Suspense>
 ```
+
+## FAQ
+
+A real é que o APOLLO não funciona muito bem para server side.
+
+Talvez no caso para server side seria melhor utilizar api rest normal mesmo para renderizar os produtos e tals no lado do servidor sem bugar e sem ter problemas.

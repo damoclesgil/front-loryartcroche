@@ -35,3 +35,8 @@ export const defaultMetadata = {
   title: 'Lory Art Crochê',
   description: 'Lorilei, bolsas em crochê modernas e de Luxo'
 }
+
+export enum ErrorCode {
+  AccessTokenExpired = 'AUTH-AT-EXP',
+  RefreshTokenExpired = 'AUTH-RT-EXP'
+}
