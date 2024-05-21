@@ -11,11 +11,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { TextError } from '@/components/ui/text-error'
 import { toast } from '@/components/ui/use-toast'
-import { useSearchParams } from 'next/navigation'
+// import { useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { ErrorOutline } from '@styled-icons/material-outlined'
 
-export function FormResetPassword() {
+type resetPasswordProps = {
+  codeParam: string
+}
+
+export function FormResetPassword({ codeParam }: resetPasswordProps) {
   const {
     handleSubmit,
     register,
@@ -26,7 +30,8 @@ export function FormResetPassword() {
     resolver: zodResolver(resetPasswordValidate)
   })
 
-  const code = useSearchParams().get('code')
+  // useSearchParams().get('code')
+  const code = codeParam
 
   const onSubmit = handleSubmit(async (values) => {
     const response = await fetch(

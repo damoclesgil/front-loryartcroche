@@ -5,10 +5,18 @@ export const metadata = {
   title: 'Redefinir Senha'
 }
 
-export default function ResetPasswordPage() {
+type PropsResetPassword = {
+  searchParams: {
+    code: string
+  }
+}
+
+export default function ResetPasswordPage({
+  searchParams
+}: PropsResetPassword) {
   return (
     <Auth>
-      <FormResetPassword />
+      <FormResetPassword codeParam={searchParams.code} />
     </Auth>
   )
 }

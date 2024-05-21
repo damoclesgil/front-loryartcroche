@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     description: defaultMetadata.description,
     images: [
       {
-        url: '/og-image-lory-art-croche.jpg',
+        url: `${links.websiteUrl}/og-image-lory-art-croche.jpg`,
         width: 1200,
         height: 630
       }

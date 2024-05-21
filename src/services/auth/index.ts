@@ -63,6 +63,7 @@ export const config = {
     strategy: 'jwt'
   },
   secret: process.env.JWT_SECRET,
+  trustHost: true,
   pages: {
     signIn: NextRoutes.signIn,
     signOut: NextRoutes.signUp,
