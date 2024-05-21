@@ -3,6 +3,8 @@
 import { normalize } from '@/utils/mappers'
 
 // Demo Ecommerce para ver e estudoar https://github.com/vercel/commerce/tree/main
+
+// Também da para utilizar o https://tanstack.com/query/v3 para fazer querys com rest api normal
 export async function getProduto(
   produtoId: string
 ): Promise<Product | undefined> {
