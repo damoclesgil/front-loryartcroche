@@ -6,6 +6,9 @@ import ProductList from '@/components/ProductList'
 // import { Suspense } from 'react'
 import { useQueryFavoritos } from '@/graphql/queries/favoritos'
 import { flatten, normalize } from '@/utils/mappers'
+import Link from 'next/link'
+import { NextRoutes } from '@/utils/constant'
+import { Button, buttonVariants } from '@/components/ui/button'
 
 const WishList = () => {
   const { data: session } = useSession()
@@ -28,6 +31,34 @@ const WishList = () => {
       }
     }
   })
+
+  if (error) {
+    if ((error.graphQLErrors[0].message = 'Forbidden access')) {
+      return (
+        <>
+          <div className="text-center mt-4">
+            <p>
+              Efetue o Login ou Cadastre-se para conseguir ver os seus
+              favoritos.
+            </p>
+            {/* <Button asChild variant="link" size="sm"> */}
+            <Link
+              className={buttonVariants({
+                variant: 'link',
+                className: 'w-full font-bold',
+                size: 'default'
+              })}
+              href={NextRoutes.signIn}
+            >
+              Entrar
+            </Link>
+            {/* </Button> */}
+          </div>
+        </>
+      )
+    }
+    return <p>Ocorreu algo, tente novamente dentro de alguns minutos. 🥲</p>
+  }
 
   if (data) {
     let produtos = data?.favoritos?.data[0]?.attributes?.produtos?.data.map(

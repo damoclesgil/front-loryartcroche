@@ -6,19 +6,20 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('authjs.session-token')
   const pathname = request.nextUrl.pathname
 
+  console.log('Token', token?.value)
+
   if (
     (pathname === NextRoutes.signIn || pathname === NextRoutes.signUp) &&
-    token
+    token?.value
   ) {
-    // console.log('AUTHENTICATED')
+    // console.log('AUTHENTICATED?')
     return NextResponse.redirect(new URL(getUrl(NextRoutes.home)))
   }
   // pathname === privateRoutes.profile
+  // pathname === privateRoutes.favorites ||
   if (
-    (pathname === privateRoutes.favorites ||
-      pathname === privateRoutes.cart ||
-      pathname === privateRoutes.profile) &&
-    !token
+    (pathname === privateRoutes.cart || pathname === privateRoutes.profile) &&
+    token === undefined
   ) {
     // console.log('NOT AUTHENTICATED', token)
     return NextResponse.redirect(new URL(getUrl(NextRoutes.signIn)))

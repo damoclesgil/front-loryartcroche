@@ -29,7 +29,13 @@ const ProductList = ({
   error
 }: ProductListProps) => {
   if (error) {
-    throw error
+    return (
+      <>
+        asda
+        <p>oi</p>
+      </>
+    )
+    // throw error
   }
 
   if (loading) {
