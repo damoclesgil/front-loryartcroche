@@ -14,7 +14,17 @@ export default function OrdensDeCompras() {
   } = useOrdensDePagamentosQuery({ fetchPolicy: 'no-cache' })
 
   if (error) {
-    throw error
+    return (
+      <>
+        <Empty
+          title=""
+          description="
+            Não conseguimos trazer nenhuma Bolsa 🥲, por favor tente novamente dentro de alguns minutos.
+            "
+        />
+      </>
+    )
+    // throw error
   }
 
   if (loading) {

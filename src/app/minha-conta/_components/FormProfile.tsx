@@ -12,6 +12,7 @@ import Link from 'next/link'
 import { NextRoutes } from '@/utils/constant'
 import { GetProfileDocument } from '@/graphql/types'
 import Loader from '@/components/Loader'
+import Empty from '@/components/Empty'
 
 export type ProfileInput = {
   email: string | null
@@ -39,7 +40,17 @@ export default function FormProfile() {
   })
 
   if (error) {
-    throw error
+    return (
+      <>
+        <Empty
+          title=""
+          description="
+            Não conseguimos trazer nenhuma Bolsa 🥲, por favor tente novamente dentro de alguns minutos.
+            "
+        />
+      </>
+    )
+    // throw error
   }
 
   if (loading) {

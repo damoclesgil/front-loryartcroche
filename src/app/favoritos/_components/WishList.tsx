@@ -32,69 +32,93 @@ const WishList = () => {
     }
   })
 
-  if (error) {
-    if ((error.graphQLErrors[0].message = 'Forbidden access')) {
-      return (
-        <>
-          <div className="text-center mt-4">
-            <p>
-              Efetue o Login ou Cadastre-se para conseguir ver os seus
-              favoritos.
-            </p>
-            {/* <Button asChild variant="link" size="sm"> */}
-            <Link
-              className={buttonVariants({
-                variant: 'link',
-                className: 'w-full font-bold',
-                size: 'default'
-              })}
-              href={NextRoutes.signIn}
-            >
-              Entrar
-            </Link>
-            {/* </Button> */}
-          </div>
-        </>
-      )
-    }
-    return <p>Ocorreu algo, tente novamente dentro de alguns minutos. 🥲</p>
-  }
-
-  if (data) {
-    let produtos = data?.favoritos?.data[0]?.attributes?.produtos?.data.map(
-      (produto) => {
-        return {
-          documentId: produto?.id,
-          cor: produto.attributes?.cor,
-          nome: produto.attributes?.nome,
-          descricao: produto.attributes?.descricao,
-          nomeCor: produto.attributes?.nomeCor,
-          preco: produto.attributes?.preco,
-          slug: produto.attributes?.slug,
-          produtosReferentes: normalize(produto.attributes?.produtosReferentes),
-          galeria: produto.attributes?.galeria,
-          imagem_destaque: produto.attributes?.imagem_destaque?.data?.attributes
-        }
-      }
-    )
-
-    let pagination = data?.favoritos?.meta?.pagination
-
+  if (!session?.user?.email) {
     return (
       <>
-        <ProductList
-          // @ts-ignore
-          produtos={produtos}
-          loading={loadingFavoritos}
-          page="favoritos"
-          error={error}
-          loadMore={() => {}}
-          // @ts-ignore
-          pagination={pagination}
-        />
+        <div className="text-center mt-4">
+          <p>
+            Efetue o Login ou Cadastre-se para conseguir ver os seus favoritos.
+          </p>
+          {/* <Button asChild variant="link" size="sm"> */}
+          <Link
+            className={buttonVariants({
+              variant: 'link',
+              className: 'w-full font-bold',
+              size: 'default'
+            })}
+            href={NextRoutes.signIn}
+          >
+            Entrar
+          </Link>
+          {/* </Button> */}
+        </div>
       </>
     )
   }
+
+  // if (error) {
+  //   if ((error.graphQLErrors[0].message = 'Forbidden access')) {
+  //     return (
+  //       <>
+  //         <div className="text-center mt-4">
+  //           <p>
+  //             Efetue o Login ou Cadastre-se para conseguir ver os seus
+  //             favoritos.
+  //           </p>
+  //           {/* <Button asChild variant="link" size="sm"> */}
+  //           <Link
+  //             className={buttonVariants({
+  //               variant: 'link',
+  //               className: 'w-full font-bold',
+  //               size: 'default'
+  //             })}
+  //             href={NextRoutes.signIn}
+  //           >
+  //             Entrar
+  //           </Link>
+  //           {/* </Button> */}
+  //         </div>
+  //       </>
+  //     )
+  //   }
+  //   return <p>Ocorreu algo, tente novamente dentro de alguns minutos. 🥲</p>
+  // }
+
+  // if (data) {
+  let produtos = data?.favoritos?.data[0]?.attributes?.produtos?.data.map(
+    (produto) => {
+      return {
+        documentId: produto?.id,
+        cor: produto.attributes?.cor,
+        nome: produto.attributes?.nome,
+        descricao: produto.attributes?.descricao,
+        nomeCor: produto.attributes?.nomeCor,
+        preco: produto.attributes?.preco,
+        slug: produto.attributes?.slug,
+        produtosReferentes: normalize(produto.attributes?.produtosReferentes),
+        galeria: produto.attributes?.galeria,
+        imagem_destaque: produto.attributes?.imagem_destaque?.data?.attributes
+      }
+    }
+  )
+
+  let pagination = data?.favoritos?.meta?.pagination
+
+  return (
+    <>
+      <ProductList
+        // @ts-ignore
+        produtos={produtos}
+        loading={loadingFavoritos}
+        page="favoritos"
+        error={error}
+        loadMore={() => {}}
+        // @ts-ignore
+        pagination={pagination}
+      />
+    </>
+  )
+  // }
 }
 
 export default WishList

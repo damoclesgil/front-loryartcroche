@@ -31,8 +31,12 @@ const ProductList = ({
   if (error) {
     return (
       <>
-        asda
-        <p>oi</p>
+        <Empty
+          title=""
+          description="
+            Não conseguimos trazer nenhuma Bolsa 🥲, por favor tente novamente dentro de alguns minutos.
+            "
+        />
       </>
     )
     // throw error

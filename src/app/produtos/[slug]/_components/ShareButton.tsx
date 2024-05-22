@@ -15,7 +15,6 @@ export function ShareButton({ product }: shareButtonProps) {
           text: `Check out this product: ${product.nome} - ${formatPrice(Number(product.preco))}`,
           url: window.location.href
         })
-        console.log('Product shared successfully')
       } catch (error) {
         console.error('Error sharing product:', error)
       }

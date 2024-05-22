@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('authjs.session-token')
   const pathname = request.nextUrl.pathname
 
-  console.log('Token', token?.value)
+  // console.log('Token', token?.value)
 
   if (
     (pathname === NextRoutes.signIn || pathname === NextRoutes.signUp) &&

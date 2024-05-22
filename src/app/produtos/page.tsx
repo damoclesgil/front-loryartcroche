@@ -87,49 +87,49 @@ export default function Produtos() {
     setSearch(query)
   }
 
-  if (data) {
-    let produtosData = normalize(data.produtos)
-    let pagination = data.produtos?.meta
+  // if (da) {
+  let produtosData = normalize(data?.produtos)
+  let pagination = data?.produtos?.meta
 
-    return (
-      <Base backgroundImg="croche-pink" sizeBg="medium">
-        <Heading size="huge" className="mb-5 text-center">
-          Confira nossas bolsas de crochê 🧶
-        </Heading>
-        <div className="flex flex-col lg:flex-row w-full">
-          {/* {JSON.stringify(filterItems)} */}
-          <div className="w-full max-w-[14rem]">
-            <ExploreSidebar
-              // @ts-ignore
-              items={filterItems}
-              // @ts-ignore
-              initialValues={initialValues}
-              onFilter={handleFilter}
-            />
-          </div>
-          <div className="w-full">
-            <div className="flex items-center flex-col lg:flex-row justify-center mt-4 lg:mt-0 w-full">
-              <SearchInput
-                inputValue={search}
-                loading={false}
-                setInputValue={onChangeInputSearch}
-              />
-              {/* <div>oi</div> */}
-            </div>
-            <ProductList
-              produtos={produtosData}
-              loading={loading}
-              page="produtos"
-              error={error}
-              loadMore={handleShowMore}
-              // @ts-ignore
-              pagination={pagination}
-            />
-          </div>
+  return (
+    <Base backgroundImg="croche-pink" sizeBg="medium">
+      <Heading size="huge" className="mb-5 text-center">
+        Confira nossas bolsas de crochê 🧶
+      </Heading>
+      <div className="flex flex-col lg:flex-row w-full">
+        {/* {JSON.stringify(filterItems)} */}
+        <div className="w-full max-w-[14rem]">
+          <ExploreSidebar
+            // @ts-ignore
+            items={filterItems}
+            // @ts-ignore
+            initialValues={initialValues}
+            onFilter={handleFilter}
+          />
         </div>
+        <div className="w-full">
+          <div className="flex items-center flex-col lg:flex-row justify-center mt-4 lg:mt-0 w-full">
+            <SearchInput
+              inputValue={search}
+              loading={false}
+              setInputValue={onChangeInputSearch}
+            />
+            {/* <div>oi</div> */}
+          </div>
+          <ProductList
+            produtos={produtosData}
+            loading={loading}
+            page="produtos"
+            error={error}
+            loadMore={handleShowMore}
+            // @ts-ignore
+            pagination={pagination}
+          />
+        </div>
+      </div>
 
-        <InstagramSection />
-      </Base>
-    )
-  }
+      <InstagramSection />
+    </Base>
+  )
+  // }
 }
