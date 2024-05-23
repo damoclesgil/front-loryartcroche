@@ -1,5 +1,4 @@
-'use client'
-
+// 'use client'
 import { Instagram as InstagramIcon } from '@styled-icons/boxicons-logos'
 
 const InstagramSection = () => {

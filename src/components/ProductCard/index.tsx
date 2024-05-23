@@ -1,5 +1,3 @@
-// 'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
 import formatPrice from '@/utils/format-price'
@@ -60,6 +58,7 @@ const ProductCard = ({
               alt={img.alt ? img.alt : name}
               loading="lazy"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
             {/* 'img/placeholder.svg' */}
             {img.overImgSrc && (
@@ -69,6 +68,7 @@ const ProductCard = ({
                 alt={img.alt ? img.alt : name}
                 loading="lazy"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             )}
           </AspectRatio>

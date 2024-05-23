@@ -1,8 +1,17 @@
-'use client'
-
 import Link from 'next/link'
 import { NextRoutes } from '@/utils/constant'
 import { usePathname } from 'next/navigation'
+
+const navLinks = [
+  {
+    name: 'Início',
+    path: NextRoutes.home
+  },
+  {
+    name: 'Produtos',
+    path: NextRoutes.products
+  }
+]
 
 const NavList = ({ hiddenMobile = false }) => {
   const pathname = usePathname()
@@ -21,31 +30,21 @@ const NavList = ({ hiddenMobile = false }) => {
       <ul
         className={`${hiddenMobile ? 'hidden md:flex ml-6' : 'md:hidden flex'} flex-col px-2 pb-2 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700`}
       >
-        <li>
-          <Link
-            href={NextRoutes.home}
-            className={`${defaultLinkClasses} ${
-              pathname === NextRoutes.home
-                ? activeLinkClasses
-                : descativeLinkClasses
-            }`}
-            aria-current="page"
-          >
-            Início
-          </Link>
-        </li>
-        <li>
-          <Link
-            href={NextRoutes.products}
-            className={`${defaultLinkClasses} ${
-              pathname === NextRoutes.products
-                ? activeLinkClasses
-                : descativeLinkClasses
-            }`}
-          >
-            Produtos
-          </Link>
-        </li>
+        {navLinks.map((link) => (
+          <li key={link.path}>
+            <Link
+              href={link.path}
+              className={`${defaultLinkClasses} ${
+                pathname === link.path
+                  ? activeLinkClasses
+                  : descativeLinkClasses
+              }`}
+              aria-current="page"
+            >
+              {link.name}
+            </Link>
+          </li>
+        ))}
       </ul>
     </>
   )

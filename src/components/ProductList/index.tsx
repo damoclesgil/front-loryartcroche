@@ -1,5 +1,3 @@
-// 'use client'
-
 import ProductCard from '@/components/ProductCard'
 import { getImageUrl } from '@/utils/getImageUrl'
 import Empty from '../Empty'
