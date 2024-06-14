@@ -11,7 +11,7 @@ import React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import PaymentForm from './_components/PaymentForm'
-import { Trash2 } from '@styled-icons/feather'
+import { Icon } from '@iconify/react'
 
 const stripePromise = loadStripe(
   `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
@@ -117,7 +117,11 @@ const CartList = () => {
                           variant={'link'}
                           onClick={() => removeFromCart(product.id)}
                         >
-                          <Trash2 size={20} className="mr-1" />
+                          <Icon
+                            className="mr-1"
+                            fontSize={20}
+                            icon="feather-trash-2"
+                          ></Icon>
                           remover
                         </Button>
                       </div>

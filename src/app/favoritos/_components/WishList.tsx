@@ -2,13 +2,11 @@
 
 import { useSession } from 'next-auth/react'
 import ProductList from '@/components/ProductList'
-// import { useFavoritosAction } from '../actions'
-// import { Suspense } from 'react'
 import { useQueryFavoritos } from '@/graphql/queries/favoritos'
-import { flatten, normalize } from '@/utils/mappers'
+import { normalize } from '@/utils/mappers'
 import Link from 'next/link'
 import { NextRoutes } from '@/utils/constant'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 
 const WishList = () => {
   const { data: session } = useSession()

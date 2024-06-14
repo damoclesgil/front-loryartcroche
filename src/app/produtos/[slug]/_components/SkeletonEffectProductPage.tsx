@@ -1,6 +1,5 @@
 'use client'
-
-import { CreditCard, Favorite, Pix } from '@styled-icons/material-outlined'
+import { Icon } from '@iconify/react'
 
 const SkeletonEffectProductPage = () => {
   return (
@@ -22,15 +21,24 @@ const SkeletonEffectProductPage = () => {
             <div className="animate-pulse bg-slate-200 w-8 h-8 flex items-center justify-center rounded-full ml-[0rem] mx-1.5"></div>
             <div className="animate-pulse bg-slate-200 w-8 h-8 flex items-center justify-center rounded-full mx-1.5"></div>
           </div>
-          <Favorite size={25} className="text-slate-200 animate-pulse mt-3" />
+          <Icon
+            icon="material-symbols:favorite"
+            className="text-slate-200 animate-pulse mt-3"
+            fontSize={25}
+          />
           <div className="animate-pulse bg-slate-200 w-[120px] h-[20px] flex items-center justify-center mt-2"></div>
           <div className="animate-pulse bg-slate-200 w-[150px] h-[20px] flex items-center justify-center mt-2"></div>
           <div className="animate-pulse bg-slate-200 w-[130px] h-[20px] flex items-center justify-center mt-2"></div>
           <div className="flex mt-3">
-            <Pix size={20} className="text-slate-200 animate-pulse mr-3" />
-            <CreditCard
-              size={20}
+            <Icon
+              icon="ic:baseline-pix"
+              fontSize={20}
               className="text-slate-200 animate-pulse mr-3"
+            />
+            <Icon
+              className="text-slate-200 animate-pulse mr-3"
+              icon="material-symbols:credit-card-outline"
+              fontSize={20}
             />
             <div className="animate-pulse bg-slate-200 w-[20px] h-[20px] flex items-center justify-center"></div>
           </div>

@@ -15,9 +15,9 @@ import { signIn } from 'next-auth/react'
 import { CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { NextRoutes } from '@/utils/constant'
 import { TextError } from '@/components/ui/text-error'
-import { ErrorOutline } from '@styled-icons/material-outlined'
 import { signUpValidate } from '@/utils/validations/indext'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Icon } from '@iconify/react'
 
 export function FormSignUp() {
   const {
@@ -118,7 +118,7 @@ export function FormSignUp() {
 
       {errors.root && (
         <TextError className="text-left mb-2">
-          <ErrorOutline className="mr-1 w-4 h-4" />
+          <Icon className="mr-1 w-4 h-4" icon="mdi-error-outline"></Icon>
           {errors.root?.message?.toString()}
         </TextError>
       )}

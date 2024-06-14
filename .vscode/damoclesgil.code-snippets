@@ -20,4 +20,10 @@
     "body": "// @ts-ignore",
     "description": "Ignorar erro da linha seguinte."
   },
+  "Iconify component": {
+    "scope": "typescript, typescriptreact",
+    "prefix": "icon",
+    "body": "<Icon icon=\"${0}\" fontSize={24}></Icon>",
+    "description": "Ignorar erro da linha seguinte."
+  },
 }

@@ -2,8 +2,8 @@
 
 import Base from '@/templates/Base'
 import { NextRoutes } from '@/utils/constant'
-import { Done } from '@styled-icons/material-outlined'
 import Link from 'next/link'
+import { Icon } from '@iconify/react'
 
 const Success = () => {
   return (
@@ -13,7 +13,7 @@ const Success = () => {
           Sua compra foi realizada com sucesso!
         </h2>
         <div className="text-center px-2 text-primary bg-primary-foreground rounded-full w-20 h-20 flex items-center justify-center border-primary border">
-          <Done size={50} className="rounded-full" />
+          <Icon icon="ic:round-done" fontSize={50} className="rounded-full" />
         </div>
         <div className="mt-5 text-center">
           <p className="mt-5">

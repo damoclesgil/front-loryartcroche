@@ -17,7 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { signInValidate } from '@/utils/validations/indext'
 import { NextRoutes } from '@/utils/constant'
 import { TextError } from '@/components/ui/text-error'
-import { ErrorOutline } from '@styled-icons/material-outlined'
+import { Icon } from '@iconify/react'
 
 export function FormSignIn() {
   const { push } = useRouter()
@@ -61,7 +61,7 @@ export function FormSignIn() {
       <CardContent>
         {errors.manual && (
           <TextError className="text-left mb-2">
-            <ErrorOutline className="mr-1 w-4 h-4" />
+            <Icon className="mr-1 w-4 h-4" icon="mdi-error-outline"></Icon>
             {errors.manual?.message?.toString()}
           </TextError>
         )}

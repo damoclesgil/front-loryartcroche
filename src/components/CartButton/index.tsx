@@ -1,10 +1,7 @@
-import {
-  AddShoppingCart,
-  RemoveShoppingCart
-} from '@styled-icons/material-outlined'
 import { Button } from '../ui/button'
 import { useCart } from '@/hooks/use-cart'
 import { toast } from '@/components/ui/use-toast'
+import { Icon } from '@iconify/react'
 
 type CartProps = {
   id: string
@@ -37,9 +34,12 @@ const CartButton = ({ id }: CartProps) => {
       onClick={handleClick}
     >
       {isInCart(id) ? (
-        <RemoveShoppingCart size={25} />
+        <Icon
+          icon="material-symbols:shopping-cart-off-outline-rounded"
+          fontSize={25}
+        />
       ) : (
-        <AddShoppingCart size={25} />
+        <Icon icon="material-symbols:add-shopping-cart-rounded" fontSize={25} />
       )}
     </Button>
   )

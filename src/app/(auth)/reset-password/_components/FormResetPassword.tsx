@@ -11,9 +11,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { TextError } from '@/components/ui/text-error'
 import { toast } from '@/components/ui/use-toast'
-// import { useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
-import { ErrorOutline } from '@styled-icons/material-outlined'
+import { Icon } from '@iconify/react'
 
 type resetPasswordProps = {
   codeParam: string
@@ -84,7 +83,8 @@ export function FormResetPassword({ codeParam }: resetPasswordProps) {
 
       {errors.root && (
         <TextError className="text-left mb-2">
-          <ErrorOutline className="mr-1 w-4 h-4" />
+          <Icon className="mr-1 w-4 h-4" icon="mdi-error-outline"></Icon>
+
           {errors.root?.message?.toString()}
         </TextError>
       )}

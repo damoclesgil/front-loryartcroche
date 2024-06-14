@@ -8,11 +8,10 @@ import {
   DropdownMenu
 } from '@/components/ui/dropdown-menu'
 import Link from 'next/link'
-import { ChevronDownIcon } from '@radix-ui/react-icons'
 import { NextRoutes } from '@/utils/constant'
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu'
 import Image from 'next/image'
-import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
+import { Icon } from '@iconify/react'
 
 const UserMenu = () => {
   const { data: session, status } = useSession()
@@ -59,7 +58,11 @@ const UserMenu = () => {
               <Link href={NextRoutes.profile}>Minha Conta</Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <FavoriteBorder className="w-4 h-4 mr-2.5" />
+              <Icon
+                icon="material-symbols:favorite-outline"
+                fontSize={15}
+                className=" mr-2.5"
+              />
               <Link href={NextRoutes.favorites}>Favoritos</Link>
             </DropdownMenuItem>
             {/* <DropdownMenuSeparator /> */}

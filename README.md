@@ -2,11 +2,17 @@
 
 This is the front end of the [loryartcroche](https://www.instagram.com/loryartcroche/) e-commerce that was created with the intention of selling and promoting its handcrafted products.
 
-## Público Alvo
+## Objetivo
+
+
+## Público Alvo / Persona
 
 Seria pessoas que gostam de colecionar talvez ou comprar bolsas artesanais feito a mal de crochê. Meio que coleção únicas, pois ela quer produzir pouco porém com alta qualidade.
 
-## Atualizar Dependências usando ncu
+
+- Biblioteca de Icones: https://icon-sets.iconify.design/
+
+## Atualizar Dependências usando ncu1
 
 ```bash
 ncu --interactive

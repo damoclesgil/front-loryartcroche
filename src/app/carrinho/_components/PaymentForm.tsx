@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { TextError } from '@/components/ui/text-error'
+// import { TextError } from '@/components/ui/text-error'
 import { MetodoPagamento, useCart } from '@/hooks/use-cart'
 import { capitalize, formatDate, setCharAt } from '@/utils/common'
 import { links, NextRoutes } from '@/utils/constant'
@@ -10,16 +10,14 @@ import { createPayment, createPaymentIntent } from '@/utils/stripe/methods'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import {
   PaymentIntent,
-  // PaymentMethod,
   StripeCardElementChangeEvent,
   StripeCardElementOptions
 } from '@stripe/stripe-js'
-import { CreditCard, Pix } from '@styled-icons/material-outlined'
-import { Whatsapp } from '@styled-icons/remix-line'
+import { Icon } from '@iconify/react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 export default function PaymentForm() {
   const { items, total } = useCart()
@@ -165,14 +163,20 @@ Método de Pagamento: *${paymentMethod}*.
           className={`${buttonMethodPaymentClass} ${paymentMethod === 'Cartão de Crédito' ? 'bg-primary text-white' : 'bg-transparent'}`}
           onClick={() => setPaymentMethod('Cartão de Crédito')}
         >
-          <CreditCard size={50} />
+          <Icon icon="material-symbols:credit-card-outline" fontSize={50} />
+
           <span className="mt-2 ">Cartão de Crédito</span>
         </button>
         <button
           className={`${buttonMethodPaymentClass} ${paymentMethod === 'Pix' ? 'bg-primary text-white' : 'bg-transparent'}`}
           onClick={() => setPaymentMethod('Pix')}
         >
-          <Pix color="#4bb8a9" size={50} />
+          <Icon
+            icon="ic:baseline-pix"
+            fontSize={50}
+            color="#4bb8a9"
+            className="mr-2"
+          />
           <span className="mt-2">Pix</span>
         </button>
         <button
@@ -196,7 +200,7 @@ Método de Pagamento: *${paymentMethod}*.
 
       <div className="mt-8 flex items-center justify-center">
         <Button className="mr-4" onClick={() => sendWhatsAppItems()}>
-          <Whatsapp size={20} className="mr-2" />
+          <Icon icon="ic:baseline-whatsapp" fontSize={20} className="mr-2" />
           Encomendar
         </Button>
         {/*

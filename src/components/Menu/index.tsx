@@ -7,8 +7,8 @@ import { useState } from 'react'
 import UserMenu from './UserMenu'
 import { NextRoutes } from '@/utils/constant'
 import CartMenu from './CartMenu'
-import { FavoriteBorder } from '@styled-icons/material-outlined'
 import { Button, buttonVariants } from '../ui/button'
+import { Icon } from '@iconify/react'
 import NavList from './NavList'
 // import SearchProducts from './SearchProducts'
 
@@ -49,7 +49,7 @@ const Menu = () => {
               })}
               href={NextRoutes.favorites}
             >
-              <FavoriteBorder className="w-6 h-6" />
+              <Icon icon="material-symbols:favorite-outline" fontSize={25} />
             </Link>
           </Button>
 

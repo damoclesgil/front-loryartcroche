@@ -10,13 +10,10 @@ import { forgotPasswordValidate } from '@/utils/validations/indext'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { TextError } from '@/components/ui/text-error'
-import {
-  CheckCircleOutline,
-  ErrorOutline
-} from '@styled-icons/material-outlined'
 import { toast } from '@/components/ui/use-toast'
 import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { Icon } from '@iconify/react'
 
 export function FormForgotPassword() {
   const [success, setSuccess] = useState(false)
@@ -73,14 +70,20 @@ export function FormForgotPassword() {
       </CardHeader>
       {errors.root && (
         <TextError className="text-left mb-2">
-          <ErrorOutline className="mr-1 w-4 h-4" />
+          <Icon icon="mdi-error-outline" className="mr-1 w-4 h-4"></Icon>
+
           {errors.root?.message?.toString()}
         </TextError>
       )}
 
       {success ? (
         <div className="flex items-center">
-          <CheckCircleOutline size={20} className="text-green-500 mr-2" />
+          <Icon
+            icon="mdi-check-circle-outline"
+            fontSize={20}
+            className="text-green-500 mr-2"
+          ></Icon>
+
           <p>Você acabou de receber um e-mail!</p>
         </div>
       ) : (

@@ -2,12 +2,8 @@
 
 import Link from 'next/link'
 import Logo from '../Logo'
-
-import {
-  Instagram as InstagramIcon,
-  Whatsapp as WhatsIcon
-} from '@styled-icons/boxicons-logos'
 import { links, NextRoutes } from '@/utils/constant'
+import { Icon } from '@iconify/react'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -56,7 +52,7 @@ const Footer = () => {
               target="_blank"
               className="no-underline text-primary hover:text-primary-darker mt-2 flex items-center"
             >
-              <InstagramIcon size={22} />
+              <Icon icon="lucide-instagram" fontSize={22}></Icon>
               <p className="ml-2">Instagram</p>
             </Link>
             <Link
@@ -64,7 +60,7 @@ const Footer = () => {
               target="_blank"
               className="no-underline text-primary hover:text-primary-darker mt-2 flex items-center"
             >
-              <WhatsIcon size={22} />
+              <Icon icon="ic:baseline-whatsapp" fontSize={22} />
               <p className="ml-2">WhatsApp {links.Phone}</p>
             </Link>
           </div>

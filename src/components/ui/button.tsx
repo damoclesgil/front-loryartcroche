@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { Loader4 } from '@styled-icons/remix-line'
+import { Icon } from '@iconify/react'
 import { cn } from '@/utils/utils'
 
 // disabled:pointer-events-none
@@ -56,7 +56,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         <>
           {loading && (
-            <Loader4
+            <Icon
+              icon="ri:loader-4-fill"
+              fontSize={30}
               className={cn(
                 `animate-spin ${size === 'icon' ? 'h-6 w-6' : 'h-4 w-4'}`,
                 // @ts-ignore

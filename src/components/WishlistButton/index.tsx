@@ -1,6 +1,6 @@
-import { Favorite, FavoriteBorder } from '@styled-icons/material-outlined'
 import { Button } from '../ui/button'
 import { idProduto, useWishlist } from '@/hooks/use-wishlist'
+import { Icon } from '@iconify/react'
 // import { ProdutoEntity } from '@/graphql/types'
 export type theIdProduto = { id: string }
 
@@ -30,9 +30,9 @@ const WishlistButton = ({ id }: theIdProduto) => {
     >
       {!loadingApollo &&
         (isInWishlist(id) ? (
-          <Favorite size={25} />
+          <Icon icon="material-symbols:favorite" fontSize={25} />
         ) : (
-          <FavoriteBorder size={25} />
+          <Icon icon="material-symbols:favorite-outline" fontSize={25} />
         ))}
     </Button>
   )

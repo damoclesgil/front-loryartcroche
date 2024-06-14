@@ -1,17 +1,12 @@
 'use client'
 
 import { NextRoutes } from '@/utils/constant'
-import { FormatListBulleted } from '@styled-icons/material-outlined'
-import { AccountCircle } from '@styled-icons/remix-line'
+import { Icon } from '@iconify/react'
 import Link from 'next/link'
-// import { Button } from '../ui/button'
-// import { signOut } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
 
 const ProfileMenu = () => {
   const pathname = usePathname()
-
-  // const { push } = useRouter()
 
   const defaultLinkClasses =
     'cursor-pointer decoration-inherit flex items-center px-2 py-3 transition-colors hover:bg-primary block w-full'
@@ -30,7 +25,8 @@ const ProfileMenu = () => {
             : descativeLinkClasses
         }`}
       >
-        <AccountCircle size={24} />
+        <Icon icon="ic:outline-account-circle" fontSize={24} />
+
         <span className="ml-2">Meu Perfil</span>
       </Link>
 
@@ -42,7 +38,8 @@ const ProfileMenu = () => {
             : descativeLinkClasses
         }`}
       >
-        <FormatListBulleted size={24} />
+        <Icon icon="material-symbols:format-list-bulleted" fontSize={24} />
+
         <span className="ml-2">Minhas Compras</span>
       </Link>
 

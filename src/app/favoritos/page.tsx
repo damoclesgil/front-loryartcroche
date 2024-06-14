@@ -1,3 +1,5 @@
+// 'use client'
+
 import InstagramSection from '@/components/InstagramSection'
 import WishList from './_components/WishList'
 import Base from '@/templates/Base'

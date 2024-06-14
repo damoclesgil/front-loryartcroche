@@ -1,12 +1,14 @@
-// 'use client'
-import { Instagram as InstagramIcon } from '@styled-icons/boxicons-logos'
+'use client'
+
+import { Icon } from '@iconify/react'
 
 const InstagramSection = () => {
   return (
     <>
       <div className="flex flex-col text-center justify-center items-center mt-8 mb-5">
         <div className="flex items-center">
-          <InstagramIcon size={24} />
+          {/* <Icon icon="lucide-star" fontSize={24}></Icon> */}
+          <Icon icon="lucide-instagram" fontSize={24}></Icon>
           <h2 className="text-gray-800 dark:text-white font-medium text-lg ml-2">
             Siga-nos através do Instagram
           </h2>

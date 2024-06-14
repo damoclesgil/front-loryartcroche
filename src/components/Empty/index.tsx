@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '../ui/button'
-import { PackageIcon } from '@styled-icons/feather'
+import { Icon } from '@iconify/react'
 
 export type EmptyProps = {
   title: string
@@ -19,8 +19,7 @@ const Empty = ({ title, description, hasLink }: EmptyProps) => (
       width={280}
       height={280}
     />
-
-    {/* <PackageIcon size={50} /> */}
+    <Icon icon="material-symbols-light:package-2-outline" fontSize={50} />
 
     <h2 className="text-lg">{title}</h2>
     <p className="text-md">{description}</p>
