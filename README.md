@@ -4,11 +4,15 @@ This is the front end of the [loryartcroche](https://www.instagram.com/loryartcr
 
 ## Objetivo
 
+Vender, Divulgar as suas Bolsas, Sanar Dúvidas dos Clientes e Auxiliar nas suas tomadas de decisoes em relaçãos os produtos de Crochês feitos na mão.
 
 ## Público Alvo / Persona
 
-Seria pessoas que gostam de colecionar talvez ou comprar bolsas artesanais feito a mal de crochê. Meio que coleção únicas, pois ela quer produzir pouco porém com alta qualidade.
+Seria pessoas que gostam de colecionar talvez ou comprar bolsas artesanais feito a mal de crochê, geralmente pessoas de todas idades, jovens e adultos. São pessoas que gostam de que coleção únicas / exclusividade.
 
+## Sobre o Produto
+
+São bolsas de altas qualiadades feitas feitas a mão.
 
 - Biblioteca de Icones: https://icon-sets.iconify.design/
 
@@ -42,7 +46,7 @@ ncu -i
 Para simular se está carregando localmente colocar um e ver se o loading state is work fine.
 
 ```js
-await new Promise((resolve) => setTimeout(resolve, 3000));
+await new Promise((resolve) => setTimeout(resolve, 3000))
 ```
 
 O suspense vai ser bom quando quero setar o estado componente especifico sem trocar a pagina toda. https://youtu.be/5QP0mvrJkiY?t=4957
@@ -56,7 +60,7 @@ O suspense vai ser bom quando quero setar o estado componente especifico sem tro
 
 ## FAQ e estudos
 
-Alguns testes feitos na pasta: [dev-testing](src/app/(dev-testing)/server-side/)
+Alguns testes feitos na pasta: [dev-testing](<src/app/(dev-testing)/server-side/>)
 
 A real é que o APOLLO não funciona muito bem para server side.
 
