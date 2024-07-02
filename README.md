@@ -6,6 +6,8 @@
 
 This is the front end of the [loryartcroche](https://www.instagram.com/loryartcroche/) e-commerce that was created with the intention of selling and promoting its handcrafted products.
 
+The project have the back-end too: [api-loryartcroche](https://github.com/damoclesgil/api-loryartcroche)
+
 ## Objetivo
 
 Vender, Divulgar as suas Bolsas, Sanar Dúvidas dos Clientes e Auxiliar nas suas tomadas de decisoes em relaçãos os produtos de Crochês feitos na mão.
