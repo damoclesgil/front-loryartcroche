@@ -22,5 +22,8 @@
     "strapi",
     "Strapi"
   ],
-  "css.enabledLanguages": ["html", "vue"]
+  "css.enabledLanguages": ["html", "vue"],
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 }

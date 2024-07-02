@@ -41,3 +41,4 @@ desktop.ini
 # src/app/server-side
 # src/app/dev-test
 
+.env.local
